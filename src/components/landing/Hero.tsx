@@ -48,7 +48,8 @@ const Hero = () => {
             className="text-xl md:text-2xl text-hero-muted max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             Connect, compete, and get discovered. The platform that brings
-            structure, visibility, and opportunity to local football across Africa.
+            structure, visibility, and opportunity to local football across
+            Africa.
           </motion.p>
 
           {/* CTAs */}
@@ -76,7 +77,7 @@ const Hero = () => {
             className="mt-16 grid grid-cols-3 gap-8 max-w-xl mx-auto"
           >
             {[
-              { value: "1000+", label: "Teams Joining" },
+              { value: "10+", label: "Teams Joining Aleardy" },
               { value: "10+", label: "Cities" },
               { value: "∞", label: "Possibilities" },
             ].map((stat, index) => (
