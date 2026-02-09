@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -119,8 +119,33 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Roboto', 'Montserrat', system-ui, -apple-system, sans-serif;
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
   }
+}
+
+/* Custom scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.6) hsl(var(--background));
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+*::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.6);
+  border-radius: 999px;
+  border: 2px solid hsl(var(--background));
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
 }
 
 @layer components {

@@ -19,12 +19,12 @@ const Header = () => {
       transition={{ duration: 0.5 }}
       className="fixed top-0 left-0 right-0 z-50 px-6 py-4"
     >
-      <nav className="max-w-7xl mx-auto flex items-center justify-between glass-card rounded-2xl px-6 py-3">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between rounded-2xl px-6 py-3 border border-white/10 bg-background/70 backdrop-blur-xl shadow-md">
         <a href="#" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-sm">S</span>
           </div>
-          <span className="text-hero-foreground font-semibold text-lg">Shaba.cm</span>
+          <span className="text-foreground font-semibold text-lg">Shaba.cm</span>
         </a>
 
         {/* Desktop Navigation */}
@@ -48,7 +48,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-hero-foreground"
+          className="md:hidden text-foreground bg-background/70 border border-white/10 rounded-lg p-2 backdrop-blur"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -63,14 +63,14 @@ const Header = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="md:hidden mt-2 glass-card rounded-2xl p-6"
+            className="md:hidden mt-2 rounded-2xl p-5 border border-white/10 bg-background/90 backdrop-blur-xl shadow-lg"
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-hero-foreground hover:text-primary transition-colors font-medium"
+                  className="text-foreground hover:text-primary transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}

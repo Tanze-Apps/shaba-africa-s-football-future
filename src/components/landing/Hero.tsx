@@ -1,10 +1,118 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import heroVideo from "../../assets/hero-video.mp4";
 import heroMockup from "../../assets/mockup2.png";
 
+type Stat = {
+  value: number;
+  label: string;
+  suffix?: string;
+  displayOverride?: string;
+};
+
+const StatCard = ({
+  stat,
+  start,
+  delay = 0,
+}: {
+  stat: Stat;
+  start: boolean;
+  delay?: number;
+}) => {
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (!start || stat.displayOverride) return;
+    const duration = 1200;
+    let animationFrame = 0;
+    let startTime: number | null = null;
+
+    const animate = (time: number) => {
+      if (startTime === null) startTime = time;
+      const progress = Math.min((time - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const nextValue = Math.round(stat.value * eased);
+      setDisplay(nextValue);
+      if (progress < 1) {
+        animationFrame = window.requestAnimationFrame(animate);
+      }
+    };
+
+    const timeout = window.setTimeout(() => {
+      animationFrame = window.requestAnimationFrame(animate);
+    }, delay);
+
+    return () => {
+      window.clearTimeout(timeout);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+    };
+  }, [delay, start, stat.displayOverride, stat.value]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={start ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5 }}
+      className="text-center sm:text-left"
+    >
+      <div className="text-3xl md:text-4xl font-bold text-hero-foreground">
+        {stat.displayOverride ?? display}
+        {stat.suffix}
+      </div>
+      <div className="text-hero-muted text-sm mt-1">{stat.label}</div>
+    </motion.div>
+  );
+};
+
 const Hero = () => {
+  const [videoStage, setVideoStage] = useState<"playing" | "ended" | "hidden">(
+    "playing"
+  );
+  const [videoReady, setVideoReady] = useState(false);
+  const statsRef = useRef<HTMLDivElement | null>(null);
+  const statsInView = useInView(statsRef, { once: true, margin: "-20%" });
+
+  const stats: Stat[] = [
+    { value: 10, suffix: "+", label: "Teams Joining Already" },
+    { value: 10, suffix: "+", label: "Cities" },
+    { value: 0, displayOverride: "∞", label: "Possibilities" },
+  ];
+
+  useEffect(() => {
+    if (videoStage !== "ended") return;
+    const timeout = window.setTimeout(() => {
+      setVideoStage("hidden");
+    }, 600);
+    return () => window.clearTimeout(timeout);
+  }, [videoStage]);
+
   return (
     <section className="hero-section min-h-screen flex items-center justify-center relative pt-24 pb-20 px-6">
+      {/* Background Video */}
+      {videoStage !== "hidden" && (
+        <div
+          className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${
+            videoStage === "ended"
+              ? "opacity-0"
+              : videoReady
+                ? "opacity-100"
+                : "opacity-0"
+          }`}
+        >
+          <video
+            className="h-full w-full object-cover scale-110"
+            src={heroVideo}
+            autoPlay
+            muted
+            playsInline
+            preload="metadata"
+            onLoadedData={() => setVideoReady(true)}
+            onEnded={() => setVideoStage("ended")}
+            onError={() => setVideoStage("hidden")}
+          />
+        </div>
+      )}
       {/* Background Effects */}
       <div className="hero-glow" />
       <div className="absolute inset-0 overflow-hidden">
@@ -23,7 +131,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 mb-8"
+            className="inline-flex mt-5 items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 mb-8"
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-primary text-sm font-medium">
@@ -65,32 +173,26 @@ const Hero = () => {
               Join the Waitlist
               <ArrowRight size={20} />
             </a>
-            <a href="#how-it-works" className="btn-secondary text-lg px-8 py-4">
+            <a href="#how-it-works" className="hidden md:block btn-secondary text-lg px-8 py-4">
               <Play size={20} />
               How It Works
             </a>
           </motion.div>
 
           {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-16 grid grid-cols-3 gap-8 max-w-xl mx-auto lg:mx-0"
+          <div
+            ref={statsRef}
+            className="mt-12 grid grid-cols-3 sm:grid-cols-3 gap-6 sm:gap-8 max-w-xl mx-auto lg:mx-0"
           >
-            {[
-              { value: "10+", label: "Teams Joining Aleardy" },
-              { value: "10+", label: "Cities" },
-              { value: "∞", label: "Possibilities" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-hero-foreground">
-                  {stat.value}
-                </div>
-                <div className="text-hero-muted text-sm mt-1">{stat.label}</div>
-              </div>
+            {stats.map((stat, index) => (
+              <StatCard
+                key={stat.label}
+                stat={stat}
+                start={statsInView}
+                delay={index * 120}
+              />
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* Product Mockup */}
