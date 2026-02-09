@@ -3,24 +3,38 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
+import { joinWaitlist, WaitlistError } from "../../lib/waitlist";
 
 const Waitlist = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle"
+  );
+  const [feedback, setFeedback] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) return;
 
     setStatus("loading");
-    
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    setStatus("success");
-    setEmail("");
+    setFeedback(null);
+
+    try {
+      const response = await joinWaitlist(trimmedEmail);
+      setStatus("success");
+      setFeedback(response.message);
+      setEmail("");
+    } catch (error) {
+      const message =
+        error instanceof WaitlistError
+          ? error.message
+          : "Something went wrong. Please try again.";
+      setStatus("error");
+      setFeedback(message);
+    }
   };
 
   return (
@@ -79,7 +93,8 @@ const Waitlist = () => {
                   You're on the list!
                 </h3>
                 <p className="text-hero-muted">
-                  We'll notify you when Shaba.cm launches. Get ready to play.
+                  {feedback ??
+                    "We'll notify you when Shaba.cm launches. Get ready to play."}
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
@@ -122,6 +137,10 @@ const Waitlist = () => {
               </motion.form>
             )}
           </AnimatePresence>
+
+          {status === "error" && (
+            <p className="text-destructive text-sm mt-4">{feedback}</p>
+          )}
 
           <p className="text-hero-muted/60 text-sm mt-6">
             No spam, ever. We respect your inbox.
