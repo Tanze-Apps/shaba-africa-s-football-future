@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 import { Twitter, Instagram, Linkedin } from "lucide-react";
 
 const Footer = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
@@ -16,8 +20,13 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-background border-t border-border py-16 px-6">
-      <div className="max-w-7xl mx-auto">
+    <footer ref={ref} className="bg-background border-t border-border py-16 px-6">
+      <motion.div
+        className="max-w-7xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+      >
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start gap-4">
@@ -69,7 +78,7 @@ const Footer = () => {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 };
