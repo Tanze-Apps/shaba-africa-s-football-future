@@ -123,7 +123,12 @@ const Hero = () => {
       {/* Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <motion.div
+        className="max-w-7xl mx-auto relative z-10"
+        initial={{ opacity: 0, y: 12 }}
+        animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div className="text-center lg:text-left max-w-4xl mx-auto lg:mx-0">
           {/* Badge */}
@@ -216,7 +221,7 @@ const Hero = () => {
           </div>
         </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
