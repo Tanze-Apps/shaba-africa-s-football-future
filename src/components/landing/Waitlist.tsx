@@ -95,7 +95,7 @@ const Waitlist = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onSubmit={handleSubmit}
-                className="flex flex-col sm:flex-row items-stretch gap-3 sm:gap-4 max-w-xl mx-auto p-2 sm:p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur"
+                className="flex w-full max-w-xl flex-col sm:flex-row items-stretch gap-3 sm:gap-4 mx-auto p-2 sm:p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur"
               >
                 <input
                   type="email"
@@ -103,12 +103,12 @@ const Waitlist = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
-                  className="flex-1 px-5 py-4 sm:py-4.5 rounded-xl bg-white/5 border border-white/10 text-hero-foreground placeholder:text-hero-muted focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full flex-1 px-5 py-4 sm:py-4.5 rounded-xl bg-white/5 border border-white/10 text-hero-foreground placeholder:text-hero-muted focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all"
                 />
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="btn-primary px-7 sm:px-8 py-4 sm:py-4.5 whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="btn-primary w-full sm:w-auto px-7 sm:px-8 py-4 sm:py-4.5 whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {status === "loading" ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
