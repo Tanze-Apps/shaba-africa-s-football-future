@@ -42,13 +42,22 @@ const HowItWorks = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2 },
+      transition: { staggerChildren: 0.18, delayChildren: 0.05 },
     },
   };
 
   const stepVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6 },
+    },
+  };
+
+  const numberVariants = {
+    hidden: { scale: 0.9, opacity: 0 },
+    visible: { scale: 1, opacity: 1, transition: { duration: 0.4 } },
   };
 
   return (
@@ -65,7 +74,7 @@ const HowItWorks = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">
+          <span className="text-primary font-medium text-sm uppercase tracking-[0.2em]">
             How It Works
           </span>
           <h2 className="section-heading mt-4">
@@ -84,23 +93,32 @@ const HowItWorks = () => {
           className="relative"
         >
           {/* Connection Line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/20 to-transparent -translate-y-1/2" />
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0.8 }}
+            animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="hidden lg:block absolute top-10 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent origin-center"
+          />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, index) => (
               <motion.div
                 key={index}
                 variants={stepVariants}
+                whileHover={{ y: -6 }}
                 className="relative text-center group"
               >
                 {/* Step Number */}
                 <div className="relative inline-block mb-6">
-                  <div className="w-20 h-20 rounded-2xl bg-secondary flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                  <div className="w-20 h-20 rounded-2xl bg-secondary/70 border border-border/60 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-colors">
                     <step.icon className="w-9 h-9 text-primary" />
                   </div>
-                  <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">
+                  <motion.span
+                    variants={numberVariants}
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-sm"
+                  >
                     {step.number}
-                  </span>
+                  </motion.span>
                 </div>
 
                 <h3 className="text-xl font-semibold text-foreground mb-3">

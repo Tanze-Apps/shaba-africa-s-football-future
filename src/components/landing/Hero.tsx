@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import heroMockup from "../../assets/mockup2.png";
 
 const Hero = () => {
   return (
@@ -15,7 +16,8 @@ const Hero = () => {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="text-center lg:text-left max-w-4xl mx-auto lg:mx-0">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -34,7 +36,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-hero-foreground tracking-tight mb-6"
+            className="text-5xl md:text-6xl xl:text-7xl font-bold text-hero-foreground tracking-tight mb-6"
           >
             The Future of{" "}
             <span className="gradient-text">Grassroots Football</span>
@@ -45,7 +47,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl md:text-2xl text-hero-muted max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-xl md:text-2xl text-hero-muted max-w-2xl lg:mx-0 mb-10 leading-relaxed"
           >
             Connect, compete, and get discovered. The platform that brings
             structure, visibility, and opportunity to local football across
@@ -57,7 +59,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4"
           >
             <a href="#waitlist" className="btn-primary text-lg px-8 py-4">
               Join the Waitlist
@@ -74,7 +76,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-16 grid grid-cols-3 gap-8 max-w-xl mx-auto"
+            className="mt-16 grid grid-cols-3 gap-8 max-w-xl mx-auto lg:mx-0"
           >
             {[
               { value: "10+", label: "Teams Joining Aleardy" },
@@ -91,34 +93,27 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Abstract Football Visual */}
+        {/* Product Mockup */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 relative"
+          animate={{ opacity: 1, scale: 1, y: [0, -12, 0] }}
+          transition={{
+            opacity: { duration: 0.8, delay: 0.5 },
+            scale: { duration: 0.8, delay: 0.5 },
+            y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+          }}
+          className="relative"
         >
-          <div className="relative mx-auto w-full max-w-4xl aspect-video rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-b from-white/5 to-transparent">
-            {/* Placeholder for app preview/visual */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative">
-                {/* Abstract football pattern */}
-                <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border-2 border-primary/30 flex items-center justify-center animate-float">
-                  <div className="w-24 h-24 md:w-36 md:h-36 rounded-full border-2 border-primary/50 flex items-center justify-center">
-                    <div className="w-16 h-16 md:w-24 md:h-24 rounded-full bg-primary/20 flex items-center justify-center">
-                      <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-primary" />
-                    </div>
-                  </div>
-                </div>
-                {/* Orbiting dots */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 w-3 h-3 rounded-full bg-primary animate-pulse" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-4 w-3 h-3 rounded-full bg-accent animate-pulse delay-300" />
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-3 h-3 rounded-full bg-primary/70 animate-pulse delay-500" />
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-3 h-3 rounded-full bg-primary/70 animate-pulse delay-700" />
-              </div>
-            </div>
+          <div className="relative mx-auto w-full max-w-7xl aspect-video overflow-hidden">
+            <img
+              src={heroMockup}
+              alt="Shaba platform mockup"
+              className="absolute inset-0 h-full w-full object-contain"
+              loading="lazy"
+            />
           </div>
         </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Globe, Shield, Sparkles } from "lucide-react";
+import visionMockup from "../../assets/mockup1.png";
 
 const TrustVision = () => {
   const ref = useRef(null);
@@ -95,26 +96,13 @@ const TrustVision = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative aspect-square max-w-md mx-auto">
-              {/* Abstract Africa-inspired visual */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
-              
-              {/* Concentric circles representing connection */}
-              <div className="absolute inset-8 rounded-full border border-primary/10 animate-pulse" />
-              <div className="absolute inset-16 rounded-full border border-primary/20" />
-              <div className="absolute inset-24 rounded-full border border-primary/30" />
-              <div className="absolute inset-32 rounded-full bg-primary/5 flex items-center justify-center">
-                <div className="text-center">
-                  <Globe className="w-12 h-12 text-primary mx-auto mb-2" />
-                  <span className="text-sm font-medium text-foreground">Africa</span>
-                </div>
-              </div>
-
-              {/* Floating dots representing cities/teams */}
-              <div className="absolute top-1/4 left-1/4 w-3 h-3 rounded-full bg-primary animate-pulse" />
-              <div className="absolute top-1/3 right-1/4 w-2 h-2 rounded-full bg-accent animate-pulse delay-300" />
-              <div className="absolute bottom-1/3 left-1/3 w-2.5 h-2.5 rounded-full bg-primary/70 animate-pulse delay-500" />
-              <div className="absolute bottom-1/4 right-1/3 w-2 h-2 rounded-full bg-primary animate-pulse delay-700" />
+            <div className="relative w-full max-w-lg mx-auto aspect-square overflow-hidden">
+              <img
+                src={visionMockup}
+                alt="Shaba platform vision mockup"
+                className="absolute inset-0 h-full w-full object-contain"
+                loading="lazy"
+              />
             </div>
           </motion.div>
         </div>
