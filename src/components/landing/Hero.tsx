@@ -178,7 +178,7 @@ const Hero = () => {
               Join the Waitlist
               <ArrowRight size={20} />
             </a>
-            <a href="#how-it-works" className="hidden md:block btn-secondary text-lg px-8 py-4">
+            <a href="#how-it-works" className="hidden md:flex btn-secondary text-lg px-8 py-4">
               <Play size={20} />
               How It Works
             </a>
