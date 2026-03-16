@@ -88,7 +88,11 @@ const Hero = () => {
   }, [videoStage]);
 
   return (
-    <section className="hero-section min-h-screen flex items-center justify-center relative pt-24 pb-20 px-6">
+    <section 
+      className={`min-h-screen flex items-center justify-center relative pt-24 pb-20 px-6 transition-colors duration-700 ${
+        videoStage === "hidden" ? "bg-[#f7f7f7]" : "bg-black"
+      }`}
+    >
       {/* Background Video */}
       {videoStage !== "hidden" && (
         <div
@@ -113,33 +117,31 @@ const Hero = () => {
           />
         </div>
       )}
-      {/* Background Effects */}
-      <div className="hero-glow" />
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-primary/10 blur-3xl" />
-      </div>
 
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
+      {/* Background Effects (Only visible when video is hidden) */}
+      {videoStage === "hidden" && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[120px]" />
+        </div>
+      )}
 
       <motion.div
         className="max-w-7xl mx-auto relative z-10"
         initial={{ opacity: 0, y: 12 }}
         animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        <div className="text-center lg:text-left max-w-4xl mx-auto lg:mx-0">
+        <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex mt-5 items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 mb-8"
+            animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/5 bg-white shadow-sm mb-10"
           >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-primary text-sm font-medium">
+            <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
+            <span className="text-gray-600 text-sm font-medium">
               Launching Soon in Cameroon
             </span>
           </motion.div>
@@ -147,47 +149,68 @@ const Hero = () => {
           {/* Main Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-6xl xl:text-7xl font-bold text-hero-foreground tracking-tight mb-6"
+            animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 tracking-tight mb-8 leading-[1.1]"
           >
             The Future of{" "}
-            <span className="gradient-text">Grassroots Football</span>
+            <br className="hidden md:block" />
+            <span className="pill-highlight">Grassroots</span>{" "}
+            <span className="pill-highlight">Football</span>
+            <br className="hidden md:block" />
+             across Africa
           </motion.h1>
 
           {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl md:text-2xl text-hero-muted max-w-2xl lg:mx-0 mb-10 leading-relaxed"
+            animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-xl md:text-2xl text-gray-500 max-w-2xl mb-12 leading-relaxed"
           >
-            Connect, compete, and get discovered. The platform that brings
-            structure, visibility, and opportunity to local football across
-            Africa.
+            Connect, compete, and get discovered. The #1 platform bringing
+            structure, visibility, and opportunity to local football.
           </motion.p>
 
           {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4"
+            animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-5"
           >
-            <a href="#waitlist" className="btn-primary text-lg px-8 py-4">
+            <a href="#waitlist" className="btn-primary text-lg px-10 py-5 rounded-2xl bg-[#00D084] hover:bg-[#00b975] text-white font-bold shadow-xl shadow-green-500/20 transition-all">
               Join the Waitlist
               <ArrowRight size={20} />
             </a>
-            <a href="#how-it-works" className="hidden md:flex btn-secondary text-lg px-8 py-4">
-              <Play size={20} />
+            <a href="#how-it-works" className="btn-secondary text-lg px-10 py-5 rounded-2xl border-2 border-gray-200 text-gray-700 bg-white hover:bg-gray-50 font-bold transition-all">
               How It Works
             </a>
           </motion.div>
 
-          {/* Stats */}
+          {/* Product Mockup */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+            className="mt-20 relative w-full max-w-5xl mx-auto"
+          >
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white bg-white/50 backdrop-blur-sm">
+              <img
+                src={heroMockup}
+                alt="Shaba platform mockup"
+                className="w-full h-auto object-cover"
+                loading="lazy"
+              />
+            </div>
+            {/* Glossy overlay effect */}
+            <div className="absolute inset-0 rounded-3xl pointer-events-none bg-gradient-to-tr from-white/10 to-transparent" />
+          </motion.div>
+
+          {/* Stats Section moved below for better flow */}
           <div
             ref={statsRef}
-            className="mt-12 grid grid-cols-3 sm:grid-cols-3 gap-6 sm:gap-8 max-w-xl mx-auto lg:mx-0"
+            className="mt-24 grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-24 items-center justify-center"
           >
             {stats.map((stat, index) => (
               <StatCard
@@ -198,28 +221,6 @@ const Hero = () => {
               />
             ))}
           </div>
-        </div>
-
-        {/* Product Mockup */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1, y: [0, -12, 0] }}
-          transition={{
-            opacity: { duration: 0.8, delay: 0.5 },
-            scale: { duration: 0.8, delay: 0.5 },
-            y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
-          }}
-          className="relative"
-        >
-          <div className="relative mx-auto w-full max-w-7xl aspect-video overflow-hidden">
-            <img
-              src={heroMockup}
-              alt="Shaba platform mockup"
-              className="absolute inset-0 h-full w-full object-contain"
-              loading="lazy"
-            />
-          </div>
-        </motion.div>
         </div>
       </motion.div>
     </section>

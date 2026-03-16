@@ -43,7 +43,12 @@
 
     --radius: 0.75rem;
 
-    /* Custom tokens for Shaba.cm */
+    /* Custom tokens for Shaba.cm - SaaS Style */
+    --saas-bg: 0 0% 97%; /* #F7F7F7 */
+    --saas-primary: 160 100% 41%; /* #00D084 */
+    --saas-highlight-bg: 160 100% 41%;
+    --saas-highlight-shadow: 0 4px 0 0 hsla(160, 100%, 25%, 0.2);
+
     --hero-bg: 220 25% 8%;
     --hero-foreground: 0 0% 98%;
     --hero-muted: 220 15% 55%;
@@ -204,6 +209,26 @@
 
   .btn-secondary:hover {
     @apply bg-white/10 border-white/30;
+  }
+
+  .pill-highlight {
+    @apply inline-block px-4 py-1.5 rounded-2xl text-white font-bold transition-all duration-300;
+    background-color: hsl(var(--saas-primary));
+    box-shadow: 0 8px 16px -4px hsla(160, 100%, 30%, 0.3), 0 4px 0 0 hsla(160, 100%, 20%, 0.5);
+    margin: 0 0.1em;
+    transform: rotate(-1deg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pill-highlight:nth-child(even) {
+    transform: rotate(1deg);
+  }
+
+  .hero-section-saas {
+    @apply relative overflow-hidden transition-colors duration-700;
+    background-color: #f7f7f7;
   }
 }
 
