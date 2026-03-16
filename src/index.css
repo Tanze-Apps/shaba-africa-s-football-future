@@ -170,13 +170,18 @@
   }
 
   .feature-card {
-    @apply bg-card rounded-2xl p-8 transition-all duration-300;
-    box-shadow: var(--shadow-md);
+    @apply bg-white rounded-2xl p-8 transition-all duration-500 border border-black/[0.03];
+    box-shadow: 0 10px 30px -10px hsl(var(--foreground) / 0.05);
   }
 
   .feature-card:hover {
-    box-shadow: var(--shadow-xl);
+    @apply border-primary/20;
+    box-shadow: 0 20px 40px -15px hsl(var(--foreground) / 0.1);
     transform: translateY(-4px);
+  }
+
+  .section-badge {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full border border-black/[0.05] bg-white text-xs font-bold uppercase tracking-wider text-gray-500 mb-6;
   }
 
   .section-heading {

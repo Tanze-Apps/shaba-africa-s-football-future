@@ -41,31 +41,28 @@ const Waitlist = () => {
     <section
       id="waitlist"
       ref={ref}
-      className="hero-section py-24 md:py-32 px-6 relative"
+      className="py-24 md:py-32 px-6 bg-[#f7f7f7] relative overflow-hidden"
     >
-      {/* Background Effects */}
-      <div className="hero-glow" />
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-3xl" />
-      </div>
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/[0.03] blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-3xl mx-auto relative z-10 text-center">
+      <div className="max-w-4xl mx-auto relative z-10 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 mb-8">
+          <div className="section-badge mx-auto">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-primary text-sm font-medium">Early Access</span>
-          </span>
+            Early Access
+          </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-hero-foreground tracking-tight mb-6">
-            Be among the first to{" "}
-            <span className="gradient-text">shape the future</span>
+          <h2 className="text-4xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none mb-8">
+            Be among the first to <br />
+            <span className="pill-highlight">shape the future</span>
           </h2>
 
-          <p className="text-xl text-hero-muted max-w-xl mx-auto mb-10">
+          <p className="text-xl md:text-2xl text-gray-500 font-medium max-w-2xl mx-auto mb-12">
             Join the waitlist and get early access when we launch. Help us build
             the platform grassroots football deserves.
           </p>
@@ -84,21 +81,21 @@ const Waitlist = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="flex flex-col items-center gap-4"
+                className="flex flex-col items-center gap-4 bg-white p-12 rounded-[2rem] border border-black/[0.03] shadow-xl"
               >
-                <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-                  <Check className="w-8 h-8 text-primary" />
+                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <Check className="w-10 h-10 text-primary" />
                 </div>
-                <h3 className="text-2xl font-semibold text-hero-foreground">
+                <h3 className="text-3xl font-black text-gray-900 tracking-tight">
                   You're on the list!
                 </h3>
-                <p className="text-hero-muted">
+                <p className="text-gray-500 font-medium text-lg">
                   {feedback ??
                     "We'll notify you when Shaba.cm launches. Get ready to play."}
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="text-primary hover:text-primary/80 text-sm font-medium mt-4"
+                  className="text-primary hover:text-primary/70 font-bold mt-6 transition-colors"
                 >
                   Add another email
                 </button>
@@ -110,7 +107,7 @@ const Waitlist = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onSubmit={handleSubmit}
-                className="flex w-full max-w-xl flex-col sm:flex-row items-stretch gap-3 sm:gap-4 mx-auto p-2 sm:p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur"
+                className="flex w-full max-w-2xl flex-col sm:flex-row items-stretch gap-4 mx-auto p-4 rounded-[2rem] bg-white border border-black/[0.04] shadow-2xl shadow-black/5"
               >
                 <input
                   type="email"
@@ -118,19 +115,19 @@ const Waitlist = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
-                  className="w-full flex-1 px-5 py-4 sm:py-4.5 rounded-xl bg-white/5 border border-white/10 text-hero-foreground placeholder:text-hero-muted focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full flex-1 px-8 py-5 rounded-2xl bg-gray-50 border border-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:border-primary/20 transition-all font-medium"
                 />
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="btn-primary w-full sm:w-auto px-7 sm:px-8 py-4 sm:py-4.5 whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="bg-primary text-white font-black px-10 py-5 rounded-2xl whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
                 >
                   {status === "loading" ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Loader2 className="w-6 h-6 animate-spin" />
                   ) : (
                     <>
-                      Get Early Access
-                      <ArrowRight size={20} />
+                      Join Waitlist
+                      <ArrowRight size={20} className="stroke-[3px]" />
                     </>
                   )}
                 </button>
@@ -139,11 +136,11 @@ const Waitlist = () => {
           </AnimatePresence>
 
           {status === "error" && (
-            <p className="text-destructive text-sm mt-4">{feedback}</p>
+            <p className="text-destructive font-bold text-sm mt-6">{feedback}</p>
           )}
 
-          <p className="text-hero-muted/60 text-sm mt-6">
-            No spam, ever. We respect your inbox.
+          <p className="text-gray-400 font-medium text-sm mt-8">
+            No spam, ever. We respect your inbox privacy.
           </p>
         </motion.div>
       </div>

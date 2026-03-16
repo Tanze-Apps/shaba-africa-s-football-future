@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { User, Users, Eye, GraduationCap } from "lucide-react";
+import { User, Users, Eye, GraduationCap, Check } from "lucide-react";
 
 const WhoItsFor = () => {
   const ref = useRef(null);
@@ -71,26 +71,30 @@ const WhoItsFor = () => {
     <section
       id="who-its-for"
       ref={ref}
-      className="py-24 md:py-32 px-6 bg-secondary/30"
+      className="py-24 md:py-32 px-6 bg-[#f7f7f7] relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white to-transparent opacity-50 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">
-            Who It's For
-          </span>
-          <h2 className="section-heading mt-4">
-            Built for <span className="gradient-text">everyone</span> in the
-            football ecosystem
+          <div className="section-badge">
+            <Users className="w-3 h-3 text-primary" />
+            For the Community
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
+            Built for <span className="pill-highlight">everyone</span> <br className="hidden md:block" />
+            in the ecosystem
           </h2>
-          <p className="section-subheading mx-auto mt-4">
-            Whether you're playing, managing, or scouting — Shaba has you
-            covered.
+          <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mt-6">
+            Whether you're playing, managing, or scouting — Shaba connects
+            every piece of the puzzle.
           </p>
         </motion.div>
 
@@ -99,35 +103,38 @@ const WhoItsFor = () => {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid md:grid-cols-2 gap-6"
+          className="grid md:grid-cols-2 gap-8"
         >
           {personas.map((persona, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
-              className="feature-card flex flex-col md:flex-row gap-6"
+              whileHover={{ y: -8 }}
+              className="feature-card flex flex-col sm:flex-row gap-8 items-start sm:items-center group p-10"
             >
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <persona.icon className="w-8 h-8 text-primary" />
+              <div className="w-20 h-20 rounded-3xl bg-primary/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/10 transition-all duration-500 shadow-sm shadow-primary/5">
+                <persona.icon className="w-10 h-10 text-primary" />
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-semibold text-foreground mb-2">
-                  {persona.title}
-                </h3>
-                <p className="text-muted-foreground mb-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <h3 className="text-2xl font-black text-gray-900 tracking-tight">
+                    {persona.title}
+                  </h3>
+                </div>
+                <p className="text-gray-500 font-medium mb-6 leading-relaxed">
                   {persona.description}
                 </p>
-                <ul className="space-y-2">
+                <div className="flex flex-wrap gap-x-6 gap-y-3">
                   {persona.benefits.map((benefit, benefitIndex) => (
-                    <li
+                    <div
                       key={benefitIndex}
-                      className="flex items-center gap-2 text-sm text-foreground"
+                      className="flex items-center gap-2 text-sm font-bold text-gray-700"
                     >
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      <Check className="w-4 h-4 text-primary" />
                       {benefit}
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </motion.div>
           ))}

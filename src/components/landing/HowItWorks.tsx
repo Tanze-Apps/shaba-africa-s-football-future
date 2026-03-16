@@ -64,24 +64,29 @@ const HowItWorks = () => {
     <section
       id="how-it-works"
       ref={ref}
-      className="py-24 md:py-32 px-6 bg-background"
+      className="py-24 md:py-32 px-6 bg-white relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-primary/[0.02] blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-24"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-[0.2em]">
-            How It Works
-          </span>
-          <h2 className="section-heading mt-4">
-            From signup to <span className="gradient-text">stardom</span>
+          <div className="section-badge">
+            <MapPinned className="w-3 h-3 text-primary" />
+            The Journey
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
+            From signup <br className="hidden md:block" />
+            to <span className="pill-highlight">stardom</span>
           </h2>
-          <p className="section-subheading mx-auto mt-4">
-            Four simple steps to transform your football journey.
+          <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mt-6">
+            Four simple steps to transform your grassroots football journey.
           </p>
         </motion.div>
 
@@ -92,39 +97,40 @@ const HowItWorks = () => {
           animate={isInView ? "visible" : "hidden"}
           className="relative"
         >
-          {/* Connection Line */}
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0.8 }}
-            animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="hidden lg:block absolute top-10 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent origin-center"
-          />
+          {/* Connection Line - More modern pulse effect */}
+          <div className="hidden lg:block absolute top-[60px] left-[10%] right-[10%] h-[2px] bg-gray-100 overflow-hidden">
+            <motion.div 
+              initial={{ x: "-100%" }}
+              animate={isInView ? { x: "100%" } : {}}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              className="w-1/2 h-full bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+            />
+          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             {steps.map((step, index) => (
               <motion.div
                 key={index}
                 variants={stepVariants}
-                whileHover={{ y: -6 }}
                 className="relative text-center group"
               >
-                {/* Step Number */}
-                <div className="relative inline-block mb-6">
-                  <div className="w-20 h-20 rounded-2xl bg-secondary/70 border border-border/60 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-colors">
-                    <step.icon className="w-9 h-9 text-primary" />
+                {/* Step Icon Container */}
+                <div className="relative inline-block mb-10">
+                  <div className="w-28 h-28 rounded-[2.5rem] bg-gray-50 border border-gray-100 flex items-center justify-center group-hover:bg-primary/5 group-hover:border-primary/20 group-hover:rounded-3xl transition-all duration-500 shadow-sm relative z-10">
+                    <step.icon className="w-12 h-12 text-primary" />
                   </div>
                   <motion.span
                     variants={numberVariants}
-                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-sm"
+                    className="absolute -top-3 -right-3 w-10 h-10 rounded-2xl bg-white text-primary text-base font-black flex items-center justify-center shadow-lg border border-gray-100 z-20 group-hover:scale-110 transition-transform"
                   >
                     {step.number}
                   </motion.span>
                 </div>
 
-                <h3 className="text-xl font-semibold text-foreground mb-3">
+                <h3 className="text-2xl font-black text-gray-900 mb-4 tracking-tight">
                   {step.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-gray-500 font-medium leading-relaxed px-4">
                   {step.description}
                 </p>
               </motion.div>
