@@ -188,23 +188,21 @@ const Hero = () => {
             </a>
           </motion.div>
 
-          {/* Product Mockup */}
+          {/* Product Mockup - Simplified for clean blend */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            className="mt-20 relative w-full max-w-5xl mx-auto"
+            className="mt-16 relative w-full max-w-4xl mx-auto"
           >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white bg-white/50 backdrop-blur-sm">
+            <div className="relative flex justify-center">
               <img
                 src={heroMockup}
                 alt="Shaba platform mockup"
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-contain drop-shadow-sm"
                 loading="lazy"
               />
             </div>
-            {/* Glossy overlay effect */}
-            <div className="absolute inset-0 rounded-3xl pointer-events-none bg-gradient-to-tr from-white/10 to-transparent" />
           </motion.div>
 
           {/* Stats Section moved below for better flow */}
