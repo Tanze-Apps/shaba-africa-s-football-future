@@ -19,7 +19,7 @@ const Header = () => {
       transition={{ duration: 0.5 }}
       className="fixed top-0 left-0 right-0 z-50 px-6 py-4"
     >
-      <nav className="max-w-7xl mx-auto flex items-center justify-between rounded-2xl px-6 py-3 border border-white/10 bg-background/70 backdrop-blur-xl shadow-md">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between rounded-full px-6 py-3 border border-white/10 bg-background/70 backdrop-blur-xl shadow-md">
         <a href="#" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-sm">S</span>
