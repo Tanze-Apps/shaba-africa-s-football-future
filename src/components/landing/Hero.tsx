@@ -11,6 +11,44 @@ type Stat = {
   displayOverride?: string;
 };
 
+const FloatingDecoration = ({
+  className,
+  delay = 0,
+  duration = 20
+}: {
+  className: string;
+  delay?: number;
+  duration?: number
+}) => {
+  return (
+    <motion.div
+      initial={{ y: 0, x: 0, rotate: 0 }}
+      animate={{
+        y: [0, -40, 0],
+        x: [0, 20, 0],
+        rotate: [0, 360],
+      }}
+      transition={{
+        duration,
+        repeat: Infinity,
+        ease: "linear",
+        delay
+      }}
+      className={`absolute pointer-events-none opacity-60 blur-[0.5px] ${className}`}
+    >
+      <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.5" />
+        <path d="M50 2L30 35L50 68L70 35L50 2Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="0.5" />
+        <path d="M30 35L2 50L30 65" stroke="currentColor" strokeWidth="0.5" />
+        <path d="M70 35L98 50L70 65" stroke="currentColor" strokeWidth="0.5" />
+        <path d="M50 68L50 98" stroke="currentColor" strokeWidth="0.5" />
+        <path d="M30 65L50 98L70 65" stroke="currentColor" strokeWidth="0.5" />
+        <path d="M2 50L50 2L98 50L50 98L2 50Z" stroke="currentColor" strokeWidth="0.5" />
+      </svg>
+    </motion.div>
+  );
+};
+
 const StatCard = ({
   stat,
   start,
@@ -123,6 +161,33 @@ const Hero = () => {
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px]" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[120px]" />
+
+          {/* Floating Decorations */}
+          <FloatingDecoration
+            className="top-[15%] left-[5%] w-24 h-24 text-primary md:w-32 md:h-32"
+            delay={0}
+            duration={25}
+          />
+          <FloatingDecoration
+            className="top-[25%] right-[5%] w-40 h-40 text-gray-300 md:w-56 md:h-56"
+            delay={2}
+            duration={35}
+          />
+          <FloatingDecoration
+            className="bottom-[30%] left-[10%] w-48 h-48 text-primary/40 md:w-72 md:h-72"
+            delay={5}
+            duration={45}
+          />
+          <FloatingDecoration
+            className="bottom-[10%] right-[15%] w-32 h-32 text-gray-200 md:w-48 md:h-48"
+            delay={8}
+            duration={30}
+          />
+          <FloatingDecoration
+            className="top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] text-primary/5 hidden md:block"
+            delay={0}
+            duration={60}
+          />
         </div>
       )}
 
