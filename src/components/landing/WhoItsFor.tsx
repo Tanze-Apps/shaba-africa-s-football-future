@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { User, Users, Eye, GraduationCap, Check } from "lucide-react";
+import { Users, Check } from "lucide-react";
 
 const WhoItsFor = () => {
   const ref = useRef(null);
@@ -9,7 +9,7 @@ const WhoItsFor = () => {
 
   const personas = [
     {
-      icon: User,
+      icon: "/icons/who-its-for/players.png",
       title: "Players",
       description:
         "Build your profile, track your stats, and get discovered. Show the world what you can do on the pitch.",
@@ -20,7 +20,7 @@ const WhoItsFor = () => {
       ],
     },
     {
-      icon: Users,
+      icon: "/icons/who-its-for/captains.png",
       title: "Team Captains",
       description:
         "Manage your squad, find opponents, and climb the rankings. Bring structure to your team's journey.",
@@ -31,7 +31,7 @@ const WhoItsFor = () => {
       ],
     },
     {
-      icon: Eye,
+      icon: "/icons/who-its-for/scouts.png",
       title: "Scouts",
       description:
         "Discover raw talent in local communities. Access verified stats and match footage from grassroots leagues.",
@@ -42,7 +42,7 @@ const WhoItsFor = () => {
       ],
     },
     {
-      icon: GraduationCap,
+      icon: "/icons/who-its-for/academies.png",
       title: "Academies",
       description:
         "Find promising players and organize trials. Build your pipeline with structured scouting data.",
@@ -112,8 +112,8 @@ const WhoItsFor = () => {
               whileHover={{ y: -8 }}
               className="feature-card flex flex-col sm:flex-row gap-6 md:gap-8 items-start sm:items-center group p-6 md:p-10"
             >
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-primary/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/10 transition-all duration-500 shadow-sm shadow-primary/5">
-                <persona.icon className="w-8 h-8 md:w-10 md:h-10 text-primary" />
+              <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-500 relative z-10">
+                <img src={persona.icon} alt={persona.title} className="w-12 h-12 md:w-16 md:h-16 object-contain" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
