@@ -1,15 +1,58 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { MapPin, Swords, Trophy, User, Search, PlayCircle } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { Search, PlayCircle, Star } from "lucide-react";
+
+const PLAYERS = [
+  { name: "Le Noir", position: "Midfielder", rating: 88, image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=200&auto=format&fit=crop " },
+  { name: "Sniper 99", position: "Striker", rating: 92, image: "https://images.unsplash.com/photo-1530268729831-4b0b9e170218?q=80&w=200&auto=format&fit=crop" },
+  { name: "Lovet Tanze", position: "Defender", rating: 85, image: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=100&auto=format&fit=crop" },
+];
+
+const SEARCH_TERMS = ["Lovet Tanze", "Le Noir...", "Sniper 99", "Top Strikers in Cameroon..."];
 
 const Features = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  // Typing Animation State
+  const [currentSearchIndex, setCurrentSearchIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+
+    const currentTerm = SEARCH_TERMS[currentSearchIndex];
+
+    if (isDeleting) {
+      if (displayText === "") {
+        setIsDeleting(false);
+        setCurrentSearchIndex((prev) => (prev + 1) % SEARCH_TERMS.length);
+        timeout = setTimeout(() => { }, 800); // Pause before typing next
+      } else {
+        timeout = setTimeout(() => {
+          setDisplayText(currentTerm.substring(0, displayText.length - 1));
+        }, 40); // Deletion speed
+      }
+    } else {
+      if (displayText === currentTerm) {
+        timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2500); // Pause after typing
+      } else {
+        timeout = setTimeout(() => {
+          setDisplayText(currentTerm.substring(0, displayText.length + 1));
+        }, 120); // Typing speed
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, currentSearchIndex]);
+
   const features = [
     {
-      icon: MapPin,
+      icon: "/icons/features/discovery/icons8-discovery-100.png",
       title: "Discovery",
       subtitle: "Location-based Finder",
       description: "Find teams in your neighborhood or city. Connect with local football communities instantly.",
@@ -17,7 +60,7 @@ const Features = () => {
       color: "bg-emerald-500",
     },
     {
-      icon: Swords,
+      icon: "/icons/features/challenges/icons8-challenge-80.png",
       title: "Challenges",
       subtitle: "Instant Matchmaking",
       description: "Challenge teams and coordinate fixtures without the WhatsApp chaos.",
@@ -25,7 +68,7 @@ const Features = () => {
       color: "bg-blue-500",
     },
     {
-      icon: Trophy,
+      icon: "/icons/features/ranking/icons8-ranking-96.png",
       title: "Rankings",
       subtitle: "Verified Standings",
       description: "Earn your spot. Fair rankings based on verified match results.",
@@ -33,7 +76,7 @@ const Features = () => {
       color: "bg-amber-500",
     },
     {
-      icon: User,
+      icon: "/icons/features/portfolio/icons8-portfolio-100.png",
       title: "Profiles",
       subtitle: "Digital Portfolio",
       description: "Build your profile. Track goals, assists, and appearances across all matches.",
@@ -95,8 +138,8 @@ const Features = () => {
               <div className={`absolute top-0 right-0 w-32 h-32 ${feature.color} opacity-0 group-hover:opacity-[0.07] blur-3xl transition-opacity -mr-10 -mt-10`} />
 
               <div className="relative z-10 h-full flex flex-col">
-                <div className={`w-14 h-14 rounded-2xl ${feature.color} text-white flex items-center justify-center mb-10 shadow-lg shadow-black/5 group-hover:scale-110 transition-transform`}>
-                  <feature.icon size={28} strokeWidth={2.5} />
+                <div className={`w-14 h-14  flex items-center justify-center mb-10  group-hover:scale-110 transition-transform`}>
+                  <img src={feature.icon} alt={feature.title} className="w-15 h-15 object-contain" />
                 </div>
 
                 <div className="mt-auto">
@@ -127,29 +170,73 @@ const Features = () => {
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="flex -space-x-3">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-200" />
+                    {[
+                      "https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=100&auto=format&fit=crop",
+                      "https://images.unsplash.com/photo-1579208030886-b937da0925dc?q=80&w=100&auto=format&fit=crop",
+                      "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=200&auto=format&fit=crop"
+                    ].map((src, i) => (
+                      <img key={i} src={src} alt="Scout" className="w-10 h-10 rounded-full border-2 border-white object-cover bg-gray-200" />
                     ))}
                   </div>
-                  <span className="text-sm font-bold text-primary">Joining 50+ scout networks</span>
+                  <span className="text-sm font-bold text-primary">Join 50+ scout networks</span>
                 </div>
               </div>
-              <div className="relative aspect-video rounded-2xl bg-gray-200 overflow-hidden shadow-2xl">
-                {/* Placeholder for a scout UI element or visual */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Search className="text-primary/40 w-24 h-24" strokeWidth={1} />
-                </div>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="bg-white/90 backdrop-blur p-4 rounded-xl shadow-lg border border-white/20">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-primary/10" />
-                      <div>
-                        <div className="h-3 w-24 bg-gray-200 rounded mb-1" />
-                        <div className="h-2 w-16 bg-gray-100 rounded" />
-                      </div>
+              <div className="relative aspect-video rounded-2xl bg-gray-50 overflow-hidden shadow-inner border border-gray-100">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent flex flex-col items-center justify-center p-6 gap-6">
+
+                  {/* Automated Search Bar with Typing Effect */}
+                  <motion.div
+                    className="w-full max-w-[280px] h-12 bg-white rounded-full shadow-sm flex items-center px-4 gap-3 border border-gray-200 z-20"
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                  >
+                    <Search size={18} className="text-gray-400 flex-shrink-0" />
+                    <div className="flex-1 font-medium text-gray-700 text-sm overflow-hidden flex items-center">
+                      {displayText}
+                      <span className="w-0.5 h-4 ml-0.5 bg-primary animate-pulse" />
                     </div>
+                  </motion.div>
+
+                  {/* Scrolling Feed of Player Profiles */}
+                  <div className="relative w-full max-w-[280px] h-[120px] perspective-1000">
+                    <AnimatePresence>
+                      {PLAYERS.map((player, i) => (
+                        <motion.div
+                          key={player.name}
+                          className="absolute inset-0 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-gray-100 p-4 flex items-center gap-4 will-change-transform"
+                          initial={{ y: 80, opacity: 0, scale: 0.8, rotateX: 20 }}
+                          animate={{
+                            y: [80, 0, -80],
+                            opacity: [0, 1, 0],
+                            scale: [0.8, 1, 0.8],
+                            rotateX: [20, 0, -20],
+                            zIndex: [0, 10, 0]
+                          }}
+                          transition={{
+                            duration: 8,
+                            repeat: Infinity,
+                            delay: i * (8 / PLAYERS.length),
+                            ease: "easeInOut"
+                          }}
+                        >
+                          <img src={player.image} alt={player.name} className="w-14 h-14 rounded-full border-2 border-white shadow-sm object-cover" />
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-bold text-gray-900 truncate">{player.name}</h4>
+                            <p className="text-xs text-gray-500 truncate mb-1">{player.position}</p>
+                            <div className="flex items-center gap-1">
+                              <Star size={12} className="text-amber-400 fill-amber-400" />
+                              <span className="text-xs font-black text-gray-700">{player.rating} RTG</span>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
                   </div>
+
+                  {/* Decoration Blurs */}
+                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 blur-3xl rounded-full" />
+                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full" />
                 </div>
               </div>
             </div>
@@ -161,3 +248,4 @@ const Features = () => {
 };
 
 export default Features;
+
