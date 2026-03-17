@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { UserPlus, MapPinned, Swords, TrendingUp } from "lucide-react";
+import { MapPinned } from "lucide-react";
 
 const HowItWorks = () => {
   const ref = useRef(null);
@@ -10,28 +10,28 @@ const HowItWorks = () => {
   const steps = [
     {
       number: "01",
-      icon: UserPlus,
+      icon: "/icons/how-it-works/create-profile.png",
       title: "Create Your Profile",
       description:
         "Sign up as a player or register your team. Add your location, photos, and playing style.",
     },
     {
       number: "02",
-      icon: MapPinned,
+      icon: "/icons/how-it-works/discover-teams-nearby/icons8-map-96.png",
       title: "Discover Teams Nearby",
       description:
         "Browse teams in your area. Filter by location, skill level, and availability.",
     },
     {
       number: "03",
-      icon: Swords,
+      icon: "/icons/how-it-works/challenge-and-play/icons8-soccer-100.png",
       title: "Challenge & Play",
       description:
         "Send match challenges, agree on terms, and play. Both teams verify the result.",
     },
     {
       number: "04",
-      icon: TrendingUp,
+      icon: "/icons/how-it-works/rank.png",
       title: "Build Your Ranking",
       description:
         "Win matches, climb the leaderboard, and get noticed by scouts and academies.",
@@ -116,8 +116,8 @@ const HowItWorks = () => {
               >
                 {/* Step Icon Container */}
                 <div className="relative inline-block mb-6 md:mb-10">
-                  <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl md:rounded-[2.5rem] bg-gray-50 border border-gray-100 flex items-center justify-center group-hover:bg-primary/5 group-hover:border-primary/20 group-hover:rounded-3xl transition-all duration-500 shadow-sm relative z-10">
-                    <step.icon className="w-8 h-8 md:w-12 md:h-12 text-primary" />
+                  <div className="w-20 h-20 md:w-28 md:h-28 flex items-center justify-center transition-all duration-500 relative z-10 group-hover:scale-110">
+                    <img src={step.icon} alt={step.title} className="w-12 h-12 md:w-16 md:h-16 object-contain" />
                   </div>
                   <motion.span
                     variants={numberVariants}
