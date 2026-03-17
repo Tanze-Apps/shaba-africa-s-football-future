@@ -50,7 +50,7 @@ const ProblemSolution = () => {
             <Zap className="w-3 h-3 text-primary" />
             The Evolution
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-gray-900 tracking-tight leading-[1.1]">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-[1.1]">
             From <span className="text-gray-400 italic">Fragmented</span> <br />
             to <span className="pill-highlight">Unified</span>
           </h2>
@@ -77,9 +77,9 @@ const ProblemSolution = () => {
                   <span className="text-red-600 text-[10px] font-black uppercase tracking-widest">The Friction</span>
                </div>
                
-               <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-8 leading-tight">
+               <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-6 leading-tight">
                   Status Quo: <br />
-                  <span className="text-gray-400">Inefficient & Disconnected</span>
+                  <span className="text-gray-400 font-bold">Inefficient & Disconnected</span>
                </h3>
                
                <div className="space-y-4">
@@ -126,7 +126,7 @@ const ProblemSolution = () => {
                   <span className="text-primary text-[10px] font-black uppercase tracking-widest">The Flow</span>
                </div>
                
-               <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-8 leading-tight">
+               <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-6 leading-tight">
                   Shaba Vision: <br />
                   <span className="text-primary">Optimized & Scalable</span>
                </h3>

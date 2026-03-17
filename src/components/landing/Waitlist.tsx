@@ -57,12 +57,12 @@ const Waitlist = () => {
             Early Access
           </div>
 
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none mb-6 md:mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter leading-none mb-6 md:mb-8">
             Be among the first to <br />
             <span className="pill-highlight">shape the future</span>
           </h2>
 
-          <p className="text-lg md:text-2xl text-gray-500 font-medium max-w-2xl mx-auto mb-10 md:mb-12 px-2 md:px-0">
+          <p className="text-base md:text-xl text-gray-500 font-medium max-w-2xl mx-auto mb-8 md:mb-10 px-2 md:px-0">
             Join the waitlist and get early access when we launch. Help us build
             the platform grassroots football deserves.
           </p>
@@ -120,7 +120,7 @@ const Waitlist = () => {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="bg-primary text-white font-black px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 text-base md:text-lg"
+                  className="bg-primary text-white font-black px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 text-sm md:text-base"
                 >
                   {status === "loading" ? (
                     <Loader2 className="w-6 h-6 animate-spin" />

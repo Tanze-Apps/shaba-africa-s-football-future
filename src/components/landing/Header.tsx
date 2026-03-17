@@ -113,7 +113,7 @@ const Header = () => {
                   transition={{ delay: i * 0.1 }}
                   key={link.href}
                   href={link.href}
-                  className="text-3xl font-black text-gray-900 hover:text-primary transition-all flex items-center justify-between group"
+                  className="text-2xl font-black text-gray-900 hover:text-primary transition-all flex items-center justify-between group"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}

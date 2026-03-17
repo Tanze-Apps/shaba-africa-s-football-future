@@ -216,7 +216,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 tracking-tight mb-6 md:mb-8 leading-[1.1] px-2 md:px-0"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 tracking-tight mb-6 md:mb-8 leading-[1.1] px-2 md:px-0"
           >
             The Future of{" "}
             <br className="hidden md:block" />
@@ -238,9 +238,9 @@ const Hero = () => {
                 transition: { staggerChildren: 0.15, delayChildren: 0.3 }
               }
             }}
-            className="text-lg md:text-2xl text-gray-500 max-w-3xl mb-8 md:mb-12 leading-relaxed px-4 md:px-0"
+            className="text-base md:text-xl text-gray-500 max-w-3xl mb-8 md:mb-12 leading-relaxed px-4 md:px-0"
           >
-            <div className="flex flex-wrap justify-center gap-x-3 mb-4">
+            <div className="flex flex-wrap justify-center gap-x-2 md:gap-x-3 mb-3 md:mb-4">
               {["Connect.", "Compete.", "Get Discovered."].map((text, i) => (
                 <motion.span
                   key={i}
@@ -248,7 +248,7 @@ const Hero = () => {
                     hidden: { opacity: 0, y: 10, filter: "blur(4px)" },
                     visible: { opacity: 1, y: 0, filter: "blur(0px)" }
                   }}
-                  className="font-black text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600"
+                  className="font-black text-gray-900"
                 >
                   {text}
                 </motion.span>

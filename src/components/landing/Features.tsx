@@ -72,7 +72,7 @@ const Features = () => {
             <PlayCircle className="w-3 h-3 text-primary" />
             Product Suite
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-gray-900 tracking-tight leading-[1.1]">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-[1.1]">
             Powerful tools for <br />
             the <span className="pill-highlight">Next Gen</span> of play
           </h2>
@@ -101,8 +101,8 @@ const Features = () => {
 
                 <div className="mt-auto">
                   <span className="text-gray-400 text-xs font-black uppercase tracking-widest mb-2 block">{feature.subtitle}</span>
-                  <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-4">{feature.title}</h3>
-                  <p className="text-gray-500 font-medium leading-relaxed max-w-sm">
+                  <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-3">{feature.title}</h3>
+                  <p className="text-gray-500 font-medium leading-relaxed max-w-sm text-sm md:text-base">
                     {feature.description}
                   </p>
                 </div>
@@ -121,8 +121,8 @@ const Features = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                   <span className="text-primary text-[10px] font-black uppercase tracking-widest">Global Network</span>
                 </div>
-                <h3 className="text-3xl md:text-5xl font-black text-gray-900 mb-6">Discovery Platform</h3>
-                <p className="text-gray-600 text-lg font-medium leading-relaxed max-w-md mb-8">
+                <h3 className="text-2xl md:text-4xl font-black text-gray-900 mb-6">Discovery Platform</h3>
+                <p className="text-gray-600 text-base md:text-lg font-medium leading-relaxed max-w-md mb-8">
                   Get noticed by scouts and academies looking for the next generation of football talent. Your CV, verified and global.
                 </p>
                 <div className="flex items-center gap-4">
