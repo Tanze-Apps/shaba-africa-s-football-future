@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useSpring, useTransform, useMotionValue } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroVideo from "../../assets/hero-video.mp4";
@@ -11,41 +11,105 @@ type Stat = {
   displayOverride?: string;
 };
 
-const FloatingDecoration = ({
+const InteractiveBall = ({
   className,
-  delay = 0,
-  duration = 20
+  mouseX,
+  mouseY,
+  baseX,
+  baseY,
+  size = 120,
 }: {
-  className: string;
-  delay?: number;
-  duration?: number
+  className?: string;
+  mouseX: any;
+  mouseY: any;
+  baseX: number;
+  baseY: number;
+  size?: number;
 }) => {
+  const ballRef = useRef<HTMLImageElement>(null);
+  
+  // Create physics springs for smooth movement
+  const springX = useSpring(baseX, { stiffness: 40, damping: 15, mass: 1 });
+  const springY = useSpring(baseY, { stiffness: 40, damping: 15, mass: 1 });
+  
+  // Rotation transforms based on movement
+  const rotate = useTransform(springX, [0, window.innerWidth], [0, 720]);
+
+  useEffect(() => {
+    const handleMouseMove = () => {
+      if (!ballRef.current) return;
+
+      const rect = ballRef.current.getBoundingClientRect();
+      const ballCenterX = rect.left + rect.width / 2;
+      const ballCenterY = rect.top + rect.height / 2;
+      
+      const currentMouseX = mouseX.get();
+      const currentMouseY = mouseY.get();
+
+      // Calculate distance from cursor to ball
+      const dx = ballCenterX - currentMouseX;
+      const dy = ballCenterY - currentMouseY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      // Avoidance threshold and force calculation
+      const threshold = 250; 
+      
+      if (distance < threshold && distance > 0) {
+        // Apply repulsive force inversely proportional to distance
+        const force = (threshold - distance) / threshold;
+        const pushX = (dx / distance) * force * 150;
+        const pushY = (dy / distance) * force * 150;
+        
+        // Push the ball away
+        springX.set(baseX + pushX);
+        springY.set(baseY + pushY);
+      } else {
+        // Return to base position
+        springX.set(baseX);
+        springY.set(baseY);
+      }
+    };
+
+    // React to continuous mouse changes
+    const unsubscribeX = mouseX.onChange(handleMouseMove);
+    const unsubscribeY = mouseY.onChange(handleMouseMove);
+
+    return () => {
+      unsubscribeX();
+      unsubscribeY();
+    };
+  }, [mouseX, mouseY, baseX, baseY, springX, springY]);
+
+  // Floating animation offset to combine with physics
+  const floatY = useSpring(0, { stiffness: 20, damping: 10 });
+  
+  useEffect(() => {
+    // Add a gentle idle floating effect
+    const interval = setInterval(() => {
+      floatY.set(Math.sin(Date.now() / 1000) * 15);
+    }, 50);
+    return () => clearInterval(interval);
+  }, [floatY]);
+
+  // Combine base position, physics, and float
+  const renderX = useTransform(() => springX.get() - size/2);
+  const renderY = useTransform(() => springY.get() + floatY.get() - size/2);
+
   return (
-    <motion.div
-      initial={{ y: 0, x: 0, rotate: 0 }}
-      animate={{
-        y: [0, -40, 0],
-        x: [0, 20, 0],
-        rotate: [0, 360],
+    <motion.img
+      ref={ballRef}
+      src="/icons/soccer.png"
+      className={`absolute opacity-90 drop-shadow-2xl z-0 ${className}`}
+      style={{
+        left: renderX,
+        top: renderY,
+        width: size,
+        height: size,
+        rotate,
+        cursor: 'default'
       }}
-      transition={{
-        duration,
-        repeat: Infinity,
-        ease: "linear",
-        delay
-      }}
-      className={`absolute pointer-events-none opacity-60 blur-[0.5px] ${className}`}
-    >
-      <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.5" />
-        <path d="M50 2L30 35L50 68L70 35L50 2Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="0.5" />
-        <path d="M30 35L2 50L30 65" stroke="currentColor" strokeWidth="0.5" />
-        <path d="M70 35L98 50L70 65" stroke="currentColor" strokeWidth="0.5" />
-        <path d="M50 68L50 98" stroke="currentColor" strokeWidth="0.5" />
-        <path d="M30 65L50 98L70 65" stroke="currentColor" strokeWidth="0.5" />
-        <path d="M2 50L50 2L98 50L50 98L2 50Z" stroke="currentColor" strokeWidth="0.5" />
-      </svg>
-    </motion.div>
+      alt="Interactive Soccer Ball"
+    />
   );
 };
 
@@ -112,6 +176,40 @@ const Hero = () => {
   const [videoReady, setVideoReady] = useState(false);
   const statsRef = useRef<HTMLDivElement | null>(null);
   const statsInView = useInView(statsRef, { once: true, margin: "-20%" });
+  
+  // Track mouse coordinates for interactive elements
+  const mouseX = useMotionValue(-1000);
+  const mouseY = useMotionValue(-1000);
+
+  // Initialize ball positions based on screen size (handled in effect to ensure window exists)
+  const [ballPositions, setBallPositions] = useState({ leftX: 200, leftY: 200, rightX: 800, rightY: 400 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    const handleResize = () => {
+      setBallPositions({
+        leftX: window.innerWidth * 0.15,
+        leftY: window.innerHeight * 0.3,
+        rightX: window.innerWidth * 0.85,
+        rightY: window.innerHeight * 0.6,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("resize", handleResize);
+    
+    // Initial position
+    handleResize();
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [mouseX, mouseY]);
 
   const stats: Stat[] = [
     { value: 10, suffix: "+", label: "Teams Joining Already" },
@@ -158,35 +256,35 @@ const Hero = () => {
 
       {/* Background Effects (Only visible when video is hidden) */}
       {videoStage === "hidden" && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px]" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[120px]" />
 
-          {/* Floating Decorations */}
-          <FloatingDecoration
-            className="top-[15%] left-[5%] w-24 h-24 text-primary md:w-32 md:h-32"
-            delay={0}
-            duration={25}
-          />
-          <FloatingDecoration
-            className="top-[25%] right-[5%] w-40 h-40 text-gray-300 md:w-56 md:h-56"
-            delay={2}
-            duration={35}
-          />
-          <FloatingDecoration
-            className="bottom-[30%] left-[10%] w-48 h-48 text-primary/40 md:w-72 md:h-72"
-            delay={5}
-            duration={45}
-          />
-          <FloatingDecoration
-            className="bottom-[10%] right-[15%] w-32 h-32 text-gray-200 md:w-48 md:h-48"
-            delay={8}
-            duration={30}
-          />
-          <FloatingDecoration
-            className="top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] text-primary/5 hidden md:block"
-            delay={0}
-            duration={60}
+          {/* Interactive Soccer Balls */}
+          <div className="hidden md:block">
+            <InteractiveBall 
+              mouseX={mouseX} 
+              mouseY={mouseY} 
+              baseX={ballPositions.leftX} 
+              baseY={ballPositions.leftY} 
+              size={140} 
+            />
+            <InteractiveBall 
+              mouseX={mouseX} 
+              mouseY={mouseY} 
+              baseX={ballPositions.rightX} 
+              baseY={ballPositions.rightY} 
+              size={180} 
+            />
+          </div>
+          
+          {/* Static decoration for mobile */}
+           <motion.img
+            src="/icons/soccer.png"
+            className="md:hidden absolute right-[-10%] top-[20%] w-32 h-32 opacity-40 blur-[1px]"
+            animate={{ rotate: 360, y: [0, -20, 0] }}
+            transition={{ rotate: { duration: 30, repeat: Infinity, ease: "linear" }, y: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
+            alt="Soccer Ball Decoration"
           />
         </div>
       )}
