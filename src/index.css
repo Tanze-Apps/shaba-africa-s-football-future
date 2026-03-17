@@ -44,19 +44,21 @@
     --radius: 0.75rem;
 
     /* Custom tokens for Shaba.cm - SaaS Style */
-    --saas-bg: 0 0% 97%; /* #F7F7F7 */
-    --saas-primary: 160 100% 41%; /* #00D084 */
+    --saas-bg: 0 0% 97%;
+    /* #F7F7F7 */
+    --saas-primary: 160 100% 41%;
+    /* #00D084 */
     --saas-highlight-bg: 160 100% 41%;
     --saas-highlight-shadow: 0 4px 0 0 hsla(160, 100%, 25%, 0.2);
 
     --hero-bg: 220 25% 8%;
     --hero-foreground: 0 0% 98%;
     --hero-muted: 220 15% 55%;
-    
+
     --gradient-primary: linear-gradient(135deg, hsl(152 70% 40%), hsl(152 80% 50%));
     --gradient-hero: linear-gradient(180deg, hsl(220 25% 8%) 0%, hsl(220 25% 12%) 100%);
     --gradient-glow: radial-gradient(ellipse at center, hsl(152 70% 40% / 0.15) 0%, transparent 70%);
-    
+
     --shadow-sm: 0 1px 2px 0 hsl(220 20% 10% / 0.05);
     --shadow-md: 0 4px 6px -1px hsl(220 20% 10% / 0.1), 0 2px 4px -2px hsl(220 20% 10% / 0.1);
     --shadow-lg: 0 10px 15px -3px hsl(220 20% 10% / 0.1), 0 4px 6px -4px hsl(220 20% 10% / 0.1);
@@ -122,9 +124,7 @@
     scroll-behavior: smooth;
   }
 
-  section {
-    @apply py-16 md:py-24 lg:py-32;
-  }
+
 
   body {
     @apply bg-background text-foreground font-sans antialiased;

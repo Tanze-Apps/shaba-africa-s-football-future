@@ -24,14 +24,14 @@ const StatCard = ({
 
   useEffect(() => {
     if (!start || stat.displayOverride) return;
-    const duration = 1200;
+    const duration = 2000;
     let animationFrame = 0;
     let startTime: number | null = null;
 
     const animate = (time: number) => {
       if (startTime === null) startTime = time;
       const progress = Math.min((time - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
+      const eased = 1 - Math.pow(1 - progress, 4);
       const nextValue = Math.round(stat.value * eased);
       setDisplay(nextValue);
       if (progress < 1) {
@@ -51,16 +51,18 @@ const StatCard = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={start ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5 }}
-      className="text-center sm:text-left"
+      transition={{ duration: 0.6, delay: delay / 1000 }}
+      className="flex flex-col items-center sm:items-start group"
     >
-      <div className="text-3xl md:text-4xl font-bold text-hero-foreground">
-        {stat.displayOverride ?? display}
-        {stat.suffix}
+      <div className="text-3xl md:text-5xl font-black text-gray-900 tracking-tighter mb-1 transition-transform group-hover:scale-105 duration-300">
+        <span className="text-primary">{stat.displayOverride ?? display}</span>
+        {stat.suffix && <span className="text-gray-300 ml-1">{stat.suffix}</span>}
       </div>
-      <div className="text-hero-muted text-sm mt-1">{stat.label}</div>
+      <div className="text-gray-400 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] leading-none">
+        {stat.label}
+      </div>
     </motion.div>
   );
 };
@@ -88,21 +90,19 @@ const Hero = () => {
   }, [videoStage]);
 
   return (
-    <section 
-      className={`min-h-screen flex items-center justify-center relative pt-28 pb-16 md:pt-36 md:pb-24 px-6 transition-colors duration-700 ${
-        videoStage === "hidden" ? "bg-[#f7f7f7]" : "bg-black"
-      }`}
+    <section
+      className={`min-h-screen flex items-center justify-center relative pt-20 pb-16 md:pb-24 px-6 transition-colors duration-700 ${videoStage === "hidden" ? "bg-[#f7f7f7]" : "bg-black"
+        }`}
     >
       {/* Background Video */}
       {videoStage !== "hidden" && (
         <div
-          className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${
-            videoStage === "ended"
-              ? "opacity-0"
-              : videoReady
-                ? "opacity-100"
-                : "opacity-0"
-          }`}
+          className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ${videoStage === "ended"
+            ? "opacity-0"
+            : videoReady
+              ? "opacity-100"
+              : "opacity-0"
+            }`}
         >
           <video
             className="h-full w-full object-cover scale-110"
@@ -127,21 +127,21 @@ const Hero = () => {
       )}
 
       <motion.div
-        className="max-w-7xl mx-auto relative z-10"
+        className="max-w-7xl mx-auto relative z-10 pt-15"
         initial={{ opacity: 0, y: 12 }}
         animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
+        <div className="flex flex-col  items-center text-center max-w-5xl mx-auto">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-black/5 bg-white shadow-sm mb-6 md:mb-10"
+            className="inline-flex items-center gap-2 mt-10 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-black/5 bg-white shadow-sm mb-6 md:mb-10"
           >
             <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
-            <span className="text-gray-600 text-xs md:text-sm font-medium">
+            <span className="text-gray-600  text-xs md:text-sm font-medium">
               Launching Soon in Cameroon
             </span>
           </motion.div>
@@ -158,19 +158,48 @@ const Hero = () => {
             <span className="pill-highlight">Grassroots</span>{" "}
             <span className="pill-highlight">Football</span>
             <br className="hidden md:block" />
-             across Africa
+            across Africa
           </motion.h1>
 
           {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg md:text-2xl text-gray-500 max-w-2xl mb-8 md:mb-12 leading-relaxed px-4 md:px-0"
+          {/* Subheadline */}
+          <motion.div
+            initial="hidden"
+            animate={videoStage === "hidden" ? "visible" : "hidden"}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.15, delayChildren: 0.3 }
+              }
+            }}
+            className="text-lg md:text-2xl text-gray-500 max-w-3xl mb-8 md:mb-12 leading-relaxed px-4 md:px-0"
           >
-            Connect, compete, and get discovered. The #1 platform bringing
-            structure, visibility, and opportunity to local football.
-          </motion.p>
+            <div className="flex flex-wrap justify-center gap-x-3 mb-4">
+              {["Connect.", "Compete.", "Get Discovered."].map((text, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 10, filter: "blur(4px)" },
+                    visible: { opacity: 1, y: 0, filter: "blur(0px)" }
+                  }}
+                  className="font-black text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600"
+                >
+                  {text}
+                </motion.span>
+              ))}
+            </div>
+            <motion.p
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className="text-gray-500"
+            >
+              The <span className="pill-highlight">#1</span> platform built to bring
+              professional structure and global visibility to every local talent.
+            </motion.p>
+          </motion.div>
 
           {/* CTAs */}
           <motion.div
@@ -189,7 +218,7 @@ const Hero = () => {
           </motion.div>
 
           {/* Product Mockup - Simplified for clean blend */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
@@ -203,22 +232,34 @@ const Hero = () => {
                 loading="lazy"
               />
             </div>
-          </motion.div>
+          </motion.div> */}
 
-          {/* Stats Section moved below for better flow */}
-          <div
+          {/* Stats Section with Glass Container */}
+          <motion.div
             ref={statsRef}
-            className="mt-16 md:mt-24 grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-24 items-center justify-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={statsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-16 md:mt-32 w-full max-w-5xl mx-auto"
           >
-            {stats.map((stat, index) => (
-              <StatCard
-                key={stat.label}
-                stat={stat}
-                start={statsInView}
-                delay={index * 120}
-              />
-            ))}
-          </div>
+            <div className="relative p-6 md:p-12 rounded-[2rem] md:rounded-[3.5rem] bg-white border border-gray-100 shadow-2xl shadow-black/[0.02] overflow-hidden group">
+              {/* Accent Background */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 transition-transform group-hover:scale-110 duration-700" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gray-50 rounded-full blur-3xl -ml-24 -mb-24" />
+
+              <div className="relative z-10 grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-20 items-center justify-between">
+                {stats.map((stat, index) => (
+                  <div key={stat.label} className="flex justify-center">
+                    <StatCard
+                      stat={stat}
+                      start={statsInView}
+                      delay={index * 150}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </div>
       </motion.div>
     </section>
