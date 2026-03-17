@@ -240,13 +240,42 @@ const Hero = () => {
               : "opacity-0"
             }`}
         >
+          {/* Placeholder Image for Slow Connections */}
+          <div 
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat scale-110 filter blur-sm transition-opacity duration-700 ${videoReady ? "opacity-0" : "opacity-100"}`}
+            style={{ 
+              backgroundImage: "url('/icons/how-it-works/discover-teams-nearby/icons8-map-96.png')", // Fallback pattern or placeholder
+              backgroundColor: "#111" // Dark fallback
+            }}
+          >
+            {/* Spinning Soccer Ball Loader */}
+            {!videoReady && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
+                <motion.img 
+                  src="/icons/soccer.png" 
+                  alt="Loading..."
+                  className="w-16 h-16 opacity-80"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                />
+                <motion.div
+                  animate={{ opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-white/80 font-bold text-sm md:text-base mt-6 tracking-[0.2em] uppercase"
+                >
+                  Loading Experience
+                </motion.div>
+              </div>
+            )}
+          </div>
           <video
-            className="h-full w-full object-cover scale-110"
+            className="h-full w-full object-cover scale-110 relative z-10"
             src={heroVideo}
             autoPlay
             muted
             playsInline
-            preload="metadata"
+            loop={false}
+            preload="auto"
             onLoadedData={() => setVideoReady(true)}
             onEnded={() => setVideoStage("ended")}
             onError={() => setVideoStage("hidden")}
