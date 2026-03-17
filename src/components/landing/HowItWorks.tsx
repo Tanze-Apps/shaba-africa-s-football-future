@@ -64,7 +64,7 @@ const HowItWorks = () => {
     <section
       id="how-it-works"
       ref={ref}
-      className="py-24 md:py-32 px-6 bg-white relative overflow-hidden"
+      className="py-20 md:py-32 px-6 bg-white relative overflow-hidden"
     >
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-primary/[0.02] blur-[120px] rounded-full pointer-events-none" />
@@ -75,17 +75,17 @@ const HowItWorks = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-24"
+          className="text-center mb-12 md:mb-24"
         >
           <div className="section-badge">
             <MapPinned className="w-3 h-3 text-primary" />
             The Journey
           </div>
-          <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
             From signup <br className="hidden md:block" />
             to <span className="pill-highlight">stardom</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mt-6">
+          <p className="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mt-6">
             Four simple steps to transform your grassroots football journey.
           </p>
         </motion.div>
@@ -115,22 +115,22 @@ const HowItWorks = () => {
                 className="relative text-center group"
               >
                 {/* Step Icon Container */}
-                <div className="relative inline-block mb-10">
-                  <div className="w-28 h-28 rounded-[2.5rem] bg-gray-50 border border-gray-100 flex items-center justify-center group-hover:bg-primary/5 group-hover:border-primary/20 group-hover:rounded-3xl transition-all duration-500 shadow-sm relative z-10">
-                    <step.icon className="w-12 h-12 text-primary" />
+                <div className="relative inline-block mb-6 md:mb-10">
+                  <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl md:rounded-[2.5rem] bg-gray-50 border border-gray-100 flex items-center justify-center group-hover:bg-primary/5 group-hover:border-primary/20 group-hover:rounded-3xl transition-all duration-500 shadow-sm relative z-10">
+                    <step.icon className="w-8 h-8 md:w-12 md:h-12 text-primary" />
                   </div>
                   <motion.span
                     variants={numberVariants}
-                    className="absolute -top-3 -right-3 w-10 h-10 rounded-2xl bg-white text-primary text-base font-black flex items-center justify-center shadow-lg border border-gray-100 z-20 group-hover:scale-110 transition-transform"
+                    className="absolute -top-2 -right-2 md:-top-3 md:-right-3 w-8 h-8 md:w-10 md:h-10 rounded-xl md:rounded-2xl bg-white text-primary text-sm md:text-base font-black flex items-center justify-center shadow-lg border border-gray-100 z-20 group-hover:scale-110 transition-transform"
                   >
                     {step.number}
                   </motion.span>
                 </div>
 
-                <h3 className="text-2xl font-black text-gray-900 mb-4 tracking-tight">
+                <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-3 md:mb-4 tracking-tight">
                   {step.title}
                 </h3>
-                <p className="text-gray-500 font-medium leading-relaxed px-4">
+                <p className="text-gray-500 text-sm md:text-base font-medium leading-relaxed px-4">
                   {step.description}
                 </p>
               </motion.div>

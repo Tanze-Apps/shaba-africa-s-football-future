@@ -122,6 +122,10 @@
     scroll-behavior: smooth;
   }
 
+  section {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Bricolage Grotesque', 'Poppins', system-ui, -apple-system, sans-serif;
@@ -175,9 +179,8 @@
   }
 
   .feature-card:hover {
-    @apply border-primary/20;
+    @apply border-primary/20 md:-translate-y-1;
     box-shadow: 0 20px 40px -15px hsl(var(--foreground) / 0.1);
-    transform: translateY(-4px);
   }
 
   .section-badge {
@@ -185,7 +188,7 @@
   }
 
   .section-heading {
-    @apply text-4xl md:text-5xl font-bold tracking-tight;
+    @apply text-3xl md:text-5xl font-bold tracking-tight;
   }
 
   .section-subheading {
@@ -217,10 +220,10 @@
   }
 
   .pill-highlight {
-    @apply inline-block px-4 py-1.5 rounded-2xl text-white font-bold transition-all duration-300;
+    @apply inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-xl md:rounded-2xl text-white font-bold transition-all duration-300;
     background-color: hsl(var(--saas-primary));
-    box-shadow: 0 8px 16px -4px hsla(160, 100%, 30%, 0.3), 0 4px 0 0 hsla(160, 100%, 20%, 0.5);
-    margin: 0 0.1em;
+    box-shadow: 0 4px 8px -2px hsla(160, 100%, 30%, 0.3), 0 3px 0 0 hsla(160, 100%, 20%, 0.5);
+    margin: 0 0.05em;
     transform: rotate(-1deg);
     display: inline-flex;
     align-items: center;

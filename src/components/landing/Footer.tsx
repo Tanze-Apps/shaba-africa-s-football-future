@@ -20,7 +20,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer ref={ref} className="bg-white border-t border-black/[0.04] py-24 px-6 relative overflow-hidden">
+    <footer ref={ref} className="bg-white border-t border-black/[0.04] py-20 md:py-24 px-6 relative overflow-hidden">
       <motion.div
         className="max-w-7xl mx-auto relative z-10"
         initial={{ opacity: 0, y: 20 }}
@@ -72,7 +72,7 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-black/[0.04] to-transparent my-16" />
+        <div className="h-px bg-gradient-to-r from-transparent via-black/[0.04] to-transparent my-12 md:my-16" />
 
         {/* Bottom Row */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm font-bold tracking-tight">

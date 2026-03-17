@@ -27,7 +27,7 @@ const TrustVision = () => {
   ];
 
   return (
-    <section ref={ref} className="py-24 md:py-32 px-6 bg-white relative overflow-hidden">
+    <section ref={ref} className="py-20 md:py-32 px-6 bg-white relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-primary/[0.03] blur-[100px] rounded-full pointer-events-none" />
 
@@ -43,16 +43,16 @@ const TrustVision = () => {
               <Sparkles className="w-3 h-3 text-primary" />
               Our Vision
             </div>
-            <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight mb-8">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight mb-6 md:mb-8">
               Building the digital <br className="hidden md:block" />
               infrastructure for <span className="pill-highlight">African</span> football
             </h2>
-            <p className="text-xl text-gray-500 leading-relaxed mb-8 font-medium">
+            <p className="text-lg md:text-xl text-gray-500 leading-relaxed mb-6 md:mb-8 font-medium">
               We believe every talented player deserves to be seen. Every team
               deserves fair competition. Every community deserves the tools to
               organize and grow.
             </p>
-            <p className="text-gray-400 font-medium leading-relaxed mb-12">
+            <p className="text-gray-400 text-sm md:text-base font-medium leading-relaxed mb-10 md:mb-12">
               Shaba.cm is more than a platform — it's a movement to professionalize
               grassroots football across the continent. We're
               creating the pathways that connect local talent to global
@@ -69,12 +69,12 @@ const TrustVision = () => {
                   transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                   className="flex flex-col gap-4"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <value.icon className="w-6 h-6 text-primary" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center flex-shrink-0 shadow-sm">
+                    <value.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-black text-gray-900 tracking-tight mb-1">{value.title}</h4>
-                    <p className="text-gray-400 text-sm font-medium leading-snug">{value.description}</p>
+                    <h4 className="text-base md:text-lg font-black text-gray-900 tracking-tight mb-0.5 md:mb-1">{value.title}</h4>
+                    <p className="text-gray-400 text-[13px] md:text-sm font-medium leading-snug">{value.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -93,7 +93,7 @@ const TrustVision = () => {
                <div className="absolute -inset-4 border border-primary/10 rounded-full animate-[spin_20s_linear_infinite] pointer-events-none" />
                <div className="absolute -inset-12 border border-primary/5 rounded-full animate-[spin_30s_linear_infinite_reverse] pointer-events-none" />
               
-              <div className="relative h-full w-full bg-gradient-to-tr from-primary/5 to-transparent rounded-full flex items-center justify-center p-12">
+              <div className="relative h-full w-full bg-gradient-to-tr from-primary/5 to-transparent rounded-full flex items-center justify-center p-8 md:p-12">
                 <img
                   src={visionMockup}
                   alt="Shaba platform vision mockup"

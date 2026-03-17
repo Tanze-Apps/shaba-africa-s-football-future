@@ -17,9 +17,9 @@ const Header = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4"
+      className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-3 md:py-4"
     >
-      <nav className="max-w-7xl mx-auto flex items-center justify-between rounded-full px-6 py-3 border border-white/10 bg-background/70 backdrop-blur-xl shadow-md">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between rounded-full px-5 py-2.5 md:px-6 md:py-3 border border-black/5 md:border-white/10 bg-white/70 md:bg-background/70 backdrop-blur-xl shadow-md">
         <a href="#" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-sm">S</span>
@@ -48,11 +48,11 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-foreground bg-background/70 border border-white/10 rounded-lg p-2 backdrop-blur"
+          className="md:hidden text-foreground bg-white/50 border border-black/5 rounded-full p-2 backdrop-blur shadow-sm"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
 
@@ -63,7 +63,7 @@ const Header = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="md:hidden mt-2 rounded-2xl p-5 border border-white/10 bg-background/90 backdrop-blur-xl shadow-lg"
+            className="md:hidden mt-2 rounded-[2rem] p-6 border border-black/5 bg-white/95 backdrop-blur-2xl shadow-2xl"
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (

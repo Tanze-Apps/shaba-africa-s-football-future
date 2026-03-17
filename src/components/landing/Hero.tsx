@@ -89,7 +89,7 @@ const Hero = () => {
 
   return (
     <section 
-      className={`min-h-screen flex items-center justify-center relative pt-24 pb-20 px-6 transition-colors duration-700 ${
+      className={`min-h-screen flex items-center justify-center relative pt-28 pb-16 md:pt-36 md:pb-24 px-6 transition-colors duration-700 ${
         videoStage === "hidden" ? "bg-[#f7f7f7]" : "bg-black"
       }`}
     >
@@ -138,10 +138,10 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/5 bg-white shadow-sm mb-10"
+            className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-black/5 bg-white shadow-sm mb-6 md:mb-10"
           >
             <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
-            <span className="text-gray-600 text-sm font-medium">
+            <span className="text-gray-600 text-xs md:text-sm font-medium">
               Launching Soon in Cameroon
             </span>
           </motion.div>
@@ -151,7 +151,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 tracking-tight mb-8 leading-[1.1]"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 tracking-tight mb-6 md:mb-8 leading-[1.1] px-2 md:px-0"
           >
             The Future of{" "}
             <br className="hidden md:block" />
@@ -166,7 +166,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-xl md:text-2xl text-gray-500 max-w-2xl mb-12 leading-relaxed"
+            className="text-lg md:text-2xl text-gray-500 max-w-2xl mb-8 md:mb-12 leading-relaxed px-4 md:px-0"
           >
             Connect, compete, and get discovered. The #1 platform bringing
             structure, visibility, and opportunity to local football.
@@ -177,13 +177,13 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-5"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-5 w-full sm:w-auto px-6 sm:px-0"
           >
-            <a href="#waitlist" className="btn-primary text-lg px-10 py-5 rounded-2xl bg-[#00D084] hover:bg-[#00b975] text-white font-bold shadow-xl shadow-green-500/20 transition-all">
+            <a href="#waitlist" className="btn-primary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl bg-[#00D084] hover:bg-[#00b975] text-white font-bold shadow-xl shadow-green-500/20 transition-all flex items-center justify-center gap-2">
               Join the Waitlist
-              <ArrowRight size={20} />
+              <ArrowRight size={20} className="stroke-[3px]" />
             </a>
-            <a href="#how-it-works" className="btn-secondary text-lg px-10 py-5 rounded-2xl border-2 border-gray-200 text-gray-700 bg-white hover:bg-gray-50 font-bold transition-all">
+            <a href="#how-it-works" className="btn-secondary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl border-2 border-gray-200 text-gray-700 bg-white hover:bg-gray-50 font-bold transition-all flex items-center justify-center">
               How It Works
             </a>
           </motion.div>
@@ -193,7 +193,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            className="mt-16 relative w-full max-w-4xl mx-auto"
+            className="mt-12 md:mt-16 relative w-full max-w-4xl mx-auto px-4 sm:px-0"
           >
             <div className="relative flex justify-center">
               <img
@@ -208,7 +208,7 @@ const Hero = () => {
           {/* Stats Section moved below for better flow */}
           <div
             ref={statsRef}
-            className="mt-24 grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-24 items-center justify-center"
+            className="mt-16 md:mt-24 grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-24 items-center justify-center"
           >
             {stats.map((stat, index) => (
               <StatCard

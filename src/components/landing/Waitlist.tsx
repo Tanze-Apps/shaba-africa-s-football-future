@@ -41,7 +41,7 @@ const Waitlist = () => {
     <section
       id="waitlist"
       ref={ref}
-      className="py-24 md:py-32 px-6 bg-[#f7f7f7] relative overflow-hidden"
+      className="py-20 md:py-32 px-6 bg-[#f7f7f7] relative overflow-hidden"
     >
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/[0.03] blur-[120px] rounded-full pointer-events-none" />
@@ -57,12 +57,12 @@ const Waitlist = () => {
             Early Access
           </div>
 
-          <h2 className="text-4xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none mb-8">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none mb-6 md:mb-8">
             Be among the first to <br />
             <span className="pill-highlight">shape the future</span>
           </h2>
 
-          <p className="text-xl md:text-2xl text-gray-500 font-medium max-w-2xl mx-auto mb-12">
+          <p className="text-lg md:text-2xl text-gray-500 font-medium max-w-2xl mx-auto mb-10 md:mb-12 px-2 md:px-0">
             Join the waitlist and get early access when we launch. Help us build
             the platform grassroots football deserves.
           </p>
@@ -107,7 +107,7 @@ const Waitlist = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onSubmit={handleSubmit}
-                className="flex w-full max-w-2xl flex-col sm:flex-row items-stretch gap-4 mx-auto p-4 rounded-[2rem] bg-white border border-black/[0.04] shadow-2xl shadow-black/5"
+                className="flex w-full max-w-2xl flex-col sm:flex-row items-stretch gap-4 mx-auto p-2 sm:p-4 rounded-2xl sm:rounded-[2rem] bg-white border border-black/[0.04] shadow-2xl shadow-black/5"
               >
                 <input
                   type="email"
@@ -115,12 +115,12 @@ const Waitlist = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
-                  className="w-full flex-1 px-8 py-5 rounded-2xl bg-gray-50 border border-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:border-primary/20 transition-all font-medium"
+                  className="w-full flex-1 px-6 md:px-8 py-4 md:py-5 rounded-xl md:rounded-2xl bg-gray-50 border border-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none focus:bg-white focus:border-primary/20 transition-all font-medium text-base md:text-lg"
                 />
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="bg-primary text-white font-black px-10 py-5 rounded-2xl whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+                  className="bg-primary text-white font-black px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 text-base md:text-lg"
                 >
                   {status === "loading" ? (
                     <Loader2 className="w-6 h-6 animate-spin" />

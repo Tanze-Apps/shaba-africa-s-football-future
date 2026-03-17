@@ -35,7 +35,7 @@ const ProblemSolution = () => {
   };
 
   return (
-    <section ref={ref} className="py-24 md:py-32 px-6 bg-white relative overflow-hidden">
+    <section ref={ref} className="py-20 md:py-32 px-6 bg-white relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
       
@@ -45,13 +45,13 @@ const ProblemSolution = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-20"
+          className="text-center mb-12 md:mb-20"
         >
           <div className="section-badge">
             <AlertCircle className="w-3 h-3 text-primary" />
             The Challenge
           </div>
-          <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
             Grassroots football <br className="hidden md:block" />
             deserves <span className="pill-highlight">better</span>
           </h2>
@@ -78,7 +78,7 @@ const ProblemSolution = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="flex items-center gap-4 p-5 rounded-2xl bg-gray-50/50 border border-gray-100 hover:border-destructive/20 transition-colors group"
+                className="flex items-center gap-4 p-4 md:p-5 rounded-2xl bg-gray-50/50 border border-gray-100 hover:border-destructive/20 transition-colors group"
               >
                 <div className="w-10 h-10 rounded-lg bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                   <problem.icon className="w-5 h-5 text-gray-400 group-hover:text-destructive transition-colors" />
@@ -108,7 +108,7 @@ const ProblemSolution = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="flex items-center gap-4 p-5 rounded-2xl bg-primary/[0.02] border border-primary/10 hover:border-primary/30 transition-colors group"
+                className="flex items-center gap-4 p-4 md:p-5 rounded-2xl bg-primary/[0.02] border border-primary/10 hover:border-primary/30 transition-colors group"
               >
                 <div className="w-10 h-10 rounded-lg bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                   <solution.icon className="w-5 h-5 text-primary/40 group-hover:text-primary transition-colors" />
