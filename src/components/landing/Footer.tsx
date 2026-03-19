@@ -31,10 +31,11 @@ const Footer = () => {
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start gap-6">
             <a href="#" className="group flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center group-hover:rotate-12 transition-transform shadow-lg shadow-primary/20">
-                <span className="text-white font-black text-xl">S</span>
-              </div>
-              <span className="text-gray-900 font-black text-2xl tracking-tighter">Shabas</span>
+              <img
+                src="/logo/shaba-logo.png"
+                alt="Shaba Logo"
+                className="h-16 w-auto object-contain transition-transform group-hover:scale-110"
+              />
             </a>
             <p className="text-gray-500 font-medium text-center md:text-left max-w-sm leading-relaxed">
               Building the digital infrastructure for grassroots football across Africa. Connecting talent to opportunity.

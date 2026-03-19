@@ -31,17 +31,16 @@ const Header = () => {
     >
       <nav
         className={`max-w-7xl mx-auto flex items-center justify-between rounded-full px-5 py-2.5 md:px-10 md:py-4 transition-all duration-500 border ${isScrolled
-            ? "border-black/5 bg-white/80 backdrop-blur-2xl shadow-2xl shadow-black/5 ring-1 ring-black/5"
-            : "border-transparent bg-transparent"
+          ? "border-black/5 bg-white/80 backdrop-blur-2xl shadow-2xl shadow-black/5 ring-1 ring-black/5"
+          : "border-transparent bg-transparent"
           }`}
       >
         <a href="#" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center transition-all duration-300 group-hover:rotate-[10deg] group-hover:scale-110 shadow-lg shadow-primary/20">
-            <Zap className="text-primary-foreground fill-current" size={20} />
-          </div>
-          <span className="font-black text-2xl tracking-tighter text-gray-900 group-hover:text-primary transition-colors duration-300">
-            Shabas
-          </span>
+          <img
+            src="/logo/shaba-logo.png"
+            alt="Shaba Logo"
+            className="h-16 w-auto object-contain transition-all duration-300 group-hover:scale-110"
+          />
         </a>
 
         {/* Desktop Navigation */}
@@ -67,8 +66,8 @@ const Header = () => {
             transition={{ delay: 0.5 }}
             href="#waitlist"
             className={`px-8 py-3 rounded-full font-black text-sm transition-all duration-300 flex items-center gap-2 group ${isScrolled
-                ? "bg-primary text-white shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1"
-                : "bg-gray-900 text-white hover:bg-primary hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
+              ? "bg-primary text-white shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1"
+              : "bg-gray-900 text-white hover:bg-primary hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
               }`}
           >
             Join Waitlist
@@ -79,8 +78,8 @@ const Header = () => {
         {/* Mobile Menu Button */}
         <button
           className={`md:hidden rounded-full p-3 transition-all duration-300 shadow-sm ${isScrolled
-              ? "bg-primary/5 text-primary"
-              : "bg-white text-gray-900 border border-gray-100"
+            ? "bg-primary/5 text-primary"
+            : "bg-white text-gray-900 border border-gray-100"
             }`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
