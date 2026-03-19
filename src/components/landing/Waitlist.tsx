@@ -91,7 +91,7 @@ const Waitlist = () => {
                 </h3>
                 <p className="text-gray-500 font-medium text-lg">
                   {feedback ??
-                    "We'll notify you when Shaba.cm launches. Get ready to play."}
+                    "We'll notify you when Shabas launches. Get ready to play."}
                 </p>
                 <button
                   onClick={() => setStatus("idle")}

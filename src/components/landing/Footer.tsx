@@ -34,7 +34,7 @@ const Footer = () => {
               <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center group-hover:rotate-12 transition-transform shadow-lg shadow-primary/20">
                 <span className="text-white font-black text-xl">S</span>
               </div>
-              <span className="text-gray-900 font-black text-2xl tracking-tighter">Shaba.cm</span>
+              <span className="text-gray-900 font-black text-2xl tracking-tighter">Shabas</span>
             </a>
             <p className="text-gray-500 font-medium text-center md:text-left max-w-sm leading-relaxed">
               Building the digital infrastructure for grassroots football across Africa. Connecting talent to opportunity.
@@ -43,7 +43,7 @@ const Footer = () => {
 
           {/* Social Links */}
           <div className="flex flex-col items-center md:items-end gap-6">
-             <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
               {socialLinks.map((social, index) => (
                 <motion.a
                   key={index}
@@ -77,13 +77,13 @@ const Footer = () => {
         {/* Bottom Row */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm font-bold tracking-tight">
           <p className="text-gray-400 flex items-center gap-2">
-            © {currentYear} Shaba.cm. Crafted for the future of 
-            <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-md">African Football</span>
+            © {currentYear} Shabas. Crafted for the future of
+            <span className="pill-highlight">African Football</span>
           </p>
-          <div className="flex items-center gap-2 text-gray-400">
+          {/* <div className="flex items-center gap-2 text-gray-400">
             <Globe className="w-4 h-4" />
             <span>Built with passion in Cameroon</span>
-          </div>
+          </div> */}
         </div>
       </motion.div>
     </footer>

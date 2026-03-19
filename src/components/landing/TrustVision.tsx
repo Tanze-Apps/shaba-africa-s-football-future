@@ -53,7 +53,7 @@ const TrustVision = () => {
               organize and grow.
             </p>
             <p className="text-gray-400 text-sm md:text-base font-medium leading-relaxed mb-10 md:mb-12">
-              Shaba.cm is more than a platform — it's a movement to professionalize
+              Shabas is more than a platform — it's a movement to professionalize
               grassroots football across the continent. We're
               creating the pathways that connect local talent to global
               opportunities using data and technology.
@@ -89,10 +89,10 @@ const TrustVision = () => {
             className="relative"
           >
             <div className="relative w-full max-w-lg mx-auto aspect-square">
-               {/* Decorative Circles */}
-               <div className="absolute -inset-4 border border-primary/10 rounded-full animate-[spin_20s_linear_infinite] pointer-events-none" />
-               <div className="absolute -inset-12 border border-primary/5 rounded-full animate-[spin_30s_linear_infinite_reverse] pointer-events-none" />
-              
+              {/* Decorative Circles */}
+              <div className="absolute -inset-4 border border-primary/10 rounded-full animate-[spin_20s_linear_infinite] pointer-events-none" />
+              <div className="absolute -inset-12 border border-primary/5 rounded-full animate-[spin_30s_linear_infinite_reverse] pointer-events-none" />
+
               <div className="relative h-full w-full bg-gradient-to-tr from-primary/5 to-transparent rounded-full flex items-center justify-center p-8 md:p-12">
                 <img
                   src={visionMockup}
