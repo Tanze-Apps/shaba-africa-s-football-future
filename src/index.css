@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,65..100,200..800&family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Shaba.cm Design System - Premium SaaS Aesthetic */
+/* Shabas Design System - Premium SaaS Aesthetic */
 
 @layer base {
   :root {
@@ -43,7 +43,7 @@
 
     --radius: 0.75rem;
 
-    /* Custom tokens for Shaba.cm - SaaS Style */
+    /* Custom tokens for Shabas - SaaS Style */
     --saas-bg: 0 0% 97%;
     /* #F7F7F7 */
     --saas-primary: 160 100% 41%;
@@ -129,6 +129,8 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Bricolage Grotesque', 'Poppins', system-ui, -apple-system, sans-serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "wdth" 100;
   }
 }
 
