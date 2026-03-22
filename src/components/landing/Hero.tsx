@@ -227,7 +227,7 @@ const Hero = () => {
 
   return (
     <section
-      className={`min-h-screen flex items-center justify-center relative pt-20 pb-16 md:pb-24 px-6 transition-colors duration-700 ${videoStage === "hidden" ? "bg-[#f7f7f7]" : "bg-black"
+      className={`min-h-screen flex items-center justify-center relative pt-20 pb-16 md:pb-24 px-6 transition-colors duration-700 ${videoStage === "hidden" ? "bg-background" : "bg-black"
         }`}
     >
       {/* Background Video */}
@@ -332,7 +332,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="inline-flex items-center gap-2 mt-10 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-black/5 bg-white shadow-sm mb-6 md:mb-10"
           >
-            <span className="w-2 h-2 rounded-full bg-[#00D084] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-gray-600  text-xs md:text-sm font-medium">
               Launching Soon in Cameroon
             </span>
@@ -400,7 +400,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-5 w-full sm:w-auto px-6 sm:px-0"
           >
-            <a href="#waitlist" className="btn-primary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl bg-[#00D084] hover:bg-[#00b975] text-white font-bold shadow-xl shadow-green-500/20 transition-all flex items-center justify-center gap-2">
+            <a href="#waitlist" className="btn-primary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl bg-primary hover:opacity-90 text-white font-bold shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-2">
               Join the Waitlist
               <ArrowRight size={20} className="stroke-[3px]" />
             </a>

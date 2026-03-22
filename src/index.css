@@ -9,17 +9,17 @@
 @layer base {
   :root {
     /* Core palette - Light mode with dark hero */
-    --background: 0 0% 100%;
+    --background: 35 44% 95%; /* #F8F3EC */
     --foreground: 220 20% 10%;
 
-    --card: 0 0% 100%;
+    --card: 35 44% 100%;
     --card-foreground: 220 20% 10%;
 
-    --popover: 0 0% 100%;
+    --popover: 35 44% 100%;
     --popover-foreground: 220 20% 10%;
 
-    /* Primary - Emerald Green (Football field inspired) */
-    --primary: 152 70% 40%;
+    /* Primary - Dark Green (#2D7A3E) */
+    --primary: 133 46% 33%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary - Soft gray */
@@ -37,27 +37,27 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 152 70% 40%;
+    --border: 35 20% 90%;
+    --input: 35 20% 90%;
+    --ring: 133 46% 33%;
 
     --radius: 0.75rem;
 
     /* Custom tokens for Shabas - SaaS Style */
-    --saas-bg: 0 0% 97%;
-    /* #F7F7F7 */
-    --saas-primary: 160 100% 41%;
-    /* #00D084 */
-    --saas-highlight-bg: 160 100% 41%;
-    --saas-highlight-shadow: 0 4px 0 0 hsla(160, 100%, 25%, 0.2);
+    --saas-bg: 35 44% 95%;
+    /* #F8F3EC */
+    --saas-primary: 133 46% 33%;
+    /* #2D7A3E */
+    --saas-highlight-bg: 133 46% 33%;
+    --saas-highlight-shadow: 0 4px 0 0 hsla(133, 46%, 20%, 0.2);
 
     --hero-bg: 220 25% 8%;
     --hero-foreground: 0 0% 98%;
     --hero-muted: 220 15% 55%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(152 70% 40%), hsl(152 80% 50%));
+    --gradient-primary: linear-gradient(135deg, hsl(133 46% 33%), hsl(133 50% 40%));
     --gradient-hero: linear-gradient(180deg, hsl(220 25% 8%) 0%, hsl(220 25% 12%) 100%);
-    --gradient-glow: radial-gradient(ellipse at center, hsl(152 70% 40% / 0.15) 0%, transparent 70%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(133 46% 33% / 0.15) 0%, transparent 70%);
 
     --shadow-sm: 0 1px 2px 0 hsl(220 20% 10% / 0.05);
     --shadow-md: 0 4px 6px -1px hsl(220 20% 10% / 0.1), 0 2px 4px -2px hsl(220 20% 10% / 0.1);
@@ -71,8 +71,8 @@
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 152 70% 40%;
+    --sidebar-border: 35 20% 90%;
+    --sidebar-ring: 133 46% 33%;
   }
 
   .dark {
@@ -102,7 +102,7 @@
 
     --border: 220 20% 18%;
     --input: 220 20% 18%;
-    --ring: 152 70% 45%;
+    --ring: 133 46% 38%;
 
     --sidebar-background: 220 25% 10%;
     --sidebar-foreground: 0 0% 98%;

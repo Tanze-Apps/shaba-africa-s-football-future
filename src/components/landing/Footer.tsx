@@ -38,8 +38,12 @@ const Footer = () => {
               />
             </a>
             <p className="text-gray-500 font-medium text-center md:text-left max-w-sm leading-relaxed">
-              Building the digital infrastructure for grassroots football across Africa. Connecting talent to opportunity.
+              Building the digital infrastructure for grassroots football across Africa.
             </p>
+            <div className="flex flex-col items-center md:items-start gap-2 text-sm font-bold text-gray-600">
+              <a href="mailto:shabasfootball@gmail.com" className="hover:text-primary transition-colors">shabasfootball@gmail.com</a>
+              <a href="tel:+237673015993" className="hover:text-primary transition-colors">+237 673 015 993</a>
+            </div>
           </div>
 
           {/* Social Links */}

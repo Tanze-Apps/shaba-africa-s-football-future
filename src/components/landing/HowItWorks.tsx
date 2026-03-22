@@ -27,7 +27,7 @@ const HowItWorks = () => {
       icon: "/icons/how-it-works/challenge-and-play/icons8-soccer-100.png",
       title: "Challenge & Play",
       description:
-        "Send match challenges, agree on terms, and play. Both teams verify the result.",
+        "Select a referee, both captains accept and your match is set. No WhatsApp chaos, just football.",
     },
     {
       number: "04",

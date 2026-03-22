@@ -54,10 +54,10 @@ const Features = () => {
     {
       icon: "/icons/features/discovery/icons8-discovery-100.png",
       title: "Discovery",
-      subtitle: "Location-based Finder",
-      description: "Find teams in your neighborhood or city. Connect with local football communities instantly.",
+      subtitle: "Smart Finder",
+      description: "Instantly find and connect with teams in your city or neighborhood.",
       className: "md:col-span-2 lg:col-span-2",
-      color: "bg-emerald-500",
+      color: "bg-primary",
     },
     {
       icon: "/icons/features/challenges/icons8-challenge-80.png",
@@ -162,11 +162,11 @@ const Features = () => {
               <div className="relative z-10">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-8">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  <span className="text-primary text-[10px] font-black uppercase tracking-widest">Global Network</span>
+                  <span className="text-primary text-[10px] font-black uppercase tracking-widest">Global Exposure</span>
                 </div>
-                <h3 className="text-2xl md:text-4xl font-black text-gray-900 mb-6">Discovery Platform</h3>
+                <h3 className="text-2xl md:text-4xl font-black text-gray-900 mb-6">Talent Showcase</h3>
                 <p className="text-gray-600 text-base md:text-lg font-medium leading-relaxed max-w-md mb-8">
-                  Get noticed by scouts and academies looking for the next generation of football talent. Your CV, verified and global.
+                  Get discovered by scouts and academies. Your professional football CV, verified and visible worldwide.
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="flex -space-x-3">

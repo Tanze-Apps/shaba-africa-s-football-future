@@ -12,7 +12,7 @@ const WhoItsFor = () => {
       icon: "/icons/who-its-for/players.png",
       title: "Players",
       description:
-        "Build your profile, track your stats, and get discovered. Show the world what you can do on the pitch.",
+        "Build your profile, track stats, and get discovered by scouts worldwide.",
       benefits: [
         "Personal football portfolio",
         "Match history & stats",
@@ -23,7 +23,7 @@ const WhoItsFor = () => {
       icon: "/icons/who-its-for/captains.png",
       title: "Team Captains",
       description:
-        "Manage your squad, find opponents, and climb the rankings. Bring structure to your team's journey.",
+        "Manage your squad, find opponents, and climb the local rankings.",
       benefits: [
         "Team management tools",
         "Match scheduling",
@@ -71,7 +71,7 @@ const WhoItsFor = () => {
     <section
       id="who-its-for"
       ref={ref}
-      className="py-20 md:py-32 px-6 bg-[#f7f7f7] relative overflow-hidden"
+      className="py-20 md:py-32 px-6 bg-background relative overflow-hidden"
     >
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white to-transparent opacity-50 pointer-events-none" />

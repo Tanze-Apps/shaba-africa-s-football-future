@@ -8,15 +8,15 @@ const ProblemSolution = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const problems = [
-    { icon: AlertCircle, text: "Disorganized leagues & static data" },
-    { icon: Eye, text: "Hidden talent with zero visibility" },
-    { icon: Calendar, text: "The chaos of WhatsApp scheduling" },
+    { icon: AlertCircle, text: "Disorganized data & static stats" },
+    { icon: Eye, text: "Talent with zero global visibility" },
+    { icon: Calendar, text: "WhatsApp scheduling chaos" },
   ];
 
   const solutions = [
-    { icon: ShieldCheck, text: "Verified, automated league management" },
-    { icon: Zap, text: "Global exposure for every player" },
-    { icon: Trophy, text: "Data-driven rankings & verified stats" },
+    { icon: ShieldCheck, text: "Verified league management" },
+    { icon: Zap, text: "Global exposure for players" },
+    { icon: Trophy, text: "Verified stats & rankings" },
   ];
 
   const containerVariants = {
@@ -78,8 +78,8 @@ const ProblemSolution = () => {
                </div>
                
                <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-6 leading-tight">
-                  Status Quo: <br />
-                  <span className="text-gray-400 font-bold">Inefficient & Disconnected</span>
+                  Current Reality: <br />
+                  <span className="text-gray-400 font-bold">Inefficient & Offline</span>
                </h3>
                
                <div className="space-y-4">
