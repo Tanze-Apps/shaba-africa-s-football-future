@@ -25,9 +25,9 @@ const WhoItsFor = () => {
       description:
         "Manage your squad, find opponents, and climb the local rankings.",
       benefits: [
-        "Team management tools",
-        "Match scheduling",
-        "Performance tracking",
+        "Team Management Tools",
+        "Match Scheduling",
+        "Performance Tracking",
       ],
     },
     {
@@ -89,12 +89,13 @@ const WhoItsFor = () => {
             For the Community
           </div>
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
-            Built for <span className="pill-highlight">everyone</span> <br className="hidden md:block" />
+            Built for <span className="pill-highlight">everyone</span>{" "}
+            <br className="hidden md:block" />
             in the ecosystem
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mt-6">
-            Whether you're playing, managing, or scouting — Shaba connects
-            every piece of the puzzle.
+            Whether you're playing, managing, or scouting — Shaba connects every
+            piece of the puzzle.
           </p>
         </motion.div>
 
@@ -113,7 +114,11 @@ const WhoItsFor = () => {
               className="feature-card flex flex-col sm:flex-row gap-6 md:gap-8 items-start sm:items-center group p-6 md:p-10"
             >
               <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-500 relative z-10">
-                <img src={persona.icon} alt={persona.title} className="w-12 h-12 md:w-16 md:h-16 object-contain" />
+                <img
+                  src={persona.icon}
+                  alt={persona.title}
+                  className="w-12 h-12 md:w-16 md:h-16 object-contain"
+                />
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
