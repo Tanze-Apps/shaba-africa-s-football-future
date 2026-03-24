@@ -18,7 +18,7 @@ const Header = () => {
     { href: "#features", label: "Features" },
     { href: "#how-it-works", label: "How It Works" },
     { href: "#who-its-for", label: "Who It's For" },
-    { href: "#waitlist", label: "Waitlist" },
+    { href: "#waitlist", label: "Mobile App" },
   ];
 
   return (
@@ -64,13 +64,13 @@ const Header = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5 }}
-            href="#waitlist"
+            href="https://app.sha-bas.com"
             className={`px-8 py-3 rounded-full font-black text-sm transition-all duration-300 flex items-center gap-2 group ${isScrolled
               ? "bg-primary text-white shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1"
               : "bg-gray-900 text-white hover:bg-primary hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
               }`}
           >
-            Join Waitlist
+            Open App
             <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </motion.a>
         </div>
@@ -124,11 +124,11 @@ const Header = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                href="#waitlist"
+                href="https://app.sha-bas.com"
                 className="btn-primary text-center mt-6 py-5 text-xl rounded-2xl"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Join Waitlist
+                Open App
               </motion.a>
             </div>
           </motion.div>

@@ -27,11 +27,11 @@ const InteractiveBall = ({
   size?: number;
 }) => {
   const ballRef = useRef<HTMLImageElement>(null);
-  
+
   // Create physics springs for smooth movement
   const springX = useSpring(baseX, { stiffness: 40, damping: 15, mass: 1 });
   const springY = useSpring(baseY, { stiffness: 40, damping: 15, mass: 1 });
-  
+
   // Rotation transforms based on movement
   const rotate = useTransform(springX, [0, window.innerWidth], [0, 720]);
 
@@ -42,7 +42,7 @@ const InteractiveBall = ({
       const rect = ballRef.current.getBoundingClientRect();
       const ballCenterX = rect.left + rect.width / 2;
       const ballCenterY = rect.top + rect.height / 2;
-      
+
       const currentMouseX = mouseX.get();
       const currentMouseY = mouseY.get();
 
@@ -52,14 +52,14 @@ const InteractiveBall = ({
       const distance = Math.sqrt(dx * dx + dy * dy);
 
       // Avoidance threshold and force calculation
-      const threshold = 250; 
-      
+      const threshold = 250;
+
       if (distance < threshold && distance > 0) {
         // Apply repulsive force inversely proportional to distance
         const force = (threshold - distance) / threshold;
         const pushX = (dx / distance) * force * 150;
         const pushY = (dy / distance) * force * 150;
-        
+
         // Push the ball away
         springX.set(baseX + pushX);
         springY.set(baseY + pushY);
@@ -82,7 +82,7 @@ const InteractiveBall = ({
 
   // Floating animation offset to combine with physics
   const floatY = useSpring(0, { stiffness: 20, damping: 10 });
-  
+
   useEffect(() => {
     // Add a gentle idle floating effect
     const interval = setInterval(() => {
@@ -92,8 +92,8 @@ const InteractiveBall = ({
   }, [floatY]);
 
   // Combine base position, physics, and float
-  const renderX = useTransform(() => springX.get() - size/2);
-  const renderY = useTransform(() => springY.get() + floatY.get() - size/2);
+  const renderX = useTransform(() => springX.get() - size / 2);
+  const renderY = useTransform(() => springY.get() + floatY.get() - size / 2);
 
   return (
     <motion.img
@@ -176,7 +176,7 @@ const Hero = () => {
   const [videoReady, setVideoReady] = useState(false);
   const statsRef = useRef<HTMLDivElement | null>(null);
   const statsInView = useInView(statsRef, { once: true, margin: "-20%" });
-  
+
   // Track mouse coordinates for interactive elements
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
@@ -201,7 +201,7 @@ const Hero = () => {
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("resize", handleResize);
-    
+
     // Initial position
     handleResize();
 
@@ -241,9 +241,9 @@ const Hero = () => {
             }`}
         >
           {/* Placeholder Image for Slow Connections */}
-          <div 
+          <div
             className={`absolute inset-0 bg-cover bg-center bg-no-repeat scale-110 filter blur-sm transition-opacity duration-700 ${videoReady ? "opacity-0" : "opacity-100"}`}
-            style={{ 
+            style={{
               backgroundImage: "url('/icons/how-it-works/discover-teams-nearby/icons8-map-96.png')", // Fallback pattern or placeholder
               backgroundColor: "#111" // Dark fallback
             }}
@@ -251,8 +251,8 @@ const Hero = () => {
             {/* Spinning Soccer Ball Loader */}
             {!videoReady && (
               <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
-                <motion.img 
-                  src="/icons/soccer.png" 
+                <motion.img
+                  src="/icons/soccer.png"
                   alt="Loading..."
                   className="w-16 h-16 opacity-80"
                   animate={{ rotate: 360 }}
@@ -291,24 +291,24 @@ const Hero = () => {
 
           {/* Interactive Soccer Balls */}
           <div className="hidden md:block">
-            <InteractiveBall 
-              mouseX={mouseX} 
-              mouseY={mouseY} 
-              baseX={ballPositions.leftX} 
-              baseY={ballPositions.leftY} 
-              size={140} 
+            <InteractiveBall
+              mouseX={mouseX}
+              mouseY={mouseY}
+              baseX={ballPositions.leftX}
+              baseY={ballPositions.leftY}
+              size={140}
             />
-            <InteractiveBall 
-              mouseX={mouseX} 
-              mouseY={mouseY} 
-              baseX={ballPositions.rightX} 
-              baseY={ballPositions.rightY} 
-              size={180} 
+            <InteractiveBall
+              mouseX={mouseX}
+              mouseY={mouseY}
+              baseX={ballPositions.rightX}
+              baseY={ballPositions.rightY}
+              size={180}
             />
           </div>
-          
+
           {/* Static decoration for mobile */}
-           <motion.img
+          <motion.img
             src="/icons/soccer.png"
             className="md:hidden absolute right-[-10%] top-[20%] w-32 h-32 opacity-40 blur-[1px]"
             animate={{ rotate: 360, y: [0, -20, 0] }}
@@ -334,7 +334,7 @@ const Hero = () => {
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-gray-600  text-xs md:text-sm font-medium">
-              Launching Soon in Cameroon
+              Web Version Now Live
             </span>
           </motion.div>
 
@@ -400,13 +400,27 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-5 w-full sm:w-auto px-6 sm:px-0"
           >
-            <a href="#waitlist" className="btn-primary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl bg-primary hover:opacity-90 text-white font-bold shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-2">
-              Join the Waitlist
+            <a href="https://app.sha-bas.com" className="btn-primary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl bg-primary hover:opacity-90 text-white font-bold shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-2">
+              Launch Web App
               <ArrowRight size={20} className="stroke-[3px]" />
             </a>
-            <a href="#how-it-works" className="btn-secondary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl border-2 border-gray-200 text-gray-700 bg-white hover:bg-gray-50 font-bold transition-all flex items-center justify-center">
-              How It Works
+            <a href="#waitlist" className="btn-secondary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl border-2 border-gray-200 text-gray-700 bg-white hover:bg-gray-50 font-bold transition-all flex items-center justify-center">
+              Join the Mobile Waitlist
             </a>
+          </motion.div>
+
+          {/* Store Icons */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={videoStage === "hidden" ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="mt-8 flex flex-col items-center gap-4"
+          >
+            <span className="text-gray-400 text-xs font-black uppercase tracking-widest">Available soon on</span>
+            <div className="flex items-center gap-6 hover:opacity-100 transition-opacity">
+              <img src="/icons/playstore.png" alt="Play Store" className="h-13 md:h-10 w-auto contrast-125" />
+              <img src="/icons/appstore.png" alt="App Store" className="h-13 md:h-10 w-auto contrast-125" />
+            </div>
           </motion.div>
 
           {/* Product Mockup - Simplified for clean blend */}
