@@ -401,7 +401,7 @@ const Hero = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-5 w-full sm:w-auto px-6 sm:px-0"
           >
             <a href="https://app.sha-bas.com" className="btn-primary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl bg-primary hover:opacity-90 text-white font-bold shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-2">
-              Launch Web App
+              Open Web App
               <ArrowRight size={20} className="stroke-[3px]" />
             </a>
             <a href="#waitlist" className="btn-secondary w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl border-2 border-gray-200 text-gray-700 bg-white hover:bg-gray-50 font-bold transition-all flex items-center justify-center">
