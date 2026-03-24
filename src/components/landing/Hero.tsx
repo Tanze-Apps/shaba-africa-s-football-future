@@ -417,9 +417,23 @@ const Hero = () => {
             className="mt-8 flex flex-col items-center gap-4"
           >
             <span className="text-gray-400 text-xs font-black uppercase tracking-widest">Available soon on</span>
-            <div className="flex items-center gap-6 hover:opacity-100 transition-opacity">
-              <img src="/icons/playstore.png" alt="Play Store" className="h-13 md:h-10 w-auto contrast-125" />
-              <img src="/icons/appstore.png" alt="App Store" className="h-13 md:h-10 w-auto contrast-125" />
+            <div className="flex items-center gap-6">
+              <div className="group relative">
+                <div className="absolute inset-0 bg-black/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity translate-y-4 scale-90" />
+                <img
+                  src="/icons/playstore.png"
+                  alt="Play Store"
+                  className="h-13  w-auto contrast-125 drop-shadow-[0_10px_15px_rgba(0,0,0,0.7)] hover:-translate-y-2 transition-all duration-300 cursor-pointer relative z-10"
+                />
+              </div>
+              <div className="group relative">
+                <div className="absolute inset-0 bg-black/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity translate-y-4 scale-90" />
+                <img
+                  src="/icons/appstore.png"
+                  alt="App Store"
+                  className="h-13  w-auto contrast-125 drop-shadow-[0_10px_15px_rgba(0,0,0,0.7)] hover:-translate-y-2 transition-all duration-300 cursor-pointer relative z-10"
+                />
+              </div>
             </div>
           </motion.div>
 

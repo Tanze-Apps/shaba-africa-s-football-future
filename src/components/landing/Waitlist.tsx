@@ -142,8 +142,16 @@ const Waitlist = () => {
           <div className="mt-16 pt-8 border-t border-black/[0.05] flex flex-col items-center gap-4">
             <span className="text-gray-400 text-[10px] font-black uppercase tracking-[0.2em]">Coming to your mobile device</span>
             <div className="flex items-center gap-8">
-              <img src="/icons/playstore.png" alt="Play Store" className="h-15 w-auto " />
-              <img src="/icons/appstore.png" alt="App Store" className="h-15 w-auto " />
+              <img
+                src="/icons/playstore.png"
+                alt="Play Store"
+                className="h-15 w-auto drop-shadow-[0_15px_15px_rgba(0,0,0,0.7)] hover:drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-500 cursor-pointer"
+              />
+              <img
+                src="/icons/appstore.png"
+                alt="App Store"
+                className="h-15 w-auto drop-shadow-[0_15px_15px_rgba(0,0,0,0.7)] hover:drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-500 cursor-pointer"
+              />
             </div>
           </div>
 
