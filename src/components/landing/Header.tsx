@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Zap, ChevronRight } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,20 +38,20 @@ const Header = () => {
           : "border-transparent bg-transparent"
           }`}
       >
-        <a href="#" className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-2 group">
           <img
             src="/logo/shaba-logo.png"
             alt="Shaba Logo"
             className="h-16 w-auto object-contain transition-all duration-300 group-hover:scale-110"
           />
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-2">
           {navLinks.map((link, i) => (
             <motion.a
               key={link.href}
-              href={link.href}
+              href={isHome ? link.href : `/${link.href}`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 + i * 0.1 }}
@@ -107,7 +110,7 @@ const Header = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                   key={link.href}
-                  href={link.href}
+                  href={isHome ? link.href : `/${link.href}`}
                   className="text-2xl font-black text-gray-900 hover:text-primary transition-all flex items-center justify-between group"
                   onClick={() => setIsMenuOpen(false)}
                 >

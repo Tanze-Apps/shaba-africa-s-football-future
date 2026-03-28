@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Twitter, Instagram, Linkedin, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const ref = useRef(null);
@@ -15,7 +16,7 @@ const Footer = () => {
   ];
 
   const legalLinks = [
-    { label: "Privacy Policy", href: "#" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms of Service", href: "#" },
   ];
 
@@ -30,13 +31,13 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start gap-6">
-            <a href="#" className="group flex items-center gap-3">
+            <Link to="/" className="group flex items-center gap-3">
               <img
                 src="/logo/shaba-logo.png"
                 alt="Shaba Logo"
                 className="h-16 w-auto object-contain transition-transform group-hover:scale-110"
               />
-            </a>
+            </Link>
             <p className="text-gray-500 font-medium text-center md:text-left max-w-sm leading-relaxed">
               Building the digital infrastructure for grassroots football across Africa.
             </p>
@@ -64,13 +65,23 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-8">
               {legalLinks.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.href}
-                  className="text-gray-400 hover:text-primary transition-colors font-bold text-sm tracking-tight"
-                >
-                  {link.label}
-                </a>
+                link.href.startsWith("/") ? (
+                  <Link
+                    key={index}
+                    to={link.href}
+                    className="text-gray-400 hover:text-primary transition-colors font-bold text-sm tracking-tight"
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={index}
+                    href={link.href}
+                    className="text-gray-400 hover:text-primary transition-colors font-bold text-sm tracking-tight"
+                  >
+                    {link.label}
+                  </a>
+                )
               ))}
             </div>
           </div>
