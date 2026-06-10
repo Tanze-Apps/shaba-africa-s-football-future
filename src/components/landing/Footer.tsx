@@ -1,94 +1,66 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Twitter, Instagram, Linkedin, Globe } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useLang } from "@/contexts/lang";
 
 const Footer = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const currentYear = new Date().getFullYear();
-
-  const socialLinks = [
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-  ];
-
-  const legalLinks = [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms of Service", href: "#" },
-  ];
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const { t } = useLang();
+  const f = t.footer;
 
   return (
-    <footer ref={ref} className="bg-white border-t border-black/[0.04] py-20 md:py-24 px-6 relative overflow-hidden">
+    <footer
+      ref={ref}
+      className="border-t py-12 pb-7"
+      style={{ background: "#0a1a0f", borderColor: "rgba(255,255,255,0.06)" }}
+    >
       <motion.div
-        className="max-w-7xl mx-auto relative z-10"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
+        className="max-w-[1120px] mx-auto px-6"
+        initial={{ opacity: 0, y: 16 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5 }}
       >
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mb-10">
+
           {/* Brand */}
-          <div className="flex flex-col items-center md:items-start gap-6">
-            <a href="#" className="group flex items-center gap-3">
-              <img
-                src="/logo/shaba-logo.png"
-                alt="Shaba Logo"
-                className="h-16 w-auto object-contain transition-transform group-hover:scale-110"
-              />
+          <div>
+            <a href="#" className="flex items-center gap-2.5 mb-3">
+              <img src="/logo/shaba-logo.png" alt="Shabas" className="h-8 w-auto object-contain" />
+              <span className="font-fredoka text-[20px] text-white tracking-[0.5px]">shabas</span>
             </a>
-            <p className="text-gray-500 font-medium text-center md:text-left max-w-sm leading-relaxed">
-              Building the digital infrastructure for grassroots football across Africa.
-            </p>
-            <div className="flex flex-col items-center md:items-start gap-2 text-sm font-bold text-gray-600">
-              <a href="mailto:shabasfootball@gmail.com" className="hover:text-primary transition-colors">shabasfootball@gmail.com</a>
-              <a href="tel:+237673015993" className="hover:text-primary transition-colors">+237 673 015 993</a>
+            <p className="text-[13px] font-semibold text-white/35 leading-[1.6] max-w-[260px] mb-4">{f.brand}</p>
+            <div className="flex flex-col gap-1.5 text-[14px] font-bold text-white/55">
+              <a href="mailto:shabasfootball@gmail.com" className="hover:text-[#2db355] transition-colors">shabasfootball@gmail.com</a>
+              <a href="tel:+237673015993" className="hover:text-[#2db355] transition-colors">+237 673 015 993</a>
             </div>
           </div>
 
-          {/* Social Links */}
-          <div className="flex flex-col items-center md:items-end gap-6">
-            <div className="flex items-center gap-4">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  whileHover={{ y: -4, scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center hover:bg-primary hover:border-primary group transition-all duration-300 shadow-sm"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-                </motion.a>
-              ))}
-            </div>
-            <div className="flex items-center gap-8">
-              {legalLinks.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.href}
-                  className="text-gray-400 hover:text-primary transition-colors font-bold text-sm tracking-tight"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+          {/* Product */}
+          <div>
+            <h4 className="text-[11px] font-black uppercase tracking-[1.5px] text-white/35 mb-4">{f.product}</h4>
+            {f.productLinks.map((l) => (
+              <a key={l} href="#" className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors">{l}</a>
+            ))}
+          </div>
+
+          {/* Company */}
+          <div>
+            <h4 className="text-[11px] font-black uppercase tracking-[1.5px] text-white/35 mb-4">{f.company}</h4>
+            {f.companyLinks.map((l) => (
+              <a key={l} href="#" className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors">{l}</a>
+            ))}
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-black/[0.04] to-transparent my-12 md:my-16" />
+        <div className="h-px mb-6" style={{ background: "rgba(255,255,255,0.06)" }} />
 
-        {/* Bottom Row */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm font-bold tracking-tight">
-          <p className="text-gray-400 flex items-center gap-2">
-            © {currentYear} Shabas. Crafted for the future of
-            <span className="pill-highlight">African Football</span>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[12px] font-bold text-white/25">
+            © {new Date().getFullYear()} {f.copy}
           </p>
-          {/* <div className="flex items-center gap-2 text-gray-400">
-            <Globe className="w-4 h-4" />
-            <span>Built with passion in Cameroon</span>
-          </div> */}
+          <div className="flex items-center gap-2 text-[12px] font-black text-white/40">
+            🌍 {f.madeWith}
+          </div>
         </div>
       </motion.div>
     </footer>
