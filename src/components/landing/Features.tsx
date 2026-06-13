@@ -1,251 +1,166 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { Search, PlayCircle, Star } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useLang } from "@/contexts/lang";
 
-const PLAYERS = [
-  { name: "Le Noir", position: "Midfielder", rating: 88, image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=200&auto=format&fit=crop " },
-  { name: "Sniper 99", position: "Striker", rating: 92, image: "https://images.unsplash.com/photo-1530268729831-4b0b9e170218?q=80&w=200&auto=format&fit=crop" },
-  { name: "Lovet Tanze", position: "Defender", rating: 85, image: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=100&auto=format&fit=crop" },
-];
+const TYPING_NAMES = ["Sniper 99", "Makossa 10", "Flash Mpondo", "Dragon 7"];
 
-const SEARCH_TERMS = ["Lovet Tanze", "Le Noir...", "Sniper 99", "Top Strikers in Cameroon..."];
+const SearchDemo = () => {
+  const [nameIdx, setNameIdx] = useState(0);
+  const [typed, setTyped] = useState("");
+  const [showResult, setShowResult] = useState(false);
+
+  useEffect(() => {
+    const name = TYPING_NAMES[nameIdx];
+    let i = 0;
+    setTyped("");
+    setShowResult(false);
+    const typer = setInterval(() => {
+      i++;
+      setTyped(name.slice(0, i));
+      if (i >= name.length) {
+        clearInterval(typer);
+        setTimeout(() => setShowResult(true), 300);
+        setTimeout(() => setNameIdx((p) => (p + 1) % TYPING_NAMES.length), 2800);
+      }
+    }, 80);
+    return () => clearInterval(typer);
+  }, [nameIdx]);
+
+  const initials = typed.split(" ").map((w) => w[0] || "").join("").slice(0, 2).toUpperCase();
+
+  return (
+    <div className="rounded-[18px] p-4 flex flex-col gap-2.5"
+      style={{ background: "rgba(255,255,255,0.05)", border: "1.5px solid rgba(255,255,255,0.1)" }}>
+      <div className="bg-white rounded-full px-4 py-2.5 flex items-center gap-2">
+        <span className="text-sm">🔍</span>
+        <span className="text-[13px] font-bold text-[#1a1a1a]">{typed}</span>
+        <span className="inline-block w-[2px] h-3.5 bg-[#1e8a3c] animate-cursor-blink" />
+      </div>
+      {showResult && (
+        <div className="bg-white rounded-[14px] px-3 py-2.5 flex items-center gap-2.5 slide-in-result">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center font-fredoka text-sm text-white flex-shrink-0"
+            style={{ background: "linear-gradient(135deg,#c8960c,#f5d020)" }}>
+            {initials}
+          </div>
+          <div>
+            <div className="text-[13px] font-black">{typed}</div>
+            <div className="text-[10px] text-[#6b7b6b] font-semibold">Attaquant · Makepe</div>
+          </div>
+          <div className="ml-auto bg-[#1e8a3c] text-white text-[10px] font-black px-2.5 py-1 rounded-full">RTG 92</div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const GLOW_COLORS = ['#1e8a3c', '#f5a623', '#f59e0b', '#6366f1'];
+const HOVER_BORDERS = ['#1e8a3c', '#f5a623', '#f59e0b', '#6366f1'];
+
+const reveal = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (d: number) => ({ opacity: 1, y: 0, transition: { duration: 0.55, delay: d * 0.1 } }),
+};
 
 const Features = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  // Typing Animation State
-  const [currentSearchIndex, setCurrentSearchIndex] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-
-    const currentTerm = SEARCH_TERMS[currentSearchIndex];
-
-    if (isDeleting) {
-      if (displayText === "") {
-        setIsDeleting(false);
-        setCurrentSearchIndex((prev) => (prev + 1) % SEARCH_TERMS.length);
-        timeout = setTimeout(() => { }, 800); // Pause before typing next
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayText(currentTerm.substring(0, displayText.length - 1));
-        }, 40); // Deletion speed
-      }
-    } else {
-      if (displayText === currentTerm) {
-        timeout = setTimeout(() => {
-          setIsDeleting(true);
-        }, 2500); // Pause after typing
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayText(currentTerm.substring(0, displayText.length + 1));
-        }, 120); // Typing speed
-      }
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, currentSearchIndex]);
-
-  const features = [
-    {
-      icon: "/icons/features/discovery/icons8-discovery-100.png",
-      title: "Discovery",
-      subtitle: "Smart Finder",
-      description: "Instantly find and connect with teams in your city or neighborhood.",
-      className: "md:col-span-2 lg:col-span-2",
-      color: "bg-primary",
-    },
-    {
-      icon: "/icons/features/challenges/icons8-challenge-80.png",
-      title: "Challenges",
-      subtitle: "Instant Matchmaking",
-      description: "Challenge teams and coordinate fixtures without the WhatsApp chaos.",
-      className: "md:col-span-1 lg:col-span-1",
-      color: "bg-blue-500",
-    },
-    {
-      icon: "/icons/features/ranking/icons8-ranking-96.png",
-      title: "Rankings",
-      subtitle: "Verified Standings",
-      description: "Earn your spot. Fair rankings based on verified match results.",
-      className: "md:col-span-1 lg:col-span-1",
-      color: "bg-amber-500",
-    },
-    {
-      icon: "/icons/features/portfolio/icons8-portfolio-100.png",
-      title: "Profiles",
-      subtitle: "Digital Portfolio",
-      description: "Build your profile. Track goals, assists, and appearances across all matches.",
-      className: "md:col-span-2 lg:col-span-2",
-      color: "bg-indigo-500",
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.95, y: 20 },
-    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5 } },
-  };
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { t } = useLang();
+  const f = t.features;
 
   return (
-    <section id="features" ref={ref} className="px-6 bg-white relative overflow-hidden">
-      {/* Background patterns */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none"
-        style={{ backgroundImage: `radial-gradient(#000 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
+    <section id="features" className="bg-white py-24 relative overflow-hidden">
+      <div className="absolute inset-0 dot-grid pointer-events-none" />
+      <div className="max-w-[1120px] mx-auto px-6 relative z-10">
 
-      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16 md:mb-24"
+          ref={ref}
+          className="text-center mb-14"
+          initial="hidden" animate={inView ? "visible" : "hidden"} custom={0} variants={reveal}
         >
-          <div className="section-badge mx-auto">
-            <PlayCircle className="w-3 h-3 text-primary" />
-            Product Suite
+          <div className="inline-flex items-center gap-1.5 bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-5">
+            {f.badge}
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-[1.1]">
-            Powerful tools for <br />
-            the <span className="pill-highlight">Next Gen</span> of play
+          <h2 className="font-fredoka text-[clamp(36px,5vw,60px)] leading-[1.1] text-[#1a1a1a] mb-3">
+            {f.headline}<br /><span className="text-[#1e8a3c]">{f.accent}</span>
           </h2>
+          <p className="text-[16px] font-semibold text-[#6b7b6b] max-w-[480px] mx-auto">{f.sub}</p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              whileHover={{ y: -5 }}
-              className={`group relative rounded-[2.5rem] p-8 md:p-10 overflow-hidden border border-gray-100 bg-gray-50/50 hover:bg-white hover:shadow-2xl hover:shadow-black/5 transition-all duration-500 ${feature.className}`}
-            >
-              {/* Card Decor */}
-              <div className={`absolute top-0 right-0 w-32 h-32 ${feature.color} opacity-0 group-hover:opacity-[0.07] blur-3xl transition-opacity -mr-10 -mt-10`} />
+        {/* Bento */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
-              <div className="relative z-10 h-full flex flex-col">
-                <div className={`w-14 h-14  flex items-center justify-center mb-10  group-hover:scale-110 transition-transform`}>
-                  <img src={feature.icon} alt={feature.title} className="w-15 h-15 object-contain" />
-                </div>
-
-                <div className="mt-auto">
-                  <span className="text-gray-400 text-xs font-black uppercase tracking-widest mb-2 block">{feature.subtitle}</span>
-                  <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-500 font-medium leading-relaxed max-w-sm text-sm md:text-base">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-
-          {/* Featured Bento Item (Scouts) */}
+          {/* Discovery — wide */}
           <motion.div
-            variants={cardVariants}
-            className="md:col-span-3 group relative rounded-[2.5rem] p-8 md:p-12 overflow-hidden border border-primary/20 bg-primary/[0.02] hover:bg-white hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500"
+            className="group sm:col-span-2 relative bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-[32px] p-8 overflow-hidden cursor-default hover:-translate-y-1 hover:bg-white hover:shadow-xl transition-all duration-300"
+            style={{ ['--hover-border' as any]: HOVER_BORDERS[0] }}
+            initial="hidden" animate={inView ? "visible" : "hidden"} custom={1} variants={reveal}
           >
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-8">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  <span className="text-primary text-[10px] font-black uppercase tracking-widest">Global Exposure</span>
+            <div className="bento-glow" style={{ background: GLOW_COLORS[0] }} />
+            <span className="text-[42px] mb-5 block">{f.cards[0].icon}</span>
+            <div className="text-[10px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-1.5">{f.cards[0].tag}</div>
+            <h3 className="font-fredoka text-[26px] text-[#1a1a1a] mb-2.5">{f.cards[0].title}</h3>
+            <p className="text-[14px] font-semibold text-[#6b7b6b] leading-[1.6] max-w-xs">{f.cards[0].desc}</p>
+          </motion.div>
+
+          {/* Challenges */}
+          <motion.div
+            className="group relative bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-[32px] p-8 overflow-hidden cursor-default hover:-translate-y-1 hover:bg-white hover:shadow-xl transition-all duration-300"
+            initial="hidden" animate={inView ? "visible" : "hidden"} custom={2} variants={reveal}
+          >
+            <div className="bento-glow" style={{ background: GLOW_COLORS[1] }} />
+            <span className="text-[42px] mb-5 block">{f.cards[1].icon}</span>
+            <div className="text-[10px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-1.5">{f.cards[1].tag}</div>
+            <h3 className="font-fredoka text-[26px] text-[#1a1a1a] mb-2.5">{f.cards[1].title}</h3>
+            <p className="text-[14px] font-semibold text-[#6b7b6b] leading-[1.6]">{f.cards[1].desc}</p>
+          </motion.div>
+
+          {/* Rankings */}
+          <motion.div
+            className="group relative bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-[32px] p-8 overflow-hidden cursor-default hover:-translate-y-1 hover:bg-white hover:shadow-xl transition-all duration-300"
+            initial="hidden" animate={inView ? "visible" : "hidden"} custom={3} variants={reveal}
+          >
+            <div className="bento-glow" style={{ background: GLOW_COLORS[2] }} />
+            <span className="text-[42px] mb-5 block">{f.cards[2].icon}</span>
+            <div className="text-[10px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-1.5">{f.cards[2].tag}</div>
+            <h3 className="font-fredoka text-[26px] text-[#1a1a1a] mb-2.5">{f.cards[2].title}</h3>
+            <p className="text-[14px] font-semibold text-[#6b7b6b] leading-[1.6]">{f.cards[2].desc}</p>
+          </motion.div>
+
+          {/* Profile — wide */}
+          <motion.div
+            className="group sm:col-span-2 relative bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-[32px] p-8 overflow-hidden cursor-default hover:-translate-y-1 hover:bg-white hover:shadow-xl transition-all duration-300"
+            initial="hidden" animate={inView ? "visible" : "hidden"} custom={4} variants={reveal}
+          >
+            <div className="bento-glow" style={{ background: GLOW_COLORS[3] }} />
+            <span className="text-[42px] mb-5 block">{f.cards[3].icon}</span>
+            <div className="text-[10px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-1.5">{f.cards[3].tag}</div>
+            <h3 className="font-fredoka text-[26px] text-[#1a1a1a] mb-2.5">{f.cards[3].title}</h3>
+            <p className="text-[14px] font-semibold text-[#6b7b6b] leading-[1.6] max-w-xs">{f.cards[3].desc}</p>
+          </motion.div>
+
+          {/* Talent Showcase — full width */}
+          <motion.div
+            className="lg:col-span-3 sm:col-span-2 relative rounded-[32px] overflow-hidden border-2 border-[#2db355]/20 hover:border-[#2db355]/40 hover:shadow-xl transition-all duration-300"
+            style={{ background: "#0a1a0f" }}
+            initial="hidden" animate={inView ? "visible" : "hidden"} custom={5} variants={reveal}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-8 md:p-10">
+              <div>
+                <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#2db355] mb-5"
+                  style={{ background: "rgba(45,179,85,0.1)", border: "1.5px solid rgba(45,179,85,0.25)" }}>
+                  {f.showcaseBadge}
                 </div>
-                <h3 className="text-2xl md:text-4xl font-black text-gray-900 mb-6">Talent Showcase</h3>
-                <p className="text-gray-600 text-base md:text-lg font-medium leading-relaxed max-w-md mb-8">
-                  Get discovered by scouts and academies. Your professional football CV, verified and visible worldwide.
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="flex -space-x-3">
-                    {[
-                      "https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=100&auto=format&fit=crop",
-                      "https://images.unsplash.com/photo-1579208030886-b937da0925dc?q=80&w=100&auto=format&fit=crop",
-                      "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=200&auto=format&fit=crop"
-                    ].map((src, i) => (
-                      <img key={i} src={src} alt="Scout" className="w-10 h-10 rounded-full border-2 border-white object-cover bg-gray-200" />
-                    ))}
-                  </div>
-                  <span className="text-sm font-bold text-primary">Join 50+ scout networks</span>
-                </div>
+                <h3 className="font-fredoka text-[32px] text-white mb-3">{f.showcaseTitle}</h3>
+                <p className="text-[15px] font-semibold text-white/55 leading-[1.65] max-w-[340px]">{f.showcaseDesc}</p>
               </div>
-              <div className="relative aspect-video rounded-2xl bg-gray-50 overflow-hidden shadow-inner border border-gray-100">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent flex flex-col items-center justify-center p-6 gap-6">
-
-                  {/* Automated Search Bar with Typing Effect */}
-                  <motion.div
-                    className="w-full max-w-[280px] h-12 bg-white rounded-full shadow-sm flex items-center px-4 gap-3 border border-gray-200 z-20"
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.5, duration: 0.5 }}
-                  >
-                    <Search size={18} className="text-gray-400 flex-shrink-0" />
-                    <div className="flex-1 font-medium text-gray-700 text-sm overflow-hidden flex items-center">
-                      {displayText}
-                      <span className="w-0.5 h-4 ml-0.5 bg-primary animate-pulse" />
-                    </div>
-                  </motion.div>
-
-                  {/* Scrolling Feed of Player Profiles */}
-                  <div className="relative w-full max-w-[280px] h-[120px] perspective-1000">
-                    <AnimatePresence>
-                      {PLAYERS.map((player, i) => (
-                        <motion.div
-                          key={player.name}
-                          className="absolute inset-0 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-gray-100 p-4 flex items-center gap-4 will-change-transform"
-                          initial={{ y: 80, opacity: 0, scale: 0.8, rotateX: 20 }}
-                          animate={{
-                            y: [80, 0, -80],
-                            opacity: [0, 1, 0],
-                            scale: [0.8, 1, 0.8],
-                            rotateX: [20, 0, -20],
-                            zIndex: [0, 10, 0]
-                          }}
-                          transition={{
-                            duration: 8,
-                            repeat: Infinity,
-                            delay: i * (8 / PLAYERS.length),
-                            ease: "easeInOut"
-                          }}
-                        >
-                          <img src={player.image} alt={player.name} className="w-14 h-14 rounded-full border-2 border-white shadow-sm object-cover" />
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-bold text-gray-900 truncate">{player.name}</h4>
-                            <p className="text-xs text-gray-500 truncate mb-1">{player.position}</p>
-                            <div className="flex items-center gap-1">
-                              <Star size={12} className="text-amber-400 fill-amber-400" />
-                              <span className="text-xs font-black text-gray-700">{player.rating} RTG</span>
-                            </div>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Decoration Blurs */}
-                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 blur-3xl rounded-full" />
-                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full" />
-                </div>
-              </div>
+              <SearchDemo />
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 };
 
 export default Features;
-
