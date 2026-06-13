@@ -106,8 +106,9 @@ const fr = {
     company:     'Entreprise',
     productLinks:['Fonctionnalités', 'Comment ça marche', 'La Rue', 'Talent Showcase'],
     companyLinks: ['À propos', 'Confidentialité', "Conditions d'utilisation", 'Contact'],
-    copy:        'Shabas. Conçu pour l\'avenir du football africain.',
-    madeWith:    'Made with ❤️ in Africa',
+    copy:          'Shabas. Conçu pour l\'avenir du football africain.',
+    madeWith:      'Made with ❤️ in Africa',
+    privacyPolicy: 'Politique de confidentialité',
   },
 } as const;
 
@@ -217,8 +218,9 @@ const en = {
     company:     'Company',
     productLinks:['Features', 'How It Works', 'The Street', 'Talent Showcase'],
     companyLinks: ['About', 'Privacy', 'Terms of Service', 'Contact'],
-    copy:        'Shabas. Built for the future of African football.',
-    madeWith:    'Made with ❤️ in Africa',
+    copy:          'Shabas. Built for the future of African football.',
+    madeWith:      'Made with ❤️ in Africa',
+    privacyPolicy: 'Privacy Policy',
   },
 } as const;
 
