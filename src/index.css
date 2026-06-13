@@ -1,69 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Shabas Design System - Premium SaaS Aesthetic */
-
 @layer base {
   :root {
-    /* Core palette - Light mode with dark hero */
-    --background: 35 44% 95%; /* #F8F3EC */
+    --background: 0 0% 100%;
     --foreground: 220 20% 10%;
 
-    --card: 35 44% 100%;
+    --card: 0 0% 100%;
     --card-foreground: 220 20% 10%;
 
-    --popover: 35 44% 100%;
+    --popover: 0 0% 100%;
     --popover-foreground: 220 20% 10%;
 
-    /* Primary - Dark Green (#2D7A3E) */
-    --primary: 133 46% 33%;
+    --primary: 141 64% 33%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Soft gray */
     --secondary: 220 14% 96%;
     --secondary-foreground: 220 20% 20%;
 
-    /* Muted */
     --muted: 220 14% 96%;
     --muted-foreground: 220 10% 45%;
 
-    /* Accent - Warm gold */
-    --accent: 45 93% 58%;
+    --accent: 38 93% 55%;
     --accent-foreground: 220 20% 10%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 35 20% 90%;
-    --input: 35 20% 90%;
-    --ring: 133 46% 33%;
+    --border: 120 18% 88%;
+    --input: 120 18% 88%;
+    --ring: 141 64% 33%;
 
     --radius: 0.75rem;
-
-    /* Custom tokens for Shabas - SaaS Style */
-    --saas-bg: 35 44% 95%;
-    /* #F8F3EC */
-    --saas-primary: 133 46% 33%;
-    /* #2D7A3E */
-    --saas-highlight-bg: 133 46% 33%;
-    --saas-highlight-shadow: 0 4px 0 0 hsla(133, 46%, 20%, 0.2);
-
-    --hero-bg: 220 25% 8%;
-    --hero-foreground: 0 0% 98%;
-    --hero-muted: 220 15% 55%;
-
-    --gradient-primary: linear-gradient(135deg, hsl(133 46% 33%), hsl(133 50% 40%));
-    --gradient-hero: linear-gradient(180deg, hsl(220 25% 8%) 0%, hsl(220 25% 12%) 100%);
-    --gradient-glow: radial-gradient(ellipse at center, hsl(133 46% 33% / 0.15) 0%, transparent 70%);
-
-    --shadow-sm: 0 1px 2px 0 hsl(220 20% 10% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(220 20% 10% / 0.1), 0 2px 4px -2px hsl(220 20% 10% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(220 20% 10% / 0.1), 0 4px 6px -4px hsl(220 20% 10% / 0.1);
-    --shadow-xl: 0 20px 25px -5px hsl(220 20% 10% / 0.1), 0 8px 10px -6px hsl(220 20% 10% / 0.1);
-    --shadow-glow: 0 0 40px hsl(152 70% 40% / 0.3);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -71,47 +42,8 @@
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 35 20% 90%;
-    --sidebar-ring: 133 46% 33%;
-  }
-
-  .dark {
-    --background: 220 25% 8%;
-    --foreground: 0 0% 98%;
-
-    --card: 220 25% 12%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 220 25% 12%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 152 70% 45%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 220 20% 18%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 220 20% 18%;
-    --muted-foreground: 220 15% 55%;
-
-    --accent: 45 93% 58%;
-    --accent-foreground: 220 20% 10%;
-
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 220 20% 18%;
-    --input: 220 20% 18%;
-    --ring: 133 46% 38%;
-
-    --sidebar-background: 220 25% 10%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 152 70% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 15%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 220 20% 18%;
-    --sidebar-ring: 152 70% 45%;
+    --sidebar-border: 120 18% 88%;
+    --sidebar-ring: 141 64% 33%;
   }
 }
 
@@ -124,126 +56,87 @@
     scroll-behavior: smooth;
   }
 
-
-
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Bricolage Grotesque', 'Poppins', system-ui, -apple-system, sans-serif;
-    font-optical-sizing: auto;
-    font-variation-settings: "wdth" 100;
+    @apply bg-white text-[#1a1a1a] antialiased;
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
   }
 }
 
 /* Custom scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: hsl(var(--primary) / 0.6) hsl(var(--background));
+  scrollbar-color: #1e8a3c #f0f2f0;
 }
-
-*::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  background: hsl(var(--background));
-}
-
-*::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.6);
-  border-radius: 999px;
-  border: 2px solid hsl(var(--background));
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.8);
-}
-
-@layer components {
-  .hero-section {
-    @apply relative overflow-hidden;
-    background: var(--gradient-hero);
-  }
-
-  .hero-glow {
-    @apply absolute inset-0 pointer-events-none;
-    background: var(--gradient-glow);
-  }
-
-  .glass-card {
-    @apply backdrop-blur-xl border border-white/10;
-    background: hsl(0 0% 100% / 0.05);
-  }
-
-  .feature-card {
-    @apply bg-white rounded-2xl p-8 transition-all duration-500 border border-black/[0.03];
-    box-shadow: 0 10px 30px -10px hsl(var(--foreground) / 0.05);
-  }
-
-  .feature-card:hover {
-    @apply border-primary/20 md:-translate-y-1;
-    box-shadow: 0 20px 40px -15px hsl(var(--foreground) / 0.1);
-  }
-
-  .section-badge {
-    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full border border-black/[0.05] bg-white text-xs font-bold uppercase tracking-wider text-gray-500 mb-6;
-  }
-
-  .section-heading {
-    @apply text-3xl md:text-4xl font-bold tracking-tight;
-  }
-
-  .section-subheading {
-    @apply text-lg md:text-xl text-muted-foreground max-w-2xl;
-  }
-
-  .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-primary);
-  }
-
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-primary-foreground transition-all duration-200;
-    background: var(--gradient-primary);
-    box-shadow: var(--shadow-md), var(--shadow-glow);
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg), 0 0 60px hsl(152 70% 40% / 0.4);
-  }
-
-  .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border border-white/20 text-white/90 transition-all duration-200 bg-white/5 backdrop-blur-sm;
-  }
-
-  .btn-secondary:hover {
-    @apply bg-white/10 border-white/30;
-  }
-
-  .pill-highlight {
-    @apply inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-xl md:rounded-2xl text-white font-bold transition-all duration-300;
-    background-color: hsl(var(--saas-primary));
-    box-shadow: 0 4px 8px -2px hsla(160, 100%, 30%, 0.3), 0 3px 0 0 hsla(160, 100%, 20%, 0.5);
-    margin: 0 0.05em;
-    transform: rotate(-1deg);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .pill-highlight:nth-child(even) {
-    transform: rotate(1deg);
-  }
-
-  .hero-section-saas {
-    @apply relative overflow-hidden transition-colors duration-700;
-    background-color: #f7f7f7;
-  }
-}
+*::-webkit-scrollbar { width: 8px; }
+*::-webkit-scrollbar-track { background: #f0f2f0; }
+*::-webkit-scrollbar-thumb { background: #1e8a3c; border-radius: 999px; }
+*::-webkit-scrollbar-thumb:hover { background: #145c28; }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-balance { text-wrap: balance; }
+
+  /* Duolingo-style 3D button press */
+  .btn-duo {
+    @apply relative transition-all duration-100;
+    box-shadow: 0 5px 0 #145c28;
   }
+  .btn-duo:hover  { transform: translateY(-2px); box-shadow: 0 7px 0 #145c28; }
+  .btn-duo:active { transform: translateY(4px);  box-shadow: 0 1px 0 #145c28; }
+
+  .btn-duo-white {
+    @apply relative transition-all duration-100;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+  }
+  .btn-duo-white:hover  { transform: translateY(-2px); box-shadow: 0 7px 0 rgba(0,0,0,0.2); }
+  .btn-duo-white:active { transform: translateY(4px);  box-shadow: 0 1px 0 rgba(0,0,0,0.2); }
+
+  /* XP bar fill animation */
+  .xp-fill-animate {
+    animation: xpFill 2s 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    width: 0%;
+  }
+
+  /* Gamification XP bar */
+  .gam-xp-animate {
+    animation: xpFill 1.8s 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    width: 0%;
+  }
+
+  /* Bento card hover glow */
+  .bento-glow {
+    @apply absolute top-[-40px] right-[-40px] w-40 h-40 rounded-full opacity-0 transition-opacity duration-500;
+    filter: blur(60px);
+  }
+  .group:hover .bento-glow { opacity: 0.12; }
+}
+
+@keyframes xpFill {
+  to { width: 78%; }
+}
+
+@keyframes slideInResult {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-result {
+  animation: slideInResult 0.35s ease forwards;
+}
+
+/* Diagonal stripe pattern used in hero + la-rue */
+.stripe-bg {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 40px,
+    rgba(45, 179, 85, 0.025) 40px,
+    rgba(45, 179, 85, 0.025) 80px
+  );
+}
+
+/* Dot grid used in features */
+.dot-grid {
+  background-image: radial-gradient(rgba(0,0,0,0.045) 1px, transparent 1px);
+  background-size: 36px 36px;
 }

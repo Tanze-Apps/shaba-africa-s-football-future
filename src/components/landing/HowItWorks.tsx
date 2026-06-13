@@ -1,142 +1,57 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { MapPinned } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useLang } from "@/contexts/lang";
 
 const HowItWorks = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const steps = [
-    {
-      number: "01",
-      icon: "/icons/how-it-works/create-profile.png",
-      title: "Create Your Profile",
-      description:
-        "Sign up as a player or register your team. Add your location, photos, and playing style.",
-    },
-    {
-      number: "02",
-      icon: "/icons/how-it-works/discover-teams-nearby/icons8-map-96.png",
-      title: "Discover Teams Nearby",
-      description:
-        "Browse teams in your area. Filter by location, skill level, and availability.",
-    },
-    {
-      number: "03",
-      icon: "/icons/how-it-works/challenge-and-play/icons8-soccer-100.png",
-      title: "Challenge & Play",
-      description:
-        "Select a referee, both captains accept and your match is set. No WhatsApp chaos, just football.",
-    },
-    {
-      number: "04",
-      icon: "/icons/how-it-works/rank.png",
-      title: "Build Your Ranking",
-      description:
-        "Win matches, climb the leaderboard, and get noticed by scouts and academies.",
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.18, delayChildren: 0.05 },
-    },
-  };
-
-  const stepVariants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  };
-
-  const numberVariants = {
-    hidden: { scale: 0.9, opacity: 0 },
-    visible: { scale: 1, opacity: 1, transition: { duration: 0.4 } },
-  };
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { t } = useLang();
+  const h = t.how;
 
   return (
-    <section
-      id="how-it-works"
-      ref={ref}
-      className="py-20 md:py-32 px-6 bg-white relative overflow-hidden"
-    >
-      {/* Background Decor */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-primary/[0.02] blur-[120px] rounded-full pointer-events-none" />
+    <section id="how" className="py-24" style={{ background: "#f0f2f0" }}>
+      <div className="max-w-[1120px] mx-auto px-6">
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12 md:mb-24"
+          ref={ref}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55 }}
         >
-          <div className="section-badge">
-            <MapPinned className="w-3 h-3 text-primary" />
-            The Journey
+          <div className="inline-flex items-center gap-1.5 bg-white border-2 border-[#dde8dd] rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-5">
+            {h.badge}
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
-            From signup <br className="hidden md:block" />
-            to <span className="pill-highlight">stardom</span>
+          <h2 className="font-fredoka text-[clamp(36px,5vw,58px)] leading-[1.1] text-[#1a1a1a] mb-3">
+            {h.headline}<br /><span className="text-[#1e8a3c]">{h.accent}</span>
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mt-6">
-            Four simple steps to transform your grassroots football journey.
-          </p>
+          <p className="text-[16px] font-semibold text-[#6b7b6b] max-w-[380px] mx-auto">{h.sub}</p>
         </motion.div>
 
-        {/* Steps */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="relative"
-        >
-          {/* Connection Line - More modern pulse effect */}
-          <div className="hidden lg:block absolute top-[60px] left-[10%] right-[10%] h-[2px] bg-gray-100 overflow-hidden">
-            <motion.div 
-              initial={{ x: "-100%" }}
-              animate={isInView ? { x: "100%" } : {}}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="w-1/2 h-full bg-gradient-to-r from-transparent via-primary/40 to-transparent"
-            />
-          </div>
+        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {/* Dashed connector — desktop only */}
+          <div className="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-[2px] pointer-events-none"
+            style={{ background: "repeating-linear-gradient(90deg,#1e8a3c 0px,#1e8a3c 8px,transparent 8px,transparent 16px)", opacity: 0.3 }} />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                variants={stepVariants}
-                className="relative text-center group"
-              >
-                {/* Step Icon Container */}
-                <div className="relative inline-block mb-6 md:mb-10">
-                  <div className="w-20 h-20 md:w-28 md:h-28 flex items-center justify-center transition-all duration-500 relative z-10 group-hover:scale-110">
-                    <img src={step.icon} alt={step.title} className="w-12 h-12 md:w-16 md:h-16 object-contain" />
-                  </div>
-                  <motion.span
-                    variants={numberVariants}
-                    className="absolute -top-2 -right-2 md:-top-3 md:-right-3 w-8 h-8 md:w-10 md:h-10 rounded-xl md:rounded-2xl bg-white text-primary text-sm md:text-base font-black flex items-center justify-center shadow-lg border border-gray-100 z-20 group-hover:scale-110 transition-transform"
-                  >
-                    {step.number}
-                  </motion.span>
-                </div>
+          {h.steps.map((s, i) => (
+            <motion.div
+              key={i}
+              className="relative bg-white border-2 border-[#dde8dd] rounded-[32px] pt-8 pb-7 px-5 text-center hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
+              initial={{ opacity: 0, y: 24 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.55, delay: i * 0.1 }}
+            >
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-[#1e8a3c] flex items-center justify-center font-fredoka text-[13px] text-white"
+                style={{ boxShadow: "0 2px 0 #145c28" }}>
+                {i + 1}
+              </div>
+              <span className="text-[40px] my-3.5 block">{s.emoji}</span>
+              <h3 className="font-fredoka text-[18px] text-[#1a1a1a] mb-2">{s.title}</h3>
+              <p className="text-[13px] font-semibold text-[#6b7b6b] leading-[1.55]">{s.desc}</p>
+            </motion.div>
+          ))}
+        </div>
 
-                <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-3 md:mb-4 tracking-tight">
-                  {step.title}
-                </h3>
-                <p className="text-gray-500 text-sm md:text-base font-medium leading-relaxed px-4">
-                  {step.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

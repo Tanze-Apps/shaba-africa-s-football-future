@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Bricolage Grotesque', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Nunito', 'system-ui', '-apple-system', 'sans-serif'],
+        fredoka: ['Fredoka One', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -50,11 +51,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        hero: {
-          DEFAULT: "hsl(var(--hero-bg))",
-          foreground: "hsl(var(--hero-foreground))",
-          muted: "hsl(var(--hero-muted))",
-        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -65,6 +61,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        g: {
+          green:       '#1e8a3c',
+          glow:        '#2db355',
+          dark:        '#145c28',
+          deep:        '#0a1a0f',
+          card:        '#12261e',
+          surf:        '#1c3426',
+          yellow:      '#f5a623',
+          'yellow-dk': '#d4880a',
+          off:         '#f0f2f0',
+          border:      '#dde8dd',
+          muted:       '#6b7b6b',
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -73,6 +82,7 @@ export default {
         xl: "1rem",
         "2xl": "1.5rem",
         "3xl": "2rem",
+        "4xl": "2.5rem",
       },
       keyframes: {
         "accordion-down": {
@@ -91,21 +101,33 @@ export default {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
-        "scale-in": {
-          "0%": { opacity: "0", transform: "scale(0.95)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
-        },
-        float: {
+        phoneFloat: {
           "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" },
+          "50%": { transform: "translateY(-14px)" },
         },
-        pulse: {
+        floatCard1: {
+          "0%, 100%": { transform: "translateY(0px) rotate(-2deg)" },
+          "50%": { transform: "translateY(-8px) rotate(-2deg)" },
+        },
+        floatCard2: {
+          "0%, 100%": { transform: "translateY(0px) rotate(1.5deg)" },
+          "50%": { transform: "translateY(-10px) rotate(1.5deg)" },
+        },
+        floatCard3: {
+          "0%, 100%": { transform: "translateY(0px) rotate(-1deg)" },
+          "50%": { transform: "translateY(-7px) rotate(-1deg)" },
+        },
+        pulseDot: {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.5", transform: "scale(0.8)" },
+        },
+        liveBlink: {
           "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.5" },
+          "50%": { opacity: "0.3" },
         },
-        shimmer: {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
+        cursorBlink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
         },
       },
       animation: {
@@ -113,9 +135,13 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.5s ease-out forwards",
         "fade-in": "fade-in 0.5s ease-out forwards",
-        "scale-in": "scale-in 0.5s ease-out forwards",
-        float: "float 6s ease-in-out infinite",
-        shimmer: "shimmer 2s linear infinite",
+        "phone-float": "phoneFloat 4s ease-in-out infinite",
+        "float-card-1": "floatCard1 3s ease-in-out infinite",
+        "float-card-2": "floatCard2 3.5s ease-in-out infinite",
+        "float-card-3": "floatCard3 4s ease-in-out infinite",
+        "pulse-dot": "pulseDot 2s ease-in-out infinite",
+        "live-blink": "liveBlink 1s ease-in-out infinite",
+        "cursor-blink": "cursorBlink 1s step-end infinite",
       },
     },
   },
