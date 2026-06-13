@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { useLang } from "@/contexts/lang";
 
@@ -46,6 +47,9 @@ const Footer = () => {
           {/* Company */}
           <div>
             <h4 className="text-[11px] font-black uppercase tracking-[1.5px] text-white/35 mb-4">{f.company}</h4>
+            <Link to="/privacy-policy" className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors">
+              {f.privacyPolicy}
+            </Link>
             {f.companyLinks.map((l) => (
               <a key={l} href="#" className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors">{l}</a>
             ))}

@@ -54,17 +54,17 @@ const Waitlist = () => {
         >
           <div className="section-badge mx-auto">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            Early Access
+            Mobile App Waitlist
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter leading-none mb-6 md:mb-8">
-            Be among the first to <br />
-            <span className="pill-highlight">shape the future</span>
+            The mobile experience <br />
+            <span className="pill-highlight">is coming soon</span>
           </h2>
 
           <p className="text-base md:text-xl text-gray-500 font-medium max-w-2xl mx-auto mb-8 md:mb-10 px-2 md:px-0">
-            Join the waitlist and get early access when we launch. Help us build
-            the platform grassroots football deserves.
+            Our web version is live, but the game-changing mobile app is just around the corner.
+            Join the waitlist to get early access and shape the future of African football.
           </p>
         </motion.div>
 
@@ -91,7 +91,7 @@ const Waitlist = () => {
                 </h3>
                 <p className="text-gray-500 font-medium text-lg">
                   {feedback ??
-                    "We'll notify you when Shabas launches. Get ready to play."}
+                    "We'll notify you as soon as the mobile app is ready for kickoff."}
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
@@ -126,7 +126,7 @@ const Waitlist = () => {
                     <Loader2 className="w-6 h-6 animate-spin" />
                   ) : (
                     <>
-                      Join Waitlist
+                      Join the Mobile Waitlist
                       <ArrowRight size={20} className="stroke-[3px]" />
                     </>
                   )}
@@ -139,7 +139,23 @@ const Waitlist = () => {
             <p className="text-destructive font-bold text-sm mt-6">{feedback}</p>
           )}
 
-          <p className="text-gray-400 font-medium text-sm mt-8">
+          <div className="mt-16 pt-8 border-t border-black/[0.05] flex flex-col items-center gap-4">
+            <span className="text-gray-400 text-[10px] font-black uppercase tracking-[0.2em]">Coming to your mobile device</span>
+            <div className="flex items-center gap-8">
+              <img
+                src="/icons/playstore.png"
+                alt="Play Store"
+                className="h-15 w-auto drop-shadow-[0_15px_15px_rgba(0,0,0,0.7)] hover:drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-500 cursor-pointer"
+              />
+              <img
+                src="/icons/appstore.png"
+                alt="App Store"
+                className="h-15 w-auto drop-shadow-[0_15px_15px_rgba(0,0,0,0.7)] hover:drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-500 cursor-pointer"
+              />
+            </div>
+          </div>
+
+          <p className="text-gray-400 font-medium text-sm mt-12">
             No spam, ever. We respect your inbox privacy.
           </p>
         </motion.div>
