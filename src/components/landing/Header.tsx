@@ -36,9 +36,10 @@ const Header = () => {
   const { t } = useLang();
 
   const navLinks = [
-    { href: "#features", label: t.nav.features },
-    { href: "#how", label: t.nav.howItWorks },
-    { href: "#la-rue", label: t.nav.laRue },
+    { href: '#features',    label: t.nav.features },
+    { href: '#how',         label: t.nav.howItWorks },
+    { href: '#tournaments', label: t.nav.tournaments },
+    { href: '#la-rue',      label: t.nav.laRue },
   ];
 
   return (

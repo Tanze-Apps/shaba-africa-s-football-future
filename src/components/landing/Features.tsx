@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { Footprints, MapPin, BadgeCheck } from "lucide-react";
 import { useLang } from "@/contexts/lang";
+import formationImg from "@/assets/formation.png";
 
 const TYPING_NAMES = ["Sniper 99", "Makossa 10", "Flash Mpondo", "Dragon 7"];
 
@@ -52,6 +54,35 @@ const SearchDemo = () => {
     </div>
   );
 };
+
+type MarketplaceListing = { product: string; price: string; location: string; condition: string; seller: string };
+
+const MarketplaceDemo = ({ demo }: { demo: MarketplaceListing }) => (
+  <div className="rounded-[18px] p-4"
+    style={{ background: "rgba(255,255,255,0.05)", border: "1.5px solid rgba(255,255,255,0.1)" }}>
+    <div className="bg-white rounded-[14px] p-3.5 flex flex-col gap-3">
+      <div className="flex items-center gap-2.5">
+        <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+          style={{ background: "linear-gradient(135deg,#c8960c,#f5d020)" }}>
+          <Footprints className="w-5 h-5 text-white" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-[13px] font-black text-[#1a1a1a] truncate">{demo.product}</div>
+          <div className="text-[10px] text-[#6b7b6b] font-semibold flex items-center gap-1">
+            <MapPin className="w-3 h-3" /> {demo.location}
+          </div>
+        </div>
+        <span className="bg-[#e8f5ed] text-[#1e8a3c] text-[9px] font-black px-2 py-1 rounded-full flex-shrink-0">{demo.condition}</span>
+      </div>
+      <div className="flex items-center justify-between pt-2.5 border-t border-[#f0f2f0]">
+        <span className="font-fredoka text-[17px] text-[#1a1a1a]">{demo.price}</span>
+        <div className="flex items-center gap-1 text-[10px] font-black text-[#c8960c]">
+          <BadgeCheck className="w-3.5 h-3.5" /> {demo.seller}
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 const GLOW_COLORS = ['#1e8a3c', '#f5a623', '#f59e0b', '#6366f1'];
 const HOVER_BORDERS = ['#1e8a3c', '#f5a623', '#f59e0b', '#6366f1'];
@@ -139,11 +170,54 @@ const Features = () => {
             <p className="text-[14px] font-semibold text-[#6b7b6b] leading-[1.6] max-w-xs">{f.cards[3].desc}</p>
           </motion.div>
 
-          {/* Talent Showcase — full width */}
+          {/* Live Formation Preview — full width */}
           <motion.div
             className="lg:col-span-3 sm:col-span-2 relative rounded-[32px] overflow-hidden border-2 border-[#2db355]/20 hover:border-[#2db355]/40 hover:shadow-xl transition-all duration-300"
             style={{ background: "#0a1a0f" }}
             initial="hidden" animate={inView ? "visible" : "hidden"} custom={5} variants={reveal}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-8 md:p-10">
+              <div>
+                <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#2db355] mb-5"
+                  style={{ background: "rgba(45,179,85,0.1)", border: "1.5px solid rgba(45,179,85,0.25)" }}>
+                  {f.liveFormation.badge}
+                </div>
+                <h3 className="font-fredoka text-[32px] text-white mb-3">{f.liveFormation.title}</h3>
+                <p className="text-[15px] font-semibold text-white/55 leading-[1.65] max-w-[340px]">{f.liveFormation.desc}</p>
+              </div>
+              <div className="flex justify-center">
+                <div className="rounded-[28px] p-3 w-[220px]"
+                  style={{ background: "#0d0d0d", boxShadow: "0 0 0 2px rgba(255,255,255,0.08), 0 30px 60px rgba(0,0,0,0.5)" }}>
+                  <img src={formationImg} alt={f.liveFormation.title} className="w-full rounded-[16px] object-cover" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Marketplace — full width */}
+          <motion.div
+            className="lg:col-span-3 sm:col-span-2 relative rounded-[32px] overflow-hidden border-2 border-[#f5a623]/20 hover:border-[#f5a623]/40 hover:shadow-xl transition-all duration-300"
+            style={{ background: "#0a1a0f" }}
+            initial="hidden" animate={inView ? "visible" : "hidden"} custom={6} variants={reveal}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-8 md:p-10">
+              <div>
+                <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#f5a623] mb-5"
+                  style={{ background: "rgba(245,166,35,0.1)", border: "1.5px solid rgba(245,166,35,0.25)" }}>
+                  {f.marketplace.badge}
+                </div>
+                <h3 className="font-fredoka text-[32px] text-white mb-3">{f.marketplace.title}</h3>
+                <p className="text-[15px] font-semibold text-white/55 leading-[1.65] max-w-[340px]">{f.marketplace.desc}</p>
+              </div>
+              <MarketplaceDemo demo={f.marketplace.demo} />
+            </div>
+          </motion.div>
+
+          {/* Talent Showcase — full width */}
+          <motion.div
+            className="lg:col-span-3 sm:col-span-2 relative rounded-[32px] overflow-hidden border-2 border-[#2db355]/20 hover:border-[#2db355]/40 hover:shadow-xl transition-all duration-300"
+            style={{ background: "#0a1a0f" }}
+            initial="hidden" animate={inView ? "visible" : "hidden"} custom={7} variants={reveal}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-8 md:p-10">
               <div>
