@@ -106,7 +106,7 @@ const Features = () => {
         {/* Header */}
         <motion.div
           ref={ref}
-          className="text-center mb-14"
+          className="text-center mb-15"
           initial="hidden" animate={inView ? "visible" : "hidden"} custom={0} variants={reveal}
         >
           <div className="inline-flex items-center gap-1.5 bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-5">
