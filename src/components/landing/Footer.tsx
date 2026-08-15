@@ -63,7 +63,7 @@ const Footer = () => {
             © {new Date().getFullYear()} {f.copy}
           </p>
           <div className="flex items-center gap-2 text-[12px] font-black text-white/40">
-            🌍 {f.madeWith}
+            {f.madeWith}
           </div>
         </div>
       </motion.div>

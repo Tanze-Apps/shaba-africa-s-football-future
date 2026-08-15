@@ -22,7 +22,6 @@ const Download = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55 }}
         >
-          <span className="text-[52px] mb-5 block">📲</span>
           <h2 className="font-fredoka text-[clamp(38px,5vw,64px)] text-white leading-[1.1] mb-4">
             {d.headline}<br /><span className="text-[#2db355]">{d.accent}</span>
           </h2>
@@ -37,7 +36,7 @@ const Download = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 bg-white text-[#1a1a1a] px-6 py-3.5 rounded-[20px] btn-duo-white"
             >
-              <span className="text-[22px]">🤖</span>
+              <img src="/icons/playstore.png" alt="" className="w-6 h-6 object-contain" />
               <div className="text-left">
                 <div className="text-[9px] font-bold text-[#6b7b6b] uppercase tracking-[0.5px]">{d.subApp}</div>
                 <div className="text-[16px] font-black leading-[1.2]">{d.googlePlay}</div>
@@ -46,7 +45,7 @@ const Download = () => {
 
             {/* App Store — coming soon */}
             <div className="inline-flex items-center gap-2.5 bg-white/8 border-2 border-white/15 text-white/50 px-6 py-3.5 rounded-[20px] cursor-not-allowed select-none">
-              <span className="text-[22px] opacity-50">🍎</span>
+              <img src="/icons/appstore.png" alt="" className="w-6 h-6 object-contain opacity-50" />
               <div className="text-left">
                 <div className="text-[9px] font-bold text-white/30 uppercase tracking-[0.5px]">{d.subAppSoon}</div>
                 <div className="text-[16px] font-black leading-[1.2]">{d.appStore}</div>
@@ -78,7 +77,7 @@ const Download = () => {
           </div>
 
           <div className="flex items-center justify-center gap-2 text-[13px] font-bold text-white/25">
-            ⚡ {d.trust}
+            {d.trust}
           </div>
         </motion.div>
       </div>

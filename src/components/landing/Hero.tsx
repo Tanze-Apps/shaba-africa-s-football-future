@@ -210,7 +210,7 @@ const Hero = () => {
             {/* iPhone notice */}
             <div className="flex items-center gap-2 mb-6 px-3 py-2 rounded-xl text-[12px] font-bold text-[#f5a623]"
               style={{ background: "rgba(245,166,35,0.08)", border: "1px solid rgba(245,166,35,0.2)" }}>
-              🍎 {t.hero.iphoneNotice}
+              {t.hero.iphoneNotice}
             </div>
 
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 pt-6 border-t border-white/[0.08]">

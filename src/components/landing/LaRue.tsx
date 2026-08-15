@@ -78,11 +78,6 @@ const LaRue = () => {
                 </div>
               ))}
             </div>
-
-            <div className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-black text-[#f5a623]"
-              style={{ background: "rgba(245,166,35,0.12)", border: "1.5px solid rgba(245,166,35,0.3)" }}>
-              {l.coming}
-            </div>
           </motion.div>
 
           {/* RIGHT — feed */}
