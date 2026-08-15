@@ -27,17 +27,20 @@ const useCountUp = (target: number, active: boolean, duration = 1800) => {
 };
 
 const SCREENSHOTS = [
-  { src: screen1,      label: 'Home' },
-  { src: screen2,      label: 'Explore' },
-  { src: screen3,      label: 'Matches' },
-  { src: formationImg, label: 'Formation' },
+  { src: screen1, label: "Home" },
+  { src: screen2, label: "Explore" },
+  { src: screen3, label: "Matches" },
+  { src: formationImg, label: "Formation" },
 ];
 
 const PhoneCarousel = () => {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % SCREENSHOTS.length), 3500);
+    const t = setInterval(
+      () => setIdx((i) => (i + 1) % SCREENSHOTS.length),
+      3500,
+    );
     return () => clearInterval(t);
   }, []);
 
@@ -46,14 +49,18 @@ const PhoneCarousel = () => {
       className="w-[260px] sm:w-[270px] rounded-[42px] p-3.5 animate-phone-float"
       style={{
         background: "#0d0d0d",
-        boxShadow: "0 0 0 2px rgba(255,255,255,0.08), 0 40px 80px rgba(0,0,0,0.6), 0 0 60px rgba(30,138,60,0.15)",
+        boxShadow:
+          "0 0 0 2px rgba(255,255,255,0.08), 0 40px 80px rgba(0,0,0,0.6), 0 0 60px rgba(30,138,60,0.15)",
       }}
     >
       {/* Notch */}
       <div className="w-24 h-6 bg-[#0d0d0d] rounded-b-[18px] mx-auto mb-2.5 relative z-10" />
 
       {/* Screen */}
-      <div className="rounded-[30px] overflow-hidden relative" style={{ minHeight: 480 }}>
+      <div
+        className="rounded-[30px] overflow-hidden relative"
+        style={{ minHeight: 480 }}
+      >
         <AnimatePresence mode="wait">
           <motion.img
             key={idx}
@@ -79,7 +86,7 @@ const PhoneCarousel = () => {
             style={{
               width: i === idx ? 16 : 6,
               height: 6,
-              background: i === idx ? '#2db355' : 'rgba(255,255,255,0.2)',
+              background: i === idx ? "#2db355" : "rgba(255,255,255,0.2)",
             }}
           />
         ))}
@@ -100,7 +107,9 @@ const FloatingCards = () => (
     <div className="absolute bottom-28 -left-[76px] bg-white rounded-[14px] px-3.5 py-2.5 shadow-xl border-[1.5px] border-white/90 flex items-center gap-2 animate-float-card-2 whitespace-nowrap">
       <span className="text-lg">🔔</span>
       <div>
-        <div className="text-[13px] font-black text-[#1a1a1a]">Nouveau défi</div>
+        <div className="text-[13px] font-black text-[#1a1a1a]">
+          Nouveau défi
+        </div>
         <div className="text-[9px] font-bold text-[#7a8a7a]">Scorpions FC</div>
       </div>
     </div>
@@ -135,10 +144,16 @@ const HeroStats = () => {
           <div
             key={label}
             className="text-center py-3 px-5"
-            style={{ borderRight: i < 3 ? '1px solid rgba(255,255,255,0.08)' : 'none' }}
+            style={{
+              borderRight: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none",
+            }}
           >
-            <div className="font-fredoka text-[28px] sm:text-[34px] text-[#2db355] leading-none mb-1">{displayVals[i]}</div>
-            <div className="text-[10px] font-black text-white/35 uppercase tracking-[1.5px]">{label}</div>
+            <div className="font-fredoka text-[28px] sm:text-[34px] text-[#2db355] leading-none mb-1">
+              {displayVals[i]}
+            </div>
+            <div className="text-[10px] font-black text-white/35 uppercase tracking-[1.5px]">
+              {label}
+            </div>
           </div>
         ))}
       </div>
@@ -155,14 +170,23 @@ const Hero = () => {
       className="min-h-screen relative overflow-hidden flex items-center pt-[100px] pb-[160px] stripe-bg"
       style={{ background: "#0a1a0f" }}
     >
-      <div className="absolute -top-[15%] -left-[10%] w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(30,138,60,0.25) 0%, transparent 70%)" }} />
-      <div className="absolute -bottom-[20%] -right-[5%] w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(45,179,85,0.15) 0%, transparent 70%)" }} />
+      <div
+        className="absolute -top-[15%] -left-[10%] w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(30,138,60,0.25) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute -bottom-[20%] -right-[5%] w-[400px] h-[400px] rounded-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(45,179,85,0.15) 0%, transparent 70%)",
+        }}
+      />
 
       <div className="max-w-[1120px] mx-auto px-6 w-full relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[60px] items-center">
-
           {/* LEFT */}
           <motion.div
             className="flex flex-col items-center md:items-start text-center md:text-left"
@@ -172,7 +196,10 @@ const Hero = () => {
           >
             <div
               className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 font-black text-xs text-[#2db355]"
-              style={{ background: "rgba(45,179,85,0.12)", border: "1.5px solid rgba(45,179,85,0.35)" }}
+              style={{
+                background: "rgba(45,179,85,0.12)",
+                border: "1.5px solid rgba(45,179,85,0.35)",
+              }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#2db355] animate-pulse-dot" />
               {t.hero.badge}
@@ -180,8 +207,10 @@ const Hero = () => {
 
             <h1 className="font-fredoka text-[clamp(48px,6vw,80px)] leading-[1.05] text-white mb-6">
               {t.hero.h1} <span className="text-[#2db355]">{t.hero.h1a}</span>
-              <br />{t.hero.h2} <span className="text-[#2db355]">{t.hero.h2a}</span>
-              <br />{t.hero.h3} <span className="text-[#f5a623]">{t.hero.h3g}</span>
+              <br />
+              {t.hero.h2} <span className="text-[#2db355]">{t.hero.h2a}</span>
+              <br />
+              {t.hero.h3} <span className="text-[#f5a623]">{t.hero.h3g}</span>
             </h1>
 
             <p className="text-[17px] font-semibold text-white/55 leading-[1.65] max-w-[420px] mb-9">
@@ -215,8 +244,12 @@ const Hero = () => {
 
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 pt-6 border-t border-white/[0.08]">
               {t.hero.proof.map((p, i) => (
-                <div key={i} className="flex items-center gap-1.5 text-[13px] font-bold text-white/50">
-                  {p.icon} <strong className="text-white/85">{p.strong}</strong> {p.label}
+                <div
+                  key={i}
+                  className="flex items-center gap-1.5 text-[13px] font-bold text-white/50"
+                >
+                  {p.icon} <strong className="text-white/85">{p.strong}</strong>{" "}
+                  {p.label}
                   {i < t.hero.proof.length - 1 && (
                     <span className="ml-4 w-px h-5 bg-white/12 inline-block" />
                   )}
@@ -235,7 +268,6 @@ const Hero = () => {
             <PhoneCarousel />
             <FloatingCards />
           </motion.div>
-
         </div>
       </div>
 

@@ -8,17 +8,21 @@ const LangToggle = () => {
   return (
     <div className="flex items-center bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-full p-0.5">
       <button
-        onClick={() => setLang('fr')}
+        onClick={() => setLang("fr")}
         className={`text-xs font-black px-3 py-1.5 rounded-full transition-all duration-200 ${
-          lang === 'fr' ? 'bg-[#1e8a3c] text-white shadow-sm' : 'text-[#6b7b6b] hover:text-[#1a1a1a]'
+          lang === "fr"
+            ? "bg-[#1e8a3c] text-white shadow-sm"
+            : "text-[#6b7b6b] hover:text-[#1a1a1a]"
         }`}
       >
         FR
       </button>
       <button
-        onClick={() => setLang('en')}
+        onClick={() => setLang("en")}
         className={`text-xs font-black px-3 py-1.5 rounded-full transition-all duration-200 ${
-          lang === 'en' ? 'bg-[#1e8a3c] text-white shadow-sm' : 'text-[#6b7b6b] hover:text-[#1a1a1a]'
+          lang === "en"
+            ? "bg-[#1e8a3c] text-white shadow-sm"
+            : "text-[#6b7b6b] hover:text-[#1a1a1a]"
         }`}
       >
         EN
@@ -41,11 +45,16 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-[66px] flex items-center bg-white/95 backdrop-blur-md border-b-2 border-[#dde8dd]">
       <div className="max-w-[1120px] mx-auto px-6 flex items-center justify-between w-full">
-
         {/* Logo */}
         <a href="#" className="flex items-center gap-2.5">
-          <img src="/logo/shaba-logo.png" alt="Shabas" className="h-9 w-auto object-contain" />
-          <span className="font-fredoka text-[22px] text-[#1a1a1a] tracking-[0.5px]">shabas</span>
+          <img
+            src="/logo/shaba-logo.png"
+            alt="Shabas"
+            className="h-9 w-auto object-contain"
+          />
+          <span className="font-fredoka text-[22px] text-[#1a1a1a] tracking-[0.5px]">
+            shabas
+          </span>
         </a>
 
         {/* Desktop nav */}
@@ -75,7 +84,11 @@ const Header = () => {
         {/* Hamburger */}
         <div className="md:hidden flex items-center gap-2">
           <LangToggle />
-          <button className="p-2 text-[#1a1a1a]" onClick={() => setOpen(!open)} aria-label="Menu">
+          <button
+            className="p-2 text-[#1a1a1a]"
+            onClick={() => setOpen(!open)}
+            aria-label="Menu"
+          >
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
