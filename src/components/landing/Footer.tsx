@@ -22,41 +22,80 @@ const Footer = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mb-10">
-
           {/* Brand */}
           <div>
             <a href="#" className="flex items-center gap-2.5 mb-3">
-              <img src="/logo/shaba-logo.png" alt="Shabas" className="h-8 w-auto object-contain" />
-              <span className="font-fredoka text-[20px] text-white tracking-[0.5px]">shabas</span>
+              <img
+                src="/logo/shaba-logo.png"
+                alt="Shabas"
+                className="h-8 w-auto object-contain"
+              />
+              <span className="font-fredoka text-[20px] text-white tracking-[0.5px]">
+                shabas
+              </span>
             </a>
-            <p className="text-[13px] font-semibold text-white/35 leading-[1.6] max-w-[260px] mb-4">{f.brand}</p>
+            <p className="text-[13px] font-semibold text-white/35 leading-[1.6] max-w-[260px] mb-4">
+              {f.brand}
+            </p>
             <div className="flex flex-col gap-1.5 text-[14px] font-bold text-white/55">
-              <a href="mailto:shabasfootball@gmail.com" className="hover:text-[#2db355] transition-colors">shabasfootball@gmail.com</a>
-              <a href="tel:+237673015993" className="hover:text-[#2db355] transition-colors">+237 673 015 993</a>
+              <a
+                href="mailto:shabasfootball@gmail.com"
+                className="hover:text-[#2db355] transition-colors"
+              >
+                shabasfootball@gmail.com
+              </a>
+              <a
+                href="tel:+237673015993"
+                className="hover:text-[#2db355] transition-colors"
+              >
+                +237 673 015 993
+              </a>
             </div>
           </div>
 
           {/* Product */}
           <div>
-            <h4 className="text-[11px] font-black uppercase tracking-[1.5px] text-white/35 mb-4">{f.product}</h4>
+            <h4 className="text-[11px] font-black uppercase tracking-[1.5px] text-white/35 mb-4">
+              {f.product}
+            </h4>
             {f.productLinks.map((l) => (
-              <a key={l} href="#" className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors">{l}</a>
+              <a
+                key={l}
+                href="#"
+                className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors"
+              >
+                {l}
+              </a>
             ))}
           </div>
 
           {/* Company */}
           <div>
-            <h4 className="text-[11px] font-black uppercase tracking-[1.5px] text-white/35 mb-4">{f.company}</h4>
-            <Link to="/privacy-policy" className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors">
+            <h4 className="text-[11px] font-black uppercase tracking-[1.5px] text-white/35 mb-4">
+              {f.company}
+            </h4>
+            <Link
+              to="/privacy-policy"
+              className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors"
+            >
               {f.privacyPolicy}
             </Link>
             {f.companyLinks.map((l) => (
-              <a key={l} href="#" className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors">{l}</a>
+              <a
+                key={l}
+                href="#"
+                className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors"
+              >
+                {l}
+              </a>
             ))}
           </div>
         </div>
 
-        <div className="h-px mb-6" style={{ background: "rgba(255,255,255,0.06)" }} />
+        <div
+          className="h-px mb-6"
+          style={{ background: "rgba(255,255,255,0.06)" }}
+        />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12px] font-bold text-white/25">
