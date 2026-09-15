@@ -1,5 +1,6 @@
 import Header from "@/components/landing/Header";
 import Hero from "@/components/landing/Hero";
+import ResultsTicker from "@/components/landing/ResultsTicker";
 import Features from "@/components/landing/Features";
 import HowItWorks from "@/components/landing/HowItWorks";
 import Gamification from "@/components/landing/Gamification";
@@ -13,6 +14,7 @@ const Index = () => (
     <Header />
     <main>
       <Hero />
+      <ResultsTicker />
       <Features />
       <HowItWorks />
       <Gamification />

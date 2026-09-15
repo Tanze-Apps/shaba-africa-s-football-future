@@ -7,9 +7,20 @@ const fr = {
     tournaments: "Tournois",
     laRue: "La Rue",
     download: "Télécharger",
+    menu: "Menu",
+    close: "Fermer",
+    navigation: "Navigation",
+  },
+  ticker: {
+    headline: "Derniers résultats & prochains défis",
+    verified: "Vérifié",
+    upcoming: "À venir",
+    note: "Exemple de données in-app",
   },
   hero: {
     badge: "Afrique · Canada · Et plus",
+    eyebrow: "Bienvenue chez Shabas",
+    scroll: "Défiler",
     h1: "Votre",
     h1a: "quartier.",
     h2: "Votre",
@@ -21,16 +32,16 @@ const fr = {
     ctaWeb: "Essayer sur le web",
     iphoneNotice: "Utilisateurs iPhone : accédez à l'app sur app.sha-bas.com",
     proof: [
-      { icon: "🔥", strong: "12+", label: "équipes actives" },
-      { icon: "📍", strong: "Cameroun", label: "& Canada" },
-      { icon: "⭐", strong: "5.0", label: "REP moyen" },
-      { icon: "🆓", strong: "Gratuit", label: "de base" },
+      { strong: "12+", label: "équipes actives" },
+      { strong: "Cameroun", label: "& Canada" },
+      { strong: "5.0", label: "REP moyen" },
+      { strong: "Gratuit", label: "de base" },
     ],
     stats: [
       { val: "12+", label: "Équipes actives" },
       { val: "5+", label: "Villes" },
       { val: "100%", label: "Résultats vérifiés" },
-      { val: "🌍", label: "Africa & Canada" },
+      { val: "2", label: "Pays" },
     ],
   },
   features: {
@@ -220,18 +231,32 @@ const fr = {
     madeWith: "",
     privacyPolicy: "Politique de confidentialité",
   },
-} as const;
+};
 
-const en = {
+// Typing `en` as `typeof fr` makes the compiler enforce that both languages
+// stay structurally identical — a missing or misspelled key is now a build
+// error rather than an `undefined` rendered into the page.
+const en: typeof fr = {
   nav: {
     features: "Features",
     howItWorks: "How It Works",
     tournaments: "Tournaments",
     laRue: "The Street",
     download: "Download",
+    menu: "Menu",
+    close: "Close",
+    navigation: "Navigation",
+  },
+  ticker: {
+    headline: "Latest results & next challenges",
+    verified: "Verified",
+    upcoming: "Upcoming",
+    note: "Sample in-app data",
   },
   hero: {
     badge: "Africa · Canada · And more",
+    eyebrow: "Welcome to Shabas",
+    scroll: "Scroll",
     h1: "Your",
     h1a: "neighborhood.",
     h2: "Your",
@@ -243,16 +268,16 @@ const en = {
     ctaWeb: "Try on the Web",
     iphoneNotice: "iPhone users: access the app at app.sha-bas.com",
     proof: [
-      { icon: "🔥", strong: "12+", label: "active teams" },
-      { icon: "📍", strong: "Cameroon", label: "& Canada" },
-      { icon: "⭐", strong: "5.0", label: "avg REP" },
-      { icon: "🆓", strong: "Free", label: "to start" },
+      { strong: "12+", label: "active teams" },
+      { strong: "Cameroon", label: "& Canada" },
+      { strong: "5.0", label: "avg REP" },
+      { strong: "Free", label: "to start" },
     ],
     stats: [
       { val: "12+", label: "Active Teams" },
       { val: "5+", label: "Cities" },
       { val: "100%", label: "Verified Results" },
-      { val: "🌍", label: "Africa & Canada" },
+      { val: "2", label: "Countries" },
     ],
   },
   features: {
@@ -432,7 +457,7 @@ const en = {
     madeWith: "",
     privacyPolicy: "Privacy Policy",
   },
-} as const;
+};
 
 export const translations = { fr, en } as const;
 export type T = typeof fr;
