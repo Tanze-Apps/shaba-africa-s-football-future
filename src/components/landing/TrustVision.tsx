@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Globe, Shield, Sparkles } from "lucide-react";
-import visionMockup from "../../assets/mockup1.png";
+import visionMockup from "../../assets/mockup1.webp";
 
 const TrustVision = () => {
   const ref = useRef(null);

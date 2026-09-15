@@ -1,111 +1,117 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useInView } from "framer-motion";
 import { useLang } from "@/contexts/lang";
+import { Reveal } from "@/components/motion/Reveal";
+import SocialRow from "@/components/SocialRow";
+
+const EMAIL = "shabasfootball@gmail.com";
+const PHONE = "+237673015993";
+const PHONE_DISPLAY = "+237 673 015 993";
+
+/**
+ * Destinations line up with `t.footer.productLinks` / `companyLinks` by index.
+ * The remaining "#" entries are pages that do not exist yet.
+ */
+const PRODUCT_HREFS = ["#features", "#how", "#la-rue", "#features"];
+const COMPANY_HREFS = ["#", "/privacy-policy", "#", `mailto:${EMAIL}`];
 
 const Footer = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
   const { t } = useLang();
   const f = t.footer;
+  const year = new Date().getFullYear();
 
   return (
-    <footer
-      ref={ref}
-      className="border-t py-12 pb-7"
-      style={{ background: "#0a1a0f", borderColor: "rgba(255,255,255,0.06)" }}
-    >
-      <motion.div
-        className="max-w-[1120px] mx-auto px-6"
-        initial={{ opacity: 0, y: 16 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mb-10">
-          {/* Brand */}
+    <footer className="border-t border-bone/10 bg-ink-deep">
+      <div className="mx-auto max-w-[1340px] px-5 md:px-10">
+        {/* Oversized wordmark */}
+        <Reveal>
+          <div className="border-b border-bone/10 py-14 md:py-20">
+            <span className="font-display block text-[clamp(56px,15vw,210px)] leading-[0.85] text-bone/90">
+              Shabas
+            </span>
+          </div>
+        </Reveal>
+
+        <div className="grid gap-12 py-14 md:grid-cols-[1.4fr_1fr_1fr] md:gap-16">
+          {/* Brand + contact */}
           <div>
-            <a href="#" className="flex items-center gap-2.5 mb-3">
-              <img
-                src="/logo/shaba-logo.png"
-                alt="Shabas"
-                className="h-8 w-auto object-contain"
-              />
-              <span className="font-fredoka text-[20px] text-white tracking-[0.5px]">
-                shabas
-              </span>
-            </a>
-            <p className="text-[13px] font-semibold text-white/35 leading-[1.6] max-w-[260px] mb-4">
+            <p className="max-w-[300px] text-[14px] leading-relaxed text-bone-dim">
               {f.brand}
             </p>
-            <div className="flex flex-col gap-1.5 text-[14px] font-bold text-white/55">
+
+            <div className="mt-6 flex flex-col gap-2">
               <a
-                href="mailto:shabasfootball@gmail.com"
-                className="hover:text-[#2db355] transition-colors"
+                href={`mailto:${EMAIL}`}
+                className="text-[14px] text-bone transition-colors duration-200 hover:text-brand-bright"
               >
-                shabasfootball@gmail.com
+                {EMAIL}
               </a>
               <a
-                href="tel:+237673015993"
-                className="hover:text-[#2db355] transition-colors"
+                href={`tel:${PHONE}`}
+                className="text-[14px] text-bone transition-colors duration-200 hover:text-brand-bright"
               >
-                +237 673 015 993
+                {PHONE_DISPLAY}
               </a>
             </div>
+
+            <SocialRow className="mt-7" />
           </div>
 
           {/* Product */}
           <div>
-            <h4 className="text-[11px] font-black uppercase tracking-[1.5px] text-white/35 mb-4">
-              {f.product}
-            </h4>
-            {f.productLinks.map((l) => (
-              <a
-                key={l}
-                href="#"
-                className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors"
-              >
-                {l}
-              </a>
-            ))}
+            <h4 className="u-eyebrow mb-5 text-bone-faint">{f.product}</h4>
+            <ul className="flex flex-col gap-3">
+              {f.productLinks.map((label, i) => (
+                <li key={label}>
+                  <a
+                    href={PRODUCT_HREFS[i]}
+                    className="text-[14px] text-bone-dim transition-colors duration-200 hover:text-bone"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Company */}
           <div>
-            <h4 className="text-[11px] font-black uppercase tracking-[1.5px] text-white/35 mb-4">
-              {f.company}
-            </h4>
-            <Link
-              to="/privacy-policy"
-              className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors"
-            >
-              {f.privacyPolicy}
-            </Link>
-            {f.companyLinks.map((l) => (
-              <a
-                key={l}
-                href="#"
-                className="block text-[14px] font-bold text-white/55 mb-2.5 hover:text-[#2db355] transition-colors"
-              >
-                {l}
-              </a>
-            ))}
+            <h4 className="u-eyebrow mb-5 text-bone-faint">{f.company}</h4>
+            <ul className="flex flex-col gap-3">
+              {f.companyLinks.map((label, i) => {
+                const href = COMPANY_HREFS[i];
+                const className =
+                  "text-[14px] text-bone-dim transition-colors duration-200 hover:text-bone";
+
+                return (
+                  <li key={label}>
+                    {href.startsWith("/") ? (
+                      <Link to={href} className={className}>
+                        {label}
+                      </Link>
+                    ) : (
+                      <a href={href} className={className}>
+                        {label}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
 
-        <div
-          className="h-px mb-6"
-          style={{ background: "rgba(255,255,255,0.06)" }}
-        />
-
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[12px] font-bold text-white/25">
-            © {new Date().getFullYear()} {f.copy}
+        <div className="flex flex-col gap-3 border-t border-bone/10 py-7 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[12px] text-bone-faint">
+            © {year} {f.copy}
           </p>
-          <div className="flex items-center gap-2 text-[12px] font-black text-white/40">
-            {f.madeWith}
-          </div>
+          <Link
+            to="/privacy-policy"
+            className="text-[12px] text-bone-faint transition-colors duration-200 hover:text-bone"
+          >
+            {f.privacyPolicy}
+          </Link>
         </div>
-      </motion.div>
+      </div>
     </footer>
   );
 };

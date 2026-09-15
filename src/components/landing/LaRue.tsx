@@ -1,125 +1,95 @@
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { Megaphone, Swords, BarChart3 } from "lucide-react";
 import { useLang } from "@/contexts/lang";
+import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
+import communityPhoto from "@/assets/photos/community-fans.webp";
 
-const FeedPost = ({
-  avatar, name, handle, time, tag, tagColor, children, actions,
-}: {
-  avatar: string;
-  name: string;
-  handle: string;
-  time: string;
-  tag: string;
-  tagColor?: string;
-  children: React.ReactNode;
-  actions: { icon: string; count: number }[];
-}) => (
-  <div className="rounded-[18px] p-3.5 border-2"
-    style={{ borderColor: tagColor ? "#ffe082" : "#dde8dd", background: tagColor ? "#fffde7" : "white" }}>
-    <div className="flex items-center gap-2.5 mb-2">
-      <div className="w-8 h-8 rounded-full flex items-center justify-center text-base flex-shrink-0"
-        style={{ background: tagColor ? "#fff3e0" : "#e8f5ed", border: "2px solid #dde8dd" }}>
-        {avatar}
-      </div>
-      <div>
-        <div className="text-[12px] font-black">{name}</div>
-        <div className="text-[10px] text-[#6b7b6b] font-semibold">{handle} · {time}</div>
-      </div>
-    </div>
-    <div className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-black mb-2"
-      style={{ background: tagColor ? "#fff3e0" : "#e8f5ed", border: `1.5px solid ${tagColor ?? "#b2d8bf"}`, color: tagColor ?? "#1e8a3c" }}>
-      {tag}
-    </div>
-    {children}
-    <div className="flex gap-3 mt-2">
-      {actions.map((a) => (
-        <div key={a.icon} className="text-[10px] font-black text-[#6b7b6b] flex items-center gap-1">{a.icon} {a.count}</div>
-      ))}
-    </div>
-  </div>
-);
+const FEATURE_ICONS = [Megaphone, Swords, BarChart3];
 
 const LaRue = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
   const { t } = useLang();
-  const l = t.laRue;
+  const reduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  // Gentle counter-scroll so the photograph feels set back from the page.
+  const photoY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
-    <section id="la-rue" className="py-24 relative overflow-hidden stripe-bg" style={{ background: "#0a1a0f" }}>
-      <div className="max-w-[1120px] mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+    <section
+      id="la-rue"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-ink-deep"
+    >
+      <motion.div
+        className="absolute inset-0 h-[116%] -top-[8%]"
+        style={reduced ? undefined : { y: photoY }}
+      >
+        <img
+          src={communityPhoto}
+          alt=""
+          loading="lazy"
+          className="h-full w-full object-cover"
+        />
+      </motion.div>
 
-          {/* LEFT */}
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 24 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.55 }}
-          >
-            <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] mb-7"
-              style={{ background: "rgba(255,255,255,0.1)", border: "1.5px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}>
-              {l.badge}
-            </div>
-            <h2 className="font-fredoka text-[clamp(38px,5vw,62px)] text-white leading-[1.05] mb-4">
-              {l.headline} <span className="text-[#2db355]">{l.accentH}</span><br />
-              {l.line2}<br />{l.line3}
-            </h2>
-            <p className="text-[16px] font-semibold text-white/50 leading-[1.65] max-w-[380px] mb-7">{l.sub}</p>
+      <div className="u-photo-wash absolute inset-0" />
+      <div className="u-grid-lines absolute inset-0 opacity-50" />
 
-            <div className="flex flex-col gap-3 mb-8">
-              {l.features.map((f) => (
-                <div key={f.title} className="flex items-start gap-3 text-[14px] font-bold text-white/60">
-                  <div className="w-8 h-8 rounded-[10px] flex items-center justify-center text-base flex-shrink-0"
-                    style={{ background: "rgba(45,179,85,0.15)", border: "1.5px solid rgba(45,179,85,0.3)" }}>
-                    {f.icon}
-                  </div>
-                  <div><strong className="text-white/90">{f.title}</strong> — {f.desc}</div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+      <div className="relative mx-auto max-w-[1340px] px-5 py-20 md:px-10 md:py-28">
+        <Reveal>
+          <span className="u-eyebrow text-brand-bright">{t.laRue.badge}</span>
+        </Reveal>
 
-          {/* RIGHT — feed */}
-          <motion.div
-            className="flex flex-col gap-2.5 md:rotate-2"
-            style={{ filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.5))" }}
-            initial={{ opacity: 0, y: 24 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.55, delay: 0.2 }}
-          >
-            <FeedPost
-              avatar="🏆" name="QG Family ✓" handle="@qg_family" time="2h · Ange-Raphaël"
-              tag="⚽ Match · QG Family vs Trinity Sante"
-              actions={[{ icon: "❤️", count: 24 }, { icon: "💬", count: 8 }, { icon: "🔁", count: 3 }]}
-            >
-              <div className="rounded-xl p-2.5 flex items-center justify-center gap-3 mb-2" style={{ background: "#12261e" }}>
-                <div className="text-center text-white">
-                  <div className="text-lg">🏆</div>
-                  <div className="text-[9px] font-black">QG Family</div>
-                </div>
-                <div className="font-fredoka text-[20px] text-[#2db355]">0 – 0</div>
-                <div className="text-center text-white">
-                  <div className="text-lg">⚽</div>
-                  <div className="text-[9px] font-black">Trinity Sante</div>
-                </div>
-              </div>
-              <p className="text-[12px] font-semibold text-[#1a1a1a] leading-[1.5]">
-                Ce soir on a tout donné ! Match nul mais on repart la tête haute 💪 Respect à @TrinityFC 🤝
-              </p>
-            </FeedPost>
+        <MaskLines
+          as="h2"
+          lines={[
+            <>
+              {t.laRue.headline}{" "}
+              <span className="text-brand-bright">{t.laRue.accentH}</span>
+            </>,
+            t.laRue.line2,
+            t.laRue.line3,
+          ]}
+          className="font-display mt-5 text-[clamp(36px,7.4vw,96px)] leading-[1.03] text-bone"
+        />
 
-            <FeedPost
-              avatar="🦂" name="Scorpions FC" handle="@scorpions_dla" time="5h · Makepe"
-              tag="⚡ Défi lancé · 10/6/2026"
-              tagColor="#f5a623"
-              actions={[{ icon: "❤️", count: 41 }, { icon: "💬", count: 17 }, { icon: "🔁", count: 9 }]}
-            >
-              <p className="text-[12px] font-semibold text-[#1a1a1a] leading-[1.5]">
-                On vous attend sur le terrain 😤 Qui ose relever le défi ? 🦂🔥
-              </p>
-            </FeedPost>
-          </motion.div>
+        <Reveal delay={0.12}>
+          <p className="mt-7 max-w-[540px] text-[15px] leading-relaxed text-bone-dim md:text-[17px]">
+            {t.laRue.sub}
+          </p>
+        </Reveal>
+
+        <div className="mt-14 grid gap-8 md:mt-20 md:grid-cols-3 md:gap-12">
+          {t.laRue.features.map((f, i) => {
+            const Icon = FEATURE_ICONS[i];
+            return (
+              <motion.div
+                key={f.title}
+                className="border-t border-bone/20 pt-6"
+                initial={{ opacity: 0, y: 26 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+                transition={{ duration: 0.65, delay: i * 0.08, ease: EASE }}
+              >
+                <Icon
+                  className="h-5 w-5 text-brand-bright"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+                <h3 className="font-display mt-4 text-[clamp(19px,2.6vw,27px)] leading-tight text-bone">
+                  {f.title}
+                </h3>
+                <p className="mt-3 text-[14px] leading-relaxed text-bone-dim md:text-[15px]">
+                  {f.desc}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

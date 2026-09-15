@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8F3EC]">
+    <div className="min-h-screen bg-ink">
       <Header />
       
       <main className="pt-24 md:pt-32 pb-12 md:pb-20 px-4 md:px-6 font-sans">
@@ -17,26 +17,25 @@ const PrivacyPolicy = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-16 shadow-xl shadow-black/5 border border-black/[0.03]"
+          className="max-w-4xl mx-auto bg-ink-raised p-6 md:p-16 border border-bone/10"
         >
           <div className="mb-8 md:mb-12">
-            <h1 className="text-3xl md:text-6xl font-black text-gray-900 mb-4 md:mb-6 tracking-tight leading-tight">
-              Privacy Policy for <span className="text-primary italic">Shabas</span>
+            <h1 className="font-display text-[clamp(30px,6vw,64px)] leading-[1.05] text-bone mb-4 md:mb-6">
+              Privacy Policy for <span className="text-brand-bright">Shabas</span>
             </h1>
-            <div className="flex items-center gap-2 text-gray-400 font-bold text-xs md:text-sm bg-gray-50 w-fit px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-gray-100">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <div className="u-eyebrow flex items-center gap-2 text-bone-faint w-fit px-3 py-2 border border-bone/10">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-bright" />
               Last updated: January 2026
             </div>
           </div>
 
-          <div className="bg-primary/5 border-l-4 border-primary p-6 md:p-8 rounded-r-[1.25rem] md:rounded-r-[1.5rem] mb-10 md:mb-16 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
-            <p className="text-gray-900 text-base md:text-lg font-medium leading-relaxed relative z-10">
-              <strong className="text-primary">Your privacy is important to us.</strong> This privacy policy explains how Shabas collects, uses, and protects your personal information when you use our mobile application.
+          <div className="border-l-2 border-brand-bright bg-bone/[0.03] p-6 md:p-8 mb-10 md:mb-16 relative overflow-hidden">
+                        <p className="text-bone text-[15px] md:text-[17px] leading-relaxed relative z-10">
+              <strong className="text-brand-bright">Your privacy is important to us.</strong> This privacy policy explains how Shabas collects, uses, and protects your personal information when you use our mobile application.
             </p>
           </div>
 
-          <div className="prose prose-sm md:prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-black prose-headings:tracking-tight prose-p:text-gray-600 prose-p:leading-relaxed prose-li:text-gray-600 prose-strong:text-gray-900 prose-strong:font-bold prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-hr:border-gray-100">
+          <div className="prose prose-sm md:prose-base prose-invert max-w-none prose-headings:font-display prose-headings:font-normal prose-headings:text-bone prose-h2:text-[clamp(21px,3vw,30px)] prose-h2:leading-tight prose-h3:text-[clamp(17px,2.2vw,22px)] prose-p:text-bone-dim prose-p:leading-relaxed prose-li:text-bone-dim prose-strong:text-bone prose-strong:font-semibold prose-a:text-brand-bright prose-a:no-underline hover:prose-a:underline prose-hr:border-bone/10">
             <h2>1. Information We Collect</h2>
 
             <h3>1.1 Personal Information</h3>
@@ -245,16 +244,16 @@ const PrivacyPolicy = () => {
             <h2>10. Contact Us</h2>
             <p>If you have any questions, concerns, or requests regarding this privacy policy or your personal data, please contact us:</p>
             
-            <div className="bg-primary/5 p-6 md:p-8 rounded-2xl md:rounded-3xl border border-primary/10 mt-6 group">
-                <span className="block text-xl md:text-2xl font-black text-primary mb-4 group-hover:translate-x-2 transition-transform duration-300">Shabas</span>
-                <div className="space-y-2 font-bold text-gray-700 text-sm md:text-base">
+            <div className="bg-bone/[0.03] p-6 md:p-8 border border-bone/10 mt-6">
+                <span className="font-display block text-[24px] md:text-[30px] leading-none text-brand-bright mb-5">Shabas</span>
+                <div className="space-y-3 text-bone-dim text-sm md:text-base">
                     <p className="m-0 flex flex-wrap items-center gap-3">
-                        <span className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-primary shadow-sm border border-black/5 flex-shrink-0">@</span>
-                        Email: <a href="mailto:shabasfootball@gmail.com" className="text-primary hover:underline break-all">shabasfootball@gmail.com</a>
+                        <span className="w-8 h-8 flex items-center justify-center text-brand-bright border border-bone/15 flex-shrink-0">@</span>
+                        Email: <a href="mailto:shabasfootball@gmail.com" className="text-brand-bright hover:underline break-all">shabasfootball@gmail.com</a>
                     </p>
                     <p className="m-0 flex flex-wrap items-center gap-3">
-                        <span className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-primary shadow-sm border border-black/5 flex-shrink-0">w</span>
-                        Website: <a href="https://sha-bas.com" className="text-primary hover:underline break-all">https://sha-bas.com</a>
+                        <span className="w-8 h-8 flex items-center justify-center text-brand-bright border border-bone/15 flex-shrink-0">w</span>
+                        Website: <a href="https://sha-bas.com" className="text-brand-bright hover:underline break-all">https://sha-bas.com</a>
                     </p>
                 </div>
             </div>
@@ -280,8 +279,8 @@ const PrivacyPolicy = () => {
                 <li>Right to non-discrimination for exercising your rights</li>
             </ul>
 
-            <div className="pt-20 pb-4 border-t border-gray-100 mt-20">
-                <p className="text-center text-gray-400 font-bold text-sm tracking-widest uppercase">
+            <div className="pt-16 pb-4 border-t border-bone/10 mt-20">
+                <p className="u-eyebrow text-center text-bone-faint">
                     © 2026 Shabas. All rights reserved.
                 </p>
             </div>
