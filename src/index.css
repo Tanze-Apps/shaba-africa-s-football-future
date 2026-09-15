@@ -1,49 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------
+   Design tokens — dark editorial system
+   Two typefaces only: Anton (display) and Inter (everything else).
+   ------------------------------------------------------------------ */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 20% 10%;
+    /* Raw brand values */
+    --ink: 150 14% 4%;
+    --ink-raised: 154 16% 7%;
+    --bone: 100 12% 95%;
+    --brand: 141 64% 33%;
+    --brand-bright: 141 60% 44%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    /* shadcn/ui contract, mapped onto the dark system */
+    --background: var(--ink);
+    --foreground: var(--bone);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --card: var(--ink-raised);
+    --card-foreground: var(--bone);
 
-    --primary: 141 64% 33%;
+    --popover: var(--ink-raised);
+    --popover-foreground: var(--bone);
+
+    --primary: var(--brand);
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 20% 20%;
+    --secondary: 154 12% 12%;
+    --secondary-foreground: var(--bone);
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 154 10% 14%;
+    --muted-foreground: 120 6% 62%;
 
-    --accent: 38 93% 55%;
-    --accent-foreground: 220 20% 10%;
+    --accent: var(--brand-bright);
+    --accent-foreground: 150 14% 4%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 120 18% 88%;
-    --input: 120 18% 88%;
-    --ring: 141 64% 33%;
+    --border: 150 8% 18%;
+    --input: 150 8% 18%;
+    --ring: var(--brand-bright);
 
-    --radius: 0.75rem;
+    /* Square by default — the reference design has no rounded corners */
+    --radius: 0rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 120 18% 88%;
-    --sidebar-ring: 141 64% 33%;
+    --sidebar-background: var(--ink-raised);
+    --sidebar-foreground: var(--bone);
+    --sidebar-primary: var(--brand);
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 154 12% 12%;
+    --sidebar-accent-foreground: var(--bone);
+    --sidebar-border: 150 8% 18%;
+    --sidebar-ring: var(--brand-bright);
   }
 }
 
@@ -54,89 +67,120 @@
 
   html {
     scroll-behavior: smooth;
+    /* Fixed header height, so anchor targets don't hide behind it */
+    scroll-padding-top: 88px;
   }
 
   body {
-    @apply bg-white text-[#1a1a1a] antialiased;
-    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+    @apply bg-ink text-bone antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
+    font-synthesis-weight: none;
+  }
+
+  ::selection {
+    background: hsl(var(--brand-bright));
+    color: #050806;
+  }
+
+  /* Display face is uppercase-only by design — Anton has no lowercase character */
+  .font-display {
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    font-weight: 400;
   }
 }
 
-/* Custom scrollbar */
+/* Scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #1e8a3c #f0f2f0;
+  scrollbar-color: #1e8a3c #0e1411;
 }
-*::-webkit-scrollbar { width: 8px; }
-*::-webkit-scrollbar-track { background: #f0f2f0; }
-*::-webkit-scrollbar-thumb { background: #1e8a3c; border-radius: 999px; }
-*::-webkit-scrollbar-thumb:hover { background: #145c28; }
+*::-webkit-scrollbar { width: 10px; }
+*::-webkit-scrollbar-track { background: #0e1411; }
+*::-webkit-scrollbar-thumb { background: #1e8a3c; }
+*::-webkit-scrollbar-thumb:hover { background: #2db355; }
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
 
-  /* Duolingo-style 3D button press */
-  .btn-duo {
-    @apply relative transition-all duration-100;
-    box-shadow: 0 5px 0 #145c28;
+  /* ---------------------------------------------------------------
+     Hairline column grid overlaid on full-bleed sections.
+     Four columns on mobile, six from md up.
+     --------------------------------------------------------------- */
+  .u-grid-lines {
+    background-image:
+      linear-gradient(to right, rgba(242, 244, 241, 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(242, 244, 241, 0.07) 1px, transparent 1px);
+    background-size: 25% 180px;
+    background-position: -1px -1px;
   }
-  .btn-duo:hover  { transform: translateY(-2px); box-shadow: 0 7px 0 #145c28; }
-  .btn-duo:active { transform: translateY(4px);  box-shadow: 0 1px 0 #145c28; }
-
-  .btn-duo-white {
-    @apply relative transition-all duration-100;
-    box-shadow: 0 5px 0 rgba(0,0,0,0.2);
-  }
-  .btn-duo-white:hover  { transform: translateY(-2px); box-shadow: 0 7px 0 rgba(0,0,0,0.2); }
-  .btn-duo-white:active { transform: translateY(4px);  box-shadow: 0 1px 0 rgba(0,0,0,0.2); }
-
-  /* XP bar fill animation */
-  .xp-fill-animate {
-    animation: xpFill 2s 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    width: 0%;
+  @media (min-width: 768px) {
+    .u-grid-lines { background-size: 16.666% 220px; }
   }
 
-  /* Gamification XP bar */
-  .gam-xp-animate {
-    animation: xpFill 1.8s 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    width: 0%;
+  /* Dark wash that keeps display type legible over any photograph */
+  .u-photo-wash {
+    background:
+      linear-gradient(to bottom, rgba(5, 8, 6, 0.72) 0%, rgba(5, 8, 6, 0.55) 45%, rgba(5, 8, 6, 0.92) 100%),
+      linear-gradient(to right, rgba(12, 32, 18, 0.55), rgba(5, 8, 6, 0.35));
   }
 
-  /* Bento card hover glow */
-  .bento-glow {
-    @apply absolute top-[-40px] right-[-40px] w-40 h-40 rounded-full opacity-0 transition-opacity duration-500;
-    filter: blur(60px);
+  /* Wraps one line of display type so it can slide up from behind a mask.
+     Anton's glyph box is far taller than its cap height, so the clip box needs
+     padding or descenders (the tail of a Q) get sliced off. The negative
+     margin cancels that padding so line spacing stays governed by
+     line-height alone. */
+  .u-mask {
+    display: block;
+    overflow: hidden;
+    padding: 0.1em 0.05em;
+    margin: -0.1em -0.05em;
   }
-  .group:hover .bento-glow { opacity: 0.12; }
+
+  /* Turns a solid-colour transparent PNG logo pure white for dark surfaces */
+  .u-logo-white {
+    filter: brightness(0) invert(1);
+  }
+
+  /* Small uppercase label used for eyebrows and section tags */
+  .u-eyebrow {
+    @apply text-[11px] font-semibold uppercase;
+    letter-spacing: 0.22em;
+  }
+
+  .u-hairline { border-color: rgba(242, 244, 241, 0.12); }
+
+  /* Edge fade for marquee rows */
+  .u-edge-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  }
 }
 
-@keyframes xpFill {
-  to { width: 78%; }
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 
-@keyframes slideInResult {
-  from { opacity: 0; transform: translateX(-10px); }
-  to   { opacity: 1; transform: translateX(0); }
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 46s) linear infinite;
+  will-change: transform;
 }
+.u-marquee-host:hover .animate-marquee { animation-play-state: paused; }
 
-.slide-in-result {
-  animation: slideInResult 0.35s ease forwards;
-}
+/* ------------------------------------------------------------------
+   Anyone who asks for less motion gets a static, fully legible page.
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 
-/* Diagonal stripe pattern used in hero + la-rue */
-.stripe-bg {
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 40px,
-    rgba(45, 179, 85, 0.025) 40px,
-    rgba(45, 179, 85, 0.025) 80px
-  );
-}
-
-/* Dot grid used in features */
-.dot-grid {
-  background-image: radial-gradient(rgba(0,0,0,0.045) 1px, transparent 1px);
-  background-size: 36px 36px;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

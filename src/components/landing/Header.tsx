@@ -1,129 +1,265 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLang } from "@/contexts/lang";
+import { EASE } from "@/components/motion/Reveal";
+import menuPhoto from "@/assets/photos/team-lineup.webp";
+
+/* ------------------------------------------------------------------
+   Social marks. Lucide dropped most brand glyphs, and it has never had a
+   TikTok one, so these are inline paths.
+   TODO: replace the placeholder hrefs with the real Shabas profiles.
+   ------------------------------------------------------------------ */
+const SOCIALS = [
+  {
+    name: "Facebook",
+    href: "#",
+    path: "M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z",
+  },
+  {
+    name: "X",
+    href: "#",
+    path: "M18.9 3H21l-6.6 7.5L22 21h-6.2l-4.8-6.3L5.5 21H3.4l7-8L2.5 3h6.3l4.4 5.8L18.9 3zm-1.1 16.2h1.2L8.3 4.7H7l10.8 14.5z",
+  },
+  {
+    name: "Instagram",
+    href: "#",
+    path: "M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.9-11.1a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z",
+  },
+  {
+    name: "TikTok",
+    href: "#",
+    path: "M16.5 2h-3v13.1a2.6 2.6 0 1 1-2.2-2.6v-3a5.6 5.6 0 1 0 5.2 5.6V9.3a6.7 6.7 0 0 0 3.9 1.2v-3a3.8 3.8 0 0 1-3.9-3.7V2z",
+  },
+];
+
+const SocialRow = ({ className = "" }: { className?: string }) => (
+  <div className={`flex items-center gap-4 ${className}`}>
+    {SOCIALS.map((s) => (
+      <a
+        key={s.name}
+        href={s.href}
+        aria-label={s.name}
+        className="text-bone/60 transition-colors duration-200 hover:text-brand-bright"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]">
+          <path d={s.path} />
+        </svg>
+      </a>
+    ))}
+  </div>
+);
 
 const LangToggle = () => {
   const { lang, setLang } = useLang();
+
   return (
-    <div className="flex items-center bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-full p-0.5">
-      <button
-        onClick={() => setLang("fr")}
-        className={`text-xs font-black px-3 py-1.5 rounded-full transition-all duration-200 ${
-          lang === "fr"
-            ? "bg-[#1e8a3c] text-white shadow-sm"
-            : "text-[#6b7b6b] hover:text-[#1a1a1a]"
-        }`}
-      >
-        FR
-      </button>
-      <button
-        onClick={() => setLang("en")}
-        className={`text-xs font-black px-3 py-1.5 rounded-full transition-all duration-200 ${
-          lang === "en"
-            ? "bg-[#1e8a3c] text-white shadow-sm"
-            : "text-[#6b7b6b] hover:text-[#1a1a1a]"
-        }`}
-      >
-        EN
-      </button>
+    <div className="flex items-center border border-bone/15">
+      {(["fr", "en"] as const).map((code) => (
+        <button
+          key={code}
+          onClick={() => setLang(code)}
+          aria-pressed={lang === code}
+          className={`px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors duration-200 ${
+            lang === code
+              ? "bg-bone text-ink-deep"
+              : "text-bone/55 hover:text-bone"
+          }`}
+        >
+          {code}
+        </button>
+      ))}
     </div>
   );
 };
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { t } = useLang();
+  const reduced = useReducedMotion();
 
   const navLinks = [
-    { href: '#features',    label: t.nav.features },
-    { href: '#how',         label: t.nav.howItWorks },
-    { href: '#tournaments', label: t.nav.tournaments },
-    { href: '#la-rue',      label: t.nav.laRue },
+    { href: "#features", label: t.nav.features },
+    { href: "#how", label: t.nav.howItWorks },
+    { href: "#tournaments", label: t.nav.tournaments },
+    { href: "#la-rue", label: t.nav.laRue },
+    { href: "#download", label: t.nav.download },
   ];
 
+  // Header goes solid once the hero starts scrolling away.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Hold the page still behind the overlay, and let Escape dismiss it.
+  useEffect(() => {
+    if (!open) return;
+
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-[66px] flex items-center bg-white/95 backdrop-blur-md border-b-2 border-[#dde8dd]">
-      <div className="max-w-[1120px] mx-auto px-6 flex items-center justify-between w-full">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-2.5">
-          <img
-            src="/logo/shaba-logo.png"
-            alt="Shabas"
-            className="h-9 w-auto object-contain"
-          />
-          <span className="font-fredoka text-[22px] text-[#1a1a1a] tracking-[0.5px]">
-            shabas
-          </span>
-        </a>
-
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm font-bold text-[#6b7b6b] px-3.5 py-2 rounded-xl hover:bg-[#f0f2f0] hover:text-[#1a1a1a] transition-all"
-            >
-              {l.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* Right side: toggle + CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          <LangToggle />
-          <a
-            href="#download"
-            className="inline-flex items-center gap-2 bg-[#1e8a3c] text-white text-sm font-black px-5 py-2.5 rounded-[20px] btn-duo"
-          >
-            {t.nav.download}
-          </a>
-        </div>
-
-        {/* Hamburger */}
-        <div className="md:hidden flex items-center gap-2">
-          <LangToggle />
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 h-[72px] transition-colors duration-300 md:h-[88px] ${
+          scrolled && !open
+            ? "border-b border-bone/10 bg-ink/85 backdrop-blur-md"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
+        <div className="mx-auto flex h-full max-w-[1340px] items-center justify-between px-5 md:px-10">
+          {/* Left — menu trigger */}
           <button
-            className="p-2 text-[#1a1a1a]"
-            onClick={() => setOpen(!open)}
-            aria-label="Menu"
+            onClick={() => setOpen((v) => !v)}
+            className="group z-10 flex items-center gap-3 text-bone"
+            aria-expanded={open}
+            aria-label={open ? t.nav.close : t.nav.menu}
           >
-            {open ? <X size={24} /> : <Menu size={24} />}
+            <span className="flex h-4 w-6 flex-col justify-center gap-[5px]">
+              <motion.span
+                className="block h-[2px] w-full origin-center bg-current"
+                animate={open ? { rotate: 45, y: 3.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+              />
+              <motion.span
+                className="block h-[2px] w-full origin-center bg-current"
+                animate={open ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+              />
+            </span>
+            <span className="u-eyebrow hidden sm:inline">
+              {open ? t.nav.close : t.nav.menu}
+            </span>
           </button>
-        </div>
-      </div>
 
-      {/* Mobile menu */}
+          {/* Centre — crest */}
+          <a
+            href="#hero"
+            className="absolute left-1/2 z-10 flex -translate-x-1/2 items-center gap-2.5"
+            aria-label="Shabas"
+          >
+            {/* The brand PNGs are dark green, which disappears against the
+                hero photography — filtered to white for the dark header. */}
+            <img
+              src="/logo/shaba-logo2.png"
+              alt=""
+              className="u-logo-white h-7 w-auto object-contain md:h-8"
+            />
+            <span className="font-display text-[19px] leading-none text-bone md:text-[22px]">
+              Shabas
+            </span>
+          </a>
+
+          {/* Right — language + socials */}
+          <div className="z-10 flex items-center gap-5">
+            <LangToggle />
+            <SocialRow className="hidden md:flex" />
+          </div>
+        </div>
+      </header>
+
+      {/* Full-screen overlay menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            className="absolute top-full left-0 right-0 bg-white border-b-2 border-[#dde8dd] flex flex-col gap-1 p-4 md:hidden shadow-lg"
+            key="menu"
+            className="fixed inset-0 z-40 bg-ink-deep"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
           >
-            {navLinks.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="text-sm font-bold text-[#6b7b6b] px-3.5 py-2.5 rounded-xl hover:bg-[#f0f2f0] hover:text-[#1a1a1a] transition-all"
+            <div className="u-grid-lines absolute inset-0 opacity-60" />
+
+            <div className="relative mx-auto flex h-full max-w-[1340px] flex-col justify-center px-5 pt-[72px] md:px-10 md:pt-[88px]">
+              <div className="grid items-center gap-12 md:grid-cols-[1.3fr_1fr]">
+                <nav>
+                  <span className="u-eyebrow mb-8 block text-bone-faint">
+                    {t.nav.navigation}
+                  </span>
+
+                  <ul>
+                    {navLinks.map((l, i) => (
+                      <motion.li
+                        key={l.href}
+                        initial={{ opacity: 0, y: reduced ? 0 : 26 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.5,
+                          delay: 0.08 + i * 0.06,
+                          ease: EASE,
+                        }}
+                        className="border-b border-bone/10"
+                      >
+                        <a
+                          href={l.href}
+                          onClick={() => setOpen(false)}
+                          className="group flex items-baseline gap-4 py-3 md:py-4"
+                        >
+                          <span className="u-eyebrow w-7 shrink-0 text-bone-faint transition-colors group-hover:text-brand-bright">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span className="font-display text-[clamp(30px,6.5vw,60px)] leading-[1.05] text-bone transition-colors duration-200 group-hover:text-brand-bright">
+                            {l.label}
+                          </span>
+                        </a>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </nav>
+
+                {/* Photo panel — desktop only, purely decorative */}
+                <motion.div
+                  className="hidden md:block"
+                  initial={{ opacity: 0, scale: reduced ? 1 : 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={menuPhoto}
+                      alt=""
+                      className="h-full w-full object-cover grayscale"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink-deep via-ink-deep/25 to-transparent" />
+                  </div>
+                </motion.div>
+              </div>
+
+              <motion.div
+                className="mt-12 flex flex-wrap items-center justify-between gap-5 border-t border-bone/10 pt-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
               >
-                {l.label}
-              </a>
-            ))}
-            <a
-              href="#download"
-              onClick={() => setOpen(false)}
-              className="mt-2 flex items-center justify-center gap-2 bg-[#1e8a3c] text-white text-sm font-black px-5 py-3 rounded-[20px]"
-            >
-              {t.nav.download}
-            </a>
+                <a
+                  href="mailto:shabasfootball@gmail.com"
+                  className="text-sm text-bone-dim transition-colors hover:text-bone"
+                >
+                  shabasfootball@gmail.com
+                </a>
+                <SocialRow />
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 };
 

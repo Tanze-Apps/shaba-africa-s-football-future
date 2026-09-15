@@ -1,277 +1,192 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useLang } from "@/contexts/lang";
-
-// Assets imported from src/assets (Vite resolves these at build time)
-import screen1 from "@/assets/Screenshot 2026-06-10 161816.png";
-import screen2 from "@/assets/Screenshot 2026-06-10 161852.png";
-import screen3 from "@/assets/Screenshot 2026-06-10 162018.png";
-import formationImg from "@/assets/formation.png";
-
-const useCountUp = (target: number, active: boolean, duration = 1800) => {
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    let frame: number;
-    let start: number | null = null;
-    const tick = (t: number) => {
-      if (!start) start = t;
-      const p = Math.min((t - start) / duration, 1);
-      setVal(Math.round(target * (1 - Math.pow(1 - p, 4))));
-      if (p < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [active, target, duration]);
-  return val;
-};
-
-const SCREENSHOTS = [
-  { src: screen1, label: "Home" },
-  { src: screen2, label: "Explore" },
-  { src: screen3, label: "Matches" },
-  { src: formationImg, label: "Formation" },
-];
-
-const PhoneCarousel = () => {
-  const [idx, setIdx] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(
-      () => setIdx((i) => (i + 1) % SCREENSHOTS.length),
-      3500,
-    );
-    return () => clearInterval(t);
-  }, []);
-
-  return (
-    <div
-      className="w-[260px] sm:w-[270px] rounded-[42px] p-3.5 animate-phone-float"
-      style={{
-        background: "#0d0d0d",
-        boxShadow:
-          "0 0 0 2px rgba(255,255,255,0.08), 0 40px 80px rgba(0,0,0,0.6), 0 0 60px rgba(30,138,60,0.15)",
-      }}
-    >
-      {/* Notch */}
-      <div className="w-24 h-6 bg-[#0d0d0d] rounded-b-[18px] mx-auto mb-2.5 relative z-10" />
-
-      {/* Screen */}
-      <div
-        className="rounded-[30px] overflow-hidden relative"
-        style={{ minHeight: 480 }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={idx}
-            src={SCREENSHOTS[idx].src}
-            alt={SCREENSHOTS[idx].label}
-            className="w-full object-cover object-top"
-            style={{ minHeight: 480, display: "block" }}
-            initial={{ opacity: 0, scale: 1.03 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.97 }}
-            transition={{ duration: 0.4 }}
-          />
-        </AnimatePresence>
-      </div>
-
-      {/* Dot indicators */}
-      <div className="flex justify-center gap-1.5 mt-3">
-        {SCREENSHOTS.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setIdx(i)}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === idx ? 16 : 6,
-              height: 6,
-              background: i === idx ? "#2db355" : "rgba(255,255,255,0.2)",
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const FloatingCards = () => (
-  <div className="hidden lg:block">
-    <div className="absolute top-10 -right-[72px] bg-white rounded-[14px] px-3.5 py-2.5 shadow-xl border-[1.5px] border-white/90 flex items-center gap-2 animate-float-card-1 whitespace-nowrap">
-      <span className="text-lg">⚡</span>
-      <div>
-        <div className="text-[13px] font-black text-[#1e8a3c]">+80 XP</div>
-        <div className="text-[9px] font-bold text-[#7a8a7a]">Victoire !</div>
-      </div>
-    </div>
-    <div className="absolute bottom-28 -left-[76px] bg-white rounded-[14px] px-3.5 py-2.5 shadow-xl border-[1.5px] border-white/90 flex items-center gap-2 animate-float-card-2 whitespace-nowrap">
-      <span className="text-lg">🔔</span>
-      <div>
-        <div className="text-[13px] font-black text-[#1a1a1a]">
-          Nouveau défi
-        </div>
-        <div className="text-[9px] font-bold text-[#7a8a7a]">Scorpions FC</div>
-      </div>
-    </div>
-    <div className="absolute bottom-8 -right-[58px] bg-white rounded-[14px] px-3.5 py-2.5 shadow-xl border-[1.5px] border-white/90 flex items-center gap-2 animate-float-card-3 whitespace-nowrap">
-      <span className="text-lg">🏆</span>
-      <div>
-        <div className="text-[13px] font-black text-[#1e8a3c]">#2 Bepanda</div>
-        <div className="text-[9px] font-bold text-[#7a8a7a]">Classement</div>
-      </div>
-    </div>
-  </div>
-);
-
-const HeroStats = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const active = useInView(ref, { once: true });
-  const teams = useCountUp(12, active);
-  const cities = useCountUp(5, active);
-  const { t } = useLang();
-
-  const displayVals = [`${teams}+`, `${cities}+`, "100%", "🌍"];
-  const labels = t.hero.stats.map((s) => s.label);
-
-  return (
-    <div
-      ref={ref}
-      className="absolute bottom-0 left-0 right-0 border-t border-white/[0.06]"
-      style={{ background: "#12261e", padding: "20px 24px" }}
-    >
-      <div className="grid grid-cols-2 md:grid-cols-4 max-w-[1120px] mx-auto">
-        {labels.map((label, i) => (
-          <div
-            key={label}
-            className="text-center py-3 px-5"
-            style={{
-              borderRight: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none",
-            }}
-          >
-            <div className="font-fredoka text-[28px] sm:text-[34px] text-[#2db355] leading-none mb-1">
-              {displayVals[i]}
-            </div>
-            <div className="text-[10px] font-black text-white/35 uppercase tracking-[1.5px]">
-              {label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+import { useReady } from "@/contexts/ready";
+import { EASE, MaskLines } from "@/components/motion/Reveal";
+import heroPhoto from "@/assets/photos/crowd-flags.webp";
 
 const Hero = () => {
   const { t } = useLang();
+  const ready = useReady();
+  const reduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // The photograph drifts slower than the page, and the copy lifts away.
+  const photoY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const photoScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -70]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
+  // Entrance waits for the loader to clear so it plays into the wipe.
+  const show = ready;
 
   return (
     <section
       id="hero"
-      className="min-h-screen relative overflow-hidden flex items-center pt-[100px] pb-[160px] stripe-bg"
-      style={{ background: "#0a1a0f" }}
+      ref={sectionRef}
+      className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden bg-ink-deep"
     >
-      <div
-        className="absolute -top-[15%] -left-[10%] w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(30,138,60,0.25) 0%, transparent 70%)",
-        }}
-      />
-      <div
-        className="absolute -bottom-[20%] -right-[5%] w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(45,179,85,0.15) 0%, transparent 70%)",
-        }}
-      />
+      {/* Backdrop */}
+      <motion.div
+        className="absolute inset-0"
+        style={reduced ? undefined : { y: photoY, scale: photoScale }}
+      >
+        <img
+          src={heroPhoto}
+          alt=""
+          className="h-full w-full object-cover"
+          fetchPriority="high"
+        />
+      </motion.div>
 
-      <div className="max-w-[1120px] mx-auto px-6 w-full relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[60px] items-center">
-          {/* LEFT */}
-          <motion.div
-            className="flex flex-col items-center md:items-start text-center md:text-left"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+      <div className="u-photo-wash absolute inset-0" />
+      <div className="u-grid-lines absolute inset-0" />
+
+      {/* Content */}
+      <motion.div
+        className="relative mx-auto flex w-full max-w-[1340px] flex-1 flex-col items-center justify-center px-5 pb-12 pt-[100px] text-center md:px-10 md:pb-10 md:pt-[120px]"
+        style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}
+      >
+        <motion.span
+          className="u-eyebrow text-bone/70"
+          initial={{ opacity: 0, y: 14 }}
+          animate={show ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.04, ease: EASE }}
+        >
+          {t.hero.eyebrow}
+        </motion.span>
+
+        <MaskLines
+          as="h1"
+          trigger="mount"
+          lines={
+            show
+              ? [
+                  <>
+                    {t.hero.h1} {t.hero.h1a}
+                  </>,
+                  <>
+                    {t.hero.h2} {t.hero.h2a}
+                  </>,
+                  <>
+                    {t.hero.h3}{" "}
+                    <span className="text-brand-bright">{t.hero.h3g}</span>
+                  </>,
+                ]
+              : []
+          }
+          className="font-display mt-5 text-[clamp(40px,8.4vw,116px)] leading-[1.05] text-bone"
+          delay={0.12}
+          stagger={0.08}
+        />
+
+        <motion.p
+          className="mt-7 max-w-[560px] text-[15px] leading-relaxed text-bone-dim md:text-[17px]"
+          initial={{ opacity: 0, y: 18 }}
+          animate={show ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.34, ease: EASE }}
+        >
+          {t.hero.sub}
+        </motion.p>
+
+        <motion.div
+          className="mt-9 flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row"
+          initial={{ opacity: 0, y: 18 }}
+          animate={show ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.44, ease: EASE }}
+        >
+          <a
+            href="https://play.google.com/store/apps/details?id=com.shabas.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full bg-brand px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.16em] text-white transition-colors duration-200 hover:bg-brand-bright sm:w-auto"
           >
-            <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 font-black text-xs text-[#2db355]"
-              style={{
-                background: "rgba(45,179,85,0.12)",
-                border: "1.5px solid rgba(45,179,85,0.35)",
-              }}
+            {t.hero.ctaPrimary}
+          </a>
+
+          <a
+            href="https://app.sha-bas.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex w-full items-center justify-center gap-3 border border-bone/25 px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.16em] text-bone transition-colors duration-200 hover:border-bone/60 sm:w-auto"
+          >
+            {t.hero.ctaWeb}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#2db355] animate-pulse-dot" />
-              {t.hero.badge}
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+        </motion.div>
+
+        <motion.p
+          className="mt-6 text-[12px] text-bone-faint"
+          initial={{ opacity: 0 }}
+          animate={show ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.56 }}
+        >
+          {t.hero.iphoneNotice}
+        </motion.p>
+      </motion.div>
+
+      {/* Hairline proof strip along the bottom of the hero */}
+      <motion.div
+        className="relative border-t border-bone/10 bg-ink-deep/40 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={show ? { opacity: 1 } : {}}
+        transition={{ duration: 0.8, delay: 0.64 }}
+      >
+        <div className="mx-auto grid max-w-[1340px] grid-cols-2 md:grid-cols-4">
+          {t.hero.proof.map((p, i) => (
+            <div
+              key={p.label}
+              className={`px-5 py-4 text-center md:px-10 md:py-5 ${
+                i > 0 ? "border-l border-bone/10" : ""
+              } ${i === 2 ? "border-l-0 md:border-l" : ""} ${
+                i > 1 ? "border-t border-bone/10 md:border-t-0" : ""
+              }`}
+            >
+              <span className="font-display block text-[19px] leading-none text-bone md:text-[24px]">
+                {p.strong}
+              </span>
+              <span className="u-eyebrow mt-1.5 block text-[10px] text-bone-faint">
+                {p.label}
+              </span>
             </div>
-
-            <h1 className="font-fredoka text-[clamp(48px,6vw,80px)] leading-[1.05] text-white mb-6">
-              {t.hero.h1} <span className="text-[#2db355]">{t.hero.h1a}</span>
-              <br />
-              {t.hero.h2} <span className="text-[#2db355]">{t.hero.h2a}</span>
-              <br />
-              {t.hero.h3} <span className="text-[#f5a623]">{t.hero.h3g}</span>
-            </h1>
-
-            <p className="text-[17px] font-semibold text-white/55 leading-[1.65] max-w-[420px] mb-9">
-              {t.hero.sub}
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-3 mb-11 w-full sm:w-auto">
-              <a
-                href="https://play.google.com/store/apps/details?id=com.shabas.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#1e8a3c] text-white text-[16px] font-black px-8 py-4 rounded-[20px] btn-duo"
-              >
-                {t.hero.ctaPrimary}
-              </a>
-              <a
-                href="https://app.sha-bas.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-white/70 text-sm font-bold px-5 py-3 rounded-[20px] border-2 border-white/15 hover:bg-white/8 hover:text-white hover:border-white/30 transition-all"
-              >
-                {t.hero.ctaWeb}
-              </a>
-            </div>
-
-            {/* iPhone notice */}
-            <div className="flex items-center gap-2 mb-6 px-3 py-2 rounded-xl text-[12px] font-bold text-[#f5a623]"
-              style={{ background: "rgba(245,166,35,0.08)", border: "1px solid rgba(245,166,35,0.2)" }}>
-              {t.hero.iphoneNotice}
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 pt-6 border-t border-white/[0.08]">
-              {t.hero.proof.map((p, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-1.5 text-[13px] font-bold text-white/50"
-                >
-                  {p.icon} <strong className="text-white/85">{p.strong}</strong>{" "}
-                  {p.label}
-                  {i < t.hero.proof.length - 1 && (
-                    <span className="ml-4 w-px h-5 bg-white/12 inline-block" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* RIGHT */}
-          <motion.div
-            className="flex justify-center items-center relative order-first md:order-last"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <PhoneCarousel />
-            <FloatingCards />
-          </motion.div>
+          ))}
         </div>
-      </div>
+      </motion.div>
 
-      <HeroStats />
+      {/* Scroll hint — outer element owns the scroll-linked fade, inner the
+          entrance, so the two never fight over `opacity`. */}
+      <motion.div
+        className="pointer-events-none absolute bottom-[112px] left-10 hidden md:block"
+        style={reduced ? undefined : { opacity: contentOpacity }}
+      >
+        <motion.div
+          className="flex flex-col items-start gap-2"
+          initial={{ opacity: 0 }}
+          animate={show ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.74 }}
+        >
+          <span className="u-eyebrow text-[10px] text-bone-faint">
+            {t.hero.scroll}
+          </span>
+          <span className="block h-8 w-px bg-bone/20">
+            <span className="block h-3 w-px animate-scroll-hint bg-brand-bright" />
+          </span>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
