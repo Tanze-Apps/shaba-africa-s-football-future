@@ -1,107 +1,114 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Flame, Zap, Star } from "lucide-react";
 import { useLang } from "@/contexts/lang";
+import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
+import AppScreen from "@/components/AppScreen";
+import appHome from "@/assets/app-home.webp";
 
-const StreakDots = () => {
-  const days = [true, true, true, true, true, true, false];
-  return (
-    <div className="flex justify-center gap-1.5 mt-4">
-      {days.map((done, i) => (
-        <div key={i} className="w-7 h-7 rounded-full flex items-center justify-center text-sm border-2"
-          style={{
-            background: done ? "rgba(255,255,255,0.2)" : "transparent",
-            borderColor: done ? "rgba(255,255,255,0.4)" : i === 6 ? "white" : "rgba(255,255,255,0.2)",
-            borderStyle: i === 6 ? "dashed" : "solid",
-          }}>
-          {done ? "🔥" : "📅"}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const XpBarDemo = ({ active, xpLevel, xpNext }: { active: boolean; xpLevel: string; xpNext: string }) => {
-  const [width, setWidth] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    const t = setTimeout(() => setWidth(78), 500);
-    return () => clearTimeout(t);
-  }, [active]);
-  return (
-    <div className="mt-4">
-      <div className="rounded-full h-2 overflow-hidden" style={{ background: "rgba(0,0,0,0.2)" }}>
-        <div className="h-full rounded-full bg-white"
-          style={{ width: `${width}%`, transition: "width 1.6s cubic-bezier(0.4,0,0.2,1)" }} />
-      </div>
-      <div className="flex justify-between mt-1.5">
-        <span className="text-[10px] font-black text-white/60">{xpLevel}</span>
-        <span className="text-[10px] font-black text-white/40">{xpNext}</span>
-      </div>
-    </div>
-  );
-};
-
-const RepStars = ({ label }: { label: string }) => (
-  <div className="mt-4">
-    <div className="flex justify-center gap-1">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} className="text-[22px]" style={{ filter: "drop-shadow(0 0 6px rgba(245,166,35,0.6))" }}>⭐</span>
-      ))}
-    </div>
-    <div className="text-center mt-2 text-[11px] font-black text-white/50">{label}</div>
-  </div>
-);
+const CARD_ICONS = [Flame, Zap, Star];
 
 const Gamification = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
   const { t } = useLang();
-  const g = t.gam;
-
-  const demos = [
-    <StreakDots key="streak" />,
-    <XpBarDemo key="xp" active={inView} xpLevel={g.xpLevel} xpNext={g.xpNext} />,
-    <RepStars key="rep" label={g.repLabel} />,
-  ];
+  const barRef = useRef<HTMLDivElement>(null);
+  // The XP bar only fills once, when the panel is actually looked at.
+  const barInView = useInView(barRef, { once: true, margin: "0px 0px -20% 0px" });
 
   return (
-    <section id="gamification" className="py-20 relative overflow-hidden" style={{ background: "#1e8a3c" }}>
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ backgroundImage: "repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(255,255,255,0.03) 30px,rgba(255,255,255,0.03) 60px)" }} />
+    <section className="relative border-t border-bone/10 bg-ink py-20 md:py-28">
+      <div className="mx-auto max-w-[1340px] px-5 md:px-10">
+        <Reveal>
+          <span className="u-eyebrow text-brand-bright">{t.gam.badge}</span>
+        </Reveal>
 
-      <div ref={ref} className="max-w-[1120px] mx-auto px-6 relative z-10">
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55 }}
-        >
-          <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] mb-5"
-            style={{ background: "rgba(255,255,255,0.1)", border: "1.5px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}>
-            {g.badge}
+        <MaskLines
+          as="h2"
+          lines={[
+            t.gam.headline,
+            <span className="text-brand-bright">{t.gam.accent}</span>,
+          ]}
+          className="font-display mt-5 max-w-[16ch] text-[clamp(32px,6vw,74px)] leading-[1.03] text-bone"
+        />
+
+        <Reveal delay={0.1}>
+          <p className="mt-6 max-w-[520px] text-[15px] leading-relaxed text-bone-dim md:text-[17px]">
+            {t.gam.sub}
+          </p>
+        </Reveal>
+
+        <div className="mt-14 grid gap-10 md:mt-20 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+          {/* Progress panel */}
+          <Reveal>
+            <div ref={barRef} className="border border-bone/10 bg-ink-raised">
+              <div className="flex items-center justify-between border-b border-bone/10 px-6 py-4">
+                <span className="u-eyebrow text-[10px] text-bone-faint">
+                  {t.gam.xpLevel}
+                </span>
+                <span className="u-eyebrow text-[10px] text-brand-bright">
+                  {t.gam.xpNext}
+                </span>
+              </div>
+
+              <div className="px-6 py-7">
+                <div className="h-[3px] w-full bg-bone/10">
+                  <motion.div
+                    className="h-[3px] bg-brand-bright"
+                    initial={{ width: "0%" }}
+                    animate={barInView ? { width: "78%" } : { width: "0%" }}
+                    transition={{ duration: 1.5, delay: 0.2, ease: EASE }}
+                  />
+                </div>
+
+                <div className="mt-7 flex items-center gap-3 border-t border-bone/10 pt-6">
+                  <Star
+                    className="h-4 w-4 text-brand-bright"
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                  />
+                  <span className="text-[13px] text-bone-dim">
+                    {t.gam.repLabel}
+                  </span>
+                </div>
+              </div>
+
+              <div className="border-t border-bone/10 p-6">
+                <AppScreen src={appHome} className="mx-auto max-w-[240px]" />
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Cards */}
+          <div className="border-t border-bone/10">
+            {t.gam.cards.map((card, i) => {
+              const Icon = CARD_ICONS[i];
+              return (
+                <motion.div
+                  key={card.title}
+                  className="border-b border-bone/10 py-8 md:py-9"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+                  transition={{ duration: 0.6, delay: i * 0.06, ease: EASE }}
+                >
+                  <div className="flex items-start gap-5">
+                    <Icon
+                      className="mt-1 h-5 w-5 shrink-0 text-brand-bright"
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                    />
+                    <div className="min-w-0">
+                      <h3 className="font-display text-[clamp(21px,3vw,30px)] leading-tight text-bone">
+                        {card.title}
+                      </h3>
+                      <p className="mt-2.5 max-w-[440px] text-[14px] leading-relaxed text-bone-dim md:text-[15px]">
+                        {card.desc}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
-          <h2 className="font-fredoka text-[clamp(32px,4vw,52px)] text-white leading-[1.1] mb-2.5">
-            {g.headline}<br /><span>{g.accent}</span>
-          </h2>
-          <p className="text-[16px] font-semibold text-white/65">{g.sub}</p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {g.cards.map((c, i) => (
-            <motion.div
-              key={c.title}
-              className="rounded-[32px] p-7 text-center hover:bg-white/14 hover:-translate-y-1 transition-all duration-200"
-              style={{ background: "rgba(255,255,255,0.08)", border: "1.5px solid rgba(255,255,255,0.15)" }}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.55, delay: i * 0.12 }}
-            >
-              <span className="text-[44px] mb-4 block">{c.icon}</span>
-              <h3 className="font-fredoka text-[22px] text-white mb-2">{c.title}</h3>
-              <p className="text-[13px] font-semibold text-white/65 leading-[1.55]">{c.desc}</p>
-              {demos[i]}
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>

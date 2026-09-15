@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { useLang } from "@/contexts/lang";
 import { useReady } from "@/contexts/ready";
 import { EASE, MaskLines } from "@/components/motion/Reveal";
-import heroPhoto from "@/assets/photos/crowd-flags.webp";
+import heroPhoto from "@/assets/photos/hero-pitch.webp";
 
 const Hero = () => {
   const { t } = useLang();
