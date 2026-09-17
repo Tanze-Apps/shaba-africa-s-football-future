@@ -17,6 +17,14 @@ const fr = {
     upcoming: "À venir",
     note: "Exemple de données in-app",
   },
+  webapp: {
+    badge: "App web",
+    headline: "Pensée pour",
+    accent: "le grand écran.",
+    sub: "Pas une app mobile étirée. La carte en plein écran, les équipes juste à côté — Shabas sur ordinateur, sans rien installer.",
+    cta: "Ouvrir l'app web",
+    alt: "Shabas sur ordinateur : la carte des équipes à Douala, avec le classement à côté",
+  },
   hero: {
     badge: "Afrique · Canada · Et plus",
     eyebrow: "Bienvenue chez Shabas",
@@ -238,6 +246,14 @@ const en: typeof fr = {
     verified: "Verified",
     upcoming: "Upcoming",
     note: "Sample in-app data",
+  },
+  webapp: {
+    badge: "Web app",
+    headline: "Built for",
+    accent: "the big screen.",
+    sub: "Not a phone app stretched to fit. A full-screen map with the teams right beside it — Shabas on your computer, nothing to install.",
+    cta: "Open the web app",
+    alt: "Shabas on desktop: a map of teams across Douala, with the rankings alongside",
   },
   hero: {
     badge: "Africa · Canada · And more",
