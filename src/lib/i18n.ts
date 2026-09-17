@@ -24,7 +24,7 @@ const fr = {
     sub: "Pas une app mobile étirée. La carte en plein écran, les équipes juste à côté — Shabas sur ordinateur, sans rien installer.",
     cta: "Ouvrir l'app web",
     alt: "Shabas sur ordinateur",
-    tabs: ["Explorer", "Accueil", "Classement", "Profil"],
+    tabs: ["Explorer", "Accueil", "Classement", "Tournois", "Profil"],
   },
   hero: {
     badge: "Afrique · Canada · Et plus",
@@ -255,7 +255,7 @@ const en: typeof fr = {
     sub: "Not a phone app stretched to fit. A full-screen map with the teams right beside it — Shabas on your computer, nothing to install.",
     cta: "Open the web app",
     alt: "Shabas on desktop",
-    tabs: ["Explore", "Home", "Rankings", "Profile"],
+    tabs: ["Explore", "Home", "Rankings", "Tournaments", "Profile"],
   },
   hero: {
     badge: "Africa · Canada · And more",

@@ -12,6 +12,7 @@ import exploreDesktop from "@/assets/app/explore-desktop.webp";
 import homeDesktop from "@/assets/app/home-desktop.webp";
 import rankingsDesktop from "@/assets/app/rankings-desktop.webp";
 import profileDesktop from "@/assets/app/profile-desktop.webp";
+import tournamentsDesktop from "@/assets/app/tournaments-desktop.webp";
 import legacyFormation from "@/assets/app-formation.webp";
 
 /**
@@ -44,5 +45,6 @@ export const SCREENSHOTS = {
   exploreDesktop: same(exploreDesktop),
   homeDesktop: same(homeDesktop),
   rankingsDesktop: same(rankingsDesktop),
+  tournamentsDesktop: same(tournamentsDesktop),
   profileDesktop: same(profileDesktop),
 } satisfies Record<string, Localised>;
