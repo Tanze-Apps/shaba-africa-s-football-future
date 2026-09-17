@@ -1,14 +1,21 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 import { Megaphone, Swords, BarChart3 } from "lucide-react";
 import { useLang } from "@/contexts/lang";
 import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
+import AppScreen from "@/components/AppScreen";
+import { SCREENSHOTS } from "@/lib/screenshots";
 import communityPhoto from "@/assets/photos/community-fans.webp";
 
 const FEATURE_ICONS = [Megaphone, Swords, BarChart3];
 
 const LaRue = () => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -41,28 +48,41 @@ const LaRue = () => {
       <div className="u-grid-lines absolute inset-0 opacity-50" />
 
       <div className="relative mx-auto max-w-[1340px] px-5 py-20 md:px-10 md:py-28">
-        <Reveal>
-          <span className="u-eyebrow text-brand-bright">{t.laRue.badge}</span>
-        </Reveal>
+        <div className="grid gap-12 md:grid-cols-[1fr_260px] md:items-center md:gap-16">
+          <div>
+            <Reveal>
+              <span className="u-eyebrow text-brand-bright">
+                {t.laRue.badge}
+              </span>
+            </Reveal>
 
-        <MaskLines
-          as="h2"
-          lines={[
-            <>
-              {t.laRue.headline}{" "}
-              <span className="text-brand-bright">{t.laRue.accentH}</span>
-            </>,
-            t.laRue.line2,
-            t.laRue.line3,
-          ]}
-          className="font-display mt-5 text-[clamp(36px,7.4vw,96px)] leading-[1.03] text-bone"
-        />
+            <MaskLines
+              as="h2"
+              lines={[
+                <>
+                  {t.laRue.headline}{" "}
+                  <span className="text-brand-bright">{t.laRue.accentH}</span>
+                </>,
+                t.laRue.line2,
+                t.laRue.line3,
+              ]}
+              className="font-display mt-5 text-[clamp(36px,6.6vw,88px)] leading-[1.03] text-bone"
+            />
 
-        <Reveal delay={0.12}>
-          <p className="mt-7 max-w-[540px] text-[15px] leading-relaxed text-bone-dim md:text-[17px]">
-            {t.laRue.sub}
-          </p>
-        </Reveal>
+            <Reveal delay={0.12}>
+              <p className="mt-7 max-w-[540px] text-[15px] leading-relaxed text-bone-dim md:text-[17px]">
+                {t.laRue.sub}
+              </p>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.15}>
+            <AppScreen
+              src={SCREENSHOTS.laRue[lang]}
+              className="mx-auto max-w-[240px] md:max-w-none"
+            />
+          </Reveal>
+        </div>
 
         <div className="mt-14 grid gap-8 md:mt-20 md:grid-cols-3 md:gap-12">
           {t.laRue.features.map((f, i) => {

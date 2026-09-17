@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { useLang } from "@/contexts/lang";
 import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
+import AppScreen from "@/components/AppScreen";
+import { SCREENSHOTS } from "@/lib/screenshots";
 import stadiumPhoto from "@/assets/photos/stadium.webp";
 
 const Tournaments = () => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   return (
     <section id="tournaments" className="relative overflow-hidden bg-ink-deep">
@@ -18,26 +20,39 @@ const Tournaments = () => {
       <div className="u-grid-lines absolute inset-0 opacity-50" />
 
       <div className="relative mx-auto max-w-[1340px] px-5 py-20 md:px-10 md:py-28">
-        <Reveal>
-          <span className="u-eyebrow border border-brand-bright/40 px-3 py-1.5 text-brand-bright">
-            {t.tournament.badge}
-          </span>
-        </Reveal>
+        <div className="grid gap-12 md:grid-cols-[1fr_260px] md:items-center md:gap-16">
+          <div>
+            <Reveal>
+              <span className="u-eyebrow border border-brand-bright/40 px-3 py-1.5 text-brand-bright">
+                {t.tournament.badge}
+              </span>
+            </Reveal>
 
-        <MaskLines
-          as="h2"
-          lines={[
-            t.tournament.headline,
-            <span className="text-brand-bright">{t.tournament.accent}</span>,
-          ]}
-          className="font-display mt-6 max-w-[14ch] text-[clamp(32px,6.4vw,80px)] leading-[1.02] text-bone"
-        />
+            <MaskLines
+              as="h2"
+              lines={[
+                t.tournament.headline,
+                <span className="text-brand-bright">
+                  {t.tournament.accent}
+                </span>,
+              ]}
+              className="font-display mt-6 max-w-[14ch] text-[clamp(32px,6.4vw,80px)] leading-[1.02] text-bone"
+            />
 
-        <Reveal delay={0.1}>
-          <p className="mt-6 max-w-[520px] text-[15px] leading-relaxed text-bone-dim md:text-[17px]">
-            {t.tournament.sub}
-          </p>
-        </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 max-w-[520px] text-[15px] leading-relaxed text-bone-dim md:text-[17px]">
+                {t.tournament.sub}
+              </p>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.15}>
+            <AppScreen
+              src={SCREENSHOTS.tournaments[lang]}
+              className="mx-auto max-w-[240px] md:max-w-none"
+            />
+          </Reveal>
+        </div>
 
         {/* Bracket stages */}
         <Reveal delay={0.15}>

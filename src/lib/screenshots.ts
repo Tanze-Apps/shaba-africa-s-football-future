@@ -2,38 +2,47 @@ import type { Lang } from "@/lib/i18n";
 
 import exploreEn from "@/assets/app/explore-en.webp";
 import exploreFr from "@/assets/app/explore-fr.webp";
-import rankingsEn from "@/assets/app/rankings-en.webp";
-import rankingsFr from "@/assets/app/rankings-fr.webp";
-import profileEn from "@/assets/app/profile-en.webp";
-import profileFr from "@/assets/app/profile-fr.webp";
+import challenge from "@/assets/app/challenge.webp";
+import rankings from "@/assets/app/rankings.webp";
+import profile from "@/assets/app/profile.webp";
+import progression from "@/assets/app/progression.webp";
+import laRue from "@/assets/app/la-rue.webp";
+import tournaments from "@/assets/app/tournaments.webp";
 import exploreDesktop from "@/assets/app/explore-desktop.webp";
-import legacyMatches from "@/assets/app-matches.webp";
+import homeDesktop from "@/assets/app/home-desktop.webp";
+import rankingsDesktop from "@/assets/app/rankings-desktop.webp";
+import profileDesktop from "@/assets/app/profile-desktop.webp";
 import legacyFormation from "@/assets/app-formation.webp";
 
 /**
  * Every app screenshot the site shows, per language.
  *
- * Masters come from the Flutter repo's demo-data mode (1170x2532 phone,
- * 1440x900 desktop) and are compressed into src/assets/app. When a new capture
- * arrives, swap the import here — no component needs to change.
+ * Captures come from the Flutter repo's demo-data mode and are compressed
+ * into src/assets/app. When a new capture arrives, swap the import here — no
+ * component needs to change.
  */
 type Localised = Record<Lang, string>;
 
-/** For captures that only exist in one language, or have no text that matters. */
+/** For captures that only exist in one language. */
 const same = (src: string): Localised => ({ fr: src, en: src });
 
 export const SCREENSHOTS = {
+  // Phone. Only Explore exists in both languages so far; the rest show the
+  // English UI in both until French captures arrive.
   explore: { fr: exploreFr, en: exploreEn },
-  rankings: { fr: rankingsFr, en: rankingsEn },
-  profile: { fr: profileFr, en: profileEn },
+  challenge: same(challenge),
+  rankings: same(rankings),
+  profile: same(profile),
+  progression: same(progression),
+  laRue: same(laRue),
+  tournaments: same(tournaments),
 
-  // Pre-revamp captures, kept until 02-challenge and 05-formation arrive.
-  challenge: same(legacyMatches),
+  // Pre-revamp capture — there is no demo-data formation screen yet.
   formation: same(legacyFormation),
 
-  // Stand-in until 06-progression arrives: the profile shows the level bar.
-  progression: { fr: profileFr, en: profileEn },
-
-  // UI chrome is English-only in this capture; a French one would replace it.
+  // Desktop web app.
   exploreDesktop: same(exploreDesktop),
+  homeDesktop: same(homeDesktop),
+  rankingsDesktop: same(rankingsDesktop),
+  profileDesktop: same(profileDesktop),
 } satisfies Record<string, Localised>;

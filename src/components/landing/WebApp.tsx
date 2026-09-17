@@ -1,25 +1,55 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
+  useInView,
   useReducedMotion,
   useScroll,
   useTransform,
 } from "framer-motion";
 import { useLang } from "@/contexts/lang";
-import { MaskLines, Reveal } from "@/components/motion/Reveal";
+import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
 import { SCREENSHOTS } from "@/lib/screenshots";
 
 const WEB_APP = "https://app.sha-bas.com";
 
+/** Screens in the same order as `t.webapp.tabs`. */
+const SCREENS = [
+  "exploreDesktop",
+  "homeDesktop",
+  "rankingsDesktop",
+  "profileDesktop",
+] as const;
+
+/** How long each screen shows before the tour advances on its own. */
+const INTERVAL = 5000;
+
 /**
- * The desktop web app, shown as a wide screenshot. It sits after Features:
- * having seen the app on a phone, the visitor sees it's a real desktop app
- * too — which matters because iPhone users are sent to the web app.
+ * The desktop web app, as a short tour of real screens. It sits after
+ * Features: having seen the app on a phone, the visitor sees it's a real
+ * desktop app too — which matters because iPhone users are sent to the web
+ * app.
  */
 const WebApp = () => {
   const { t, lang } = useLang();
   const reduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
+
+  const [active, setActive] = useState(0);
+  // The tour stops for good once someone picks a tab — moving it out from
+  // under them would be hostile.
+  const [autoplay, setAutoplay] = useState(true);
+  const inView = useInView(sectionRef, { margin: "-20% 0px -20% 0px" });
+  const playing = autoplay && inView && !reduced;
+
+  useEffect(() => {
+    if (!playing) return;
+    const id = window.setTimeout(
+      () => setActive((i) => (i + 1) % SCREENS.length),
+      INTERVAL,
+    );
+    return () => window.clearTimeout(id);
+  }, [active, playing]);
 
   // The frame settles to full size as it scrolls up into view.
   const { scrollYProgress } = useScroll({
@@ -29,8 +59,16 @@ const WebApp = () => {
   const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
   const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
 
+  const choose = (i: number) => {
+    setAutoplay(false);
+    setActive(i);
+  };
+
   return (
-    <section className="relative overflow-hidden border-t border-bone/10 bg-ink-raised py-20 md:py-28">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden border-t border-bone/10 bg-ink-raised py-20 md:py-28"
+    >
       <div className="u-grid-lines absolute inset-0 opacity-40" />
 
       <div className="relative mx-auto max-w-[1340px] px-5 md:px-10">
@@ -83,6 +121,48 @@ const WebApp = () => {
           className="mt-14 origin-top md:mt-20"
           style={reduced ? undefined : { scale, y }}
         >
+          {/* Screen tabs */}
+          <div
+            role="tablist"
+            aria-label={t.webapp.alt}
+            className="flex overflow-x-auto border-x border-t border-bone/15"
+          >
+            {t.webapp.tabs.map((label, i) => (
+              <button
+                key={label}
+                role="tab"
+                id={`webapp-tab-${i}`}
+                aria-selected={active === i}
+                aria-controls="webapp-panel"
+                onClick={() => choose(i)}
+                className={`relative flex-1 whitespace-nowrap px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors duration-200 md:py-4 ${
+                  active === i
+                    ? "bg-ink-deep text-bone"
+                    : "text-bone-faint hover:text-bone"
+                } ${i > 0 ? "border-l border-bone/10" : ""}`}
+              >
+                {label}
+
+                {/* Active marker; while the tour runs it fills to show when
+                    the next screen is coming. */}
+                {active === i && (
+                  <span className="absolute inset-x-0 bottom-0 h-[2px] bg-bone/10">
+                    <motion.span
+                      key={`${active}-${playing}`}
+                      className="block h-full bg-brand-bright"
+                      initial={{ width: playing ? "0%" : "100%" }}
+                      animate={{ width: "100%" }}
+                      transition={{
+                        duration: playing ? INTERVAL / 1000 : 0,
+                        ease: "linear",
+                      }}
+                    />
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+
           <div className="overflow-hidden border border-bone/15 bg-ink-deep">
             {/* A hairline address strip hints at a browser without drawing
                 one — the site never uses skeuomorphic chrome. */}
@@ -94,13 +174,30 @@ const WebApp = () => {
             </div>
 
             {/* On phones the full desktop view would be unreadably small, so
-                it takes a portrait crop centred on the team list. */}
-            <img
-              src={SCREENSHOTS.exploreDesktop[lang]}
-              alt={t.webapp.alt}
-              loading="lazy"
-              className="block aspect-[3/4] w-full object-cover object-[34%_top] md:aspect-[16/10] md:object-top"
-            />
+                it takes a portrait crop that skips the sidebar and shows the
+                main column. */}
+            <div
+              id="webapp-panel"
+              role="tabpanel"
+              aria-labelledby={`webapp-tab-${active}`}
+              className="relative aspect-[3/4] md:aspect-[16/10]"
+            >
+              {SCREENS.map((key, i) => (
+                <motion.img
+                  key={key}
+                  src={SCREENSHOTS[key][lang]}
+                  alt={
+                    active === i ? `${t.webapp.alt} — ${t.webapp.tabs[i]}` : ""
+                  }
+                  aria-hidden={active !== i}
+                  loading="lazy"
+                  className="absolute inset-0 block h-full w-full object-cover object-[34%_top] md:object-top"
+                  initial={false}
+                  animate={{ opacity: active === i ? 1 : 0 }}
+                  transition={{ duration: reduced ? 0 : 0.6, ease: EASE }}
+                />
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>

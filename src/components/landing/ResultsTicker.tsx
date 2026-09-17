@@ -8,17 +8,60 @@ import { MaskLines, Reveal } from "@/components/motion/Reveal";
  */
 type Fixture =
   | { kind: "result"; home: string; away: string; hs: number; as: number }
-  | { kind: "upcoming"; home: string; away: string; when: string };
+  | { kind: "upcoming"; home: string; away: string; date: string };
 
+// Mirrors the app's demo world (the same fixtures appear in the app
+// screenshots further down the page), so site and app tell one story.
 const FIXTURES: Fixture[] = [
-  { kind: "result", home: "Bepanda FC", away: "Makepe United", hs: 3, as: 1 },
-  { kind: "result", home: "Scorpions FC", away: "Akwa Stars", hs: 2, as: 2 },
-  { kind: "result", home: "Deido Warriors", away: "Bonapriso FC", hs: 4, as: 0 },
+  {
+    kind: "result",
+    home: "Makepe United",
+    away: "Deido Warriors",
+    hs: 3,
+    as: 1,
+  },
+  { kind: "result", home: "Akwa Stars", away: "Makepe United", hs: 2, as: 2 },
+  { kind: "result", home: "Makepe United", away: "Scorpions FC", hs: 1, as: 2 },
+  { kind: "result", home: "Bepanda FC", away: "Bonapriso FC", hs: 4, as: 0 },
   { kind: "result", home: "New Bell FC", away: "Ndogbong SC", hs: 1, as: 3 },
   { kind: "result", home: "Logbaba Kings", away: "Bali FC", hs: 2, as: 0 },
-  { kind: "upcoming", home: "Makepe United", away: "Deido Warriors", when: "Sat 20/09" },
-  { kind: "upcoming", home: "Scorpions FC", away: "Bepanda FC", when: "Tue 23/09" },
+  {
+    kind: "upcoming",
+    home: "Makepe United",
+    away: "Bepanda FC",
+    date: "2026-09-19",
+  },
+  {
+    kind: "upcoming",
+    home: "Akwa Stars",
+    away: "Makepe United",
+    date: "2026-09-22",
+  },
+  {
+    kind: "upcoming",
+    home: "Makepe United",
+    away: "Scorpions FC",
+    date: "2026-09-25",
+  },
 ];
+
+const LOCALES = { fr: "fr-FR", en: "en-GB" } as const;
+
+/** "sam. 19/09" / "Sat 19/09" — weekday derived from the date, never typed. */
+const formatMatchDay = (iso: string, lang: keyof typeof LOCALES) => {
+  // Noon UTC keeps the calendar day stable in every timezone.
+  const d = new Date(`${iso}T12:00:00Z`);
+  const weekday = new Intl.DateTimeFormat(LOCALES[lang], {
+    weekday: "short",
+    timeZone: "UTC",
+  }).format(d);
+  const dayMonth = new Intl.DateTimeFormat(LOCALES[lang], {
+    day: "2-digit",
+    month: "2-digit",
+    timeZone: "UTC",
+  }).format(d);
+  return `${weekday} ${dayMonth}`;
+};
 
 /** Initials mark — a neutral stand-in so no club badge is invented. */
 const Crest = ({ name }: { name: string }) => {
@@ -39,7 +82,7 @@ const Crest = ({ name }: { name: string }) => {
 };
 
 const FixtureCard = ({ fixture }: { fixture: Fixture }) => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   return (
     <div className="flex w-[262px] shrink-0 flex-col justify-between border-r border-bone/10 px-6 py-5">
@@ -56,7 +99,7 @@ const FixtureCard = ({ fixture }: { fixture: Fixture }) => {
           </span>
         ) : (
           <span className="font-display whitespace-nowrap text-[17px] leading-none text-bone">
-            {fixture.when}
+            {formatMatchDay(fixture.date, lang)}
           </span>
         )}
 
