@@ -4,10 +4,7 @@ import { Search, Zap, Trophy, User, LayoutGrid, Store } from "lucide-react";
 import { useLang } from "@/contexts/lang";
 import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
 import AppScreen from "@/components/AppScreen";
-import appExplore from "@/assets/app-explore.webp";
-import appMatches from "@/assets/app-matches.webp";
-import appHome from "@/assets/app-home.webp";
-import appFormation from "@/assets/app-formation.webp";
+import { SCREENSHOTS } from "@/lib/screenshots";
 import showcasePhoto from "@/assets/photos/player-golden.webp";
 
 /**
@@ -15,7 +12,9 @@ import showcasePhoto from "@/assets/photos/player-golden.webp";
  * translation, and the order matches `t.features.cards`.
  */
 const CARD_ICONS = [Search, Zap, Trophy, User];
-const SCREENS = [appExplore, appMatches, appHome, appFormation];
+
+/** Screenshot shown beside each card, in the same order as `t.features.cards`. */
+const CARD_SCREENS = ["explore", "challenge", "rankings", "profile"] as const;
 
 type RowProps = {
   index: number;
@@ -92,8 +91,9 @@ const FeatureRow = ({
 };
 
 const Features = () => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [active, setActive] = useState(0);
+  const screens = CARD_SCREENS.map((key) => SCREENSHOTS[key][lang]);
   const handleActive = useCallback((i: number) => setActive(i), []);
 
   return (
@@ -125,7 +125,7 @@ const Features = () => {
 
         {/* Mobile screenshot — the sticky column is desktop-only */}
         <Reveal delay={0.1} className="mt-12 md:hidden">
-          <AppScreen src={SCREENS[0]} className="mx-auto max-w-[280px]" />
+          <AppScreen src={screens[0]} className="mx-auto max-w-[280px]" />
         </Reveal>
 
         {/* Rows + sticky panel */}
@@ -147,9 +147,9 @@ const Features = () => {
           <div className="hidden md:block">
             <div className="sticky top-[132px]">
               <div className="relative mx-auto max-w-[300px]">
-                {SCREENS.map((src, i) => (
+                {screens.map((src, i) => (
                   <motion.div
-                    key={src}
+                    key={i}
                     className={i === 0 ? "relative" : "absolute inset-0"}
                     animate={{ opacity: active === i ? 1 : 0 }}
                     transition={{ duration: 0.5, ease: EASE }}
@@ -161,9 +161,9 @@ const Features = () => {
               </div>
 
               <div className="mx-auto mt-6 flex max-w-[300px] gap-1.5">
-                {SCREENS.map((src, i) => (
+                {screens.map((_, i) => (
                   <span
-                    key={src}
+                    key={i}
                     className={`h-px flex-1 transition-colors duration-500 ${
                       active === i ? "bg-brand-bright" : "bg-bone/15"
                     }`}
@@ -194,7 +194,7 @@ const Features = () => {
               <div className="px-6 pt-6">
                 <div className="mx-auto h-[260px] w-full max-w-[260px] overflow-hidden border border-bone/10 md:h-[300px]">
                   <img
-                    src={appFormation}
+                    src={SCREENSHOTS.formation[lang]}
                     alt=""
                     loading="lazy"
                     className="block h-full w-full object-cover object-top"

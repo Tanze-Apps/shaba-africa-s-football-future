@@ -4,12 +4,12 @@ import { Flame, Zap, Star } from "lucide-react";
 import { useLang } from "@/contexts/lang";
 import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
 import AppScreen from "@/components/AppScreen";
-import appHome from "@/assets/app-home.webp";
+import { SCREENSHOTS } from "@/lib/screenshots";
 
 const CARD_ICONS = [Flame, Zap, Star];
 
 const Gamification = () => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const barRef = useRef<HTMLDivElement>(null);
   // The XP bar only fills once, when the panel is actually looked at.
   const barInView = useInView(barRef, { once: true, margin: "0px 0px -20% 0px" });
@@ -72,7 +72,7 @@ const Gamification = () => {
               </div>
 
               <div className="border-t border-bone/10 p-6">
-                <AppScreen src={appHome} className="mx-auto max-w-[240px]" />
+                <AppScreen src={SCREENSHOTS.progression[lang]} className="mx-auto max-w-[240px]" />
               </div>
             </div>
           </Reveal>
