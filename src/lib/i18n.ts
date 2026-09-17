@@ -81,7 +81,7 @@ const fr = {
       },
     ],
     liveFormation: {
-      badge: "Nouveau",
+      badge: "Bientôt disponible",
       title: "Formation en direct",
       desc: "Le capitaine compose sa formation avec les joueurs de l'équipe. Chacun voit sa position avant même d'arriver sur le terrain.",
     },
@@ -150,7 +150,7 @@ const fr = {
     repLabel: "4.8 · Excellente réputation",
   },
   tournament: {
-    badge: "Bientôt disponible",
+    badge: "Maintenant disponible",
     headline: "Organisez tout le",
     accent: "tournoi.",
     sub: "De la création du tableau au champion — géré de bout en bout.",
@@ -312,7 +312,7 @@ const en: typeof fr = {
       },
     ],
     liveFormation: {
-      badge: "New",
+      badge: "Coming soon",
       title: "Live Formation Preview",
       desc: "Captains draft their lineup from the team roster. Everyone sees their position before they even reach the pitch.",
     },
@@ -381,7 +381,7 @@ const en: typeof fr = {
     repLabel: "4.8 · Excellent reputation",
   },
   tournament: {
-    badge: "Coming Soon",
+    badge: "Now live",
     headline: "Run the whole",
     accent: "tournament.",
     sub: "From bracket creation to champion — managed end to end.",
