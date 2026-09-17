@@ -179,12 +179,14 @@ const Features = () => {
           <Reveal>
             <div className="flex h-full flex-col border border-bone/10 bg-ink-raised">
               <div className="flex items-center gap-3 border-b border-bone/10 px-6 py-4">
+                {/* Still in development — muted so it doesn't read like the
+                    green "New" on the live Marketplace card beside it. */}
                 <LayoutGrid
-                  className="h-4 w-4 text-brand-bright"
+                  className="h-4 w-4 text-bone-faint"
                   strokeWidth={1.75}
                   aria-hidden="true"
                 />
-                <span className="u-eyebrow text-[10px] text-brand-bright">
+                <span className="u-eyebrow text-[10px] text-bone-faint">
                   {t.features.liveFormation.badge}
                 </span>
               </div>
