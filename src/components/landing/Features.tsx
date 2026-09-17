@@ -1,236 +1,302 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Footprints, MapPin, BadgeCheck } from "lucide-react";
+import { Search, Zap, Trophy, User, LayoutGrid, Store } from "lucide-react";
 import { useLang } from "@/contexts/lang";
-import formationImg from "@/assets/formation.png";
+import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
+import AppScreen from "@/components/AppScreen";
+import { SCREENSHOTS } from "@/lib/screenshots";
+import showcasePhoto from "@/assets/photos/player-golden.webp";
 
-const TYPING_NAMES = ["Sniper 99", "Makossa 10", "Flash Mpondo", "Dragon 7"];
+/**
+ * Icons live here rather than in the copy deck — they are presentation, not
+ * translation, and the order matches `t.features.cards`.
+ */
+const CARD_ICONS = [Search, Zap, Trophy, User];
 
-const SearchDemo = () => {
-  const [nameIdx, setNameIdx] = useState(0);
-  const [typed, setTyped] = useState("");
-  const [showResult, setShowResult] = useState(false);
+/** Screenshot shown beside each card, in the same order as `t.features.cards`. */
+const CARD_SCREENS = ["explore", "challenge", "rankings", "profile"] as const;
+
+type RowProps = {
+  index: number;
+  active: boolean;
+  onActive: (i: number) => void;
+  tag: string;
+  title: string;
+  desc: string;
+};
+
+const FeatureRow = ({
+  index,
+  active,
+  onActive,
+  tag,
+  title,
+  desc,
+}: RowProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+  // Fires when the row crosses the middle band of the viewport, which is what
+  // drives the sticky screenshot beside it.
+  const inView = useInView(ref, { margin: "-45% 0px -45% 0px" });
+  const Icon = CARD_ICONS[index];
 
   useEffect(() => {
-    const name = TYPING_NAMES[nameIdx];
-    let i = 0;
-    setTyped("");
-    setShowResult(false);
-    const typer = setInterval(() => {
-      i++;
-      setTyped(name.slice(0, i));
-      if (i >= name.length) {
-        clearInterval(typer);
-        setTimeout(() => setShowResult(true), 300);
-        setTimeout(() => setNameIdx((p) => (p + 1) % TYPING_NAMES.length), 2800);
-      }
-    }, 80);
-    return () => clearInterval(typer);
-  }, [nameIdx]);
-
-  const initials = typed.split(" ").map((w) => w[0] || "").join("").slice(0, 2).toUpperCase();
+    if (inView) onActive(index);
+  }, [inView, index, onActive]);
 
   return (
-    <div className="rounded-[18px] p-4 flex flex-col gap-2.5"
-      style={{ background: "rgba(255,255,255,0.05)", border: "1.5px solid rgba(255,255,255,0.1)" }}>
-      <div className="bg-white rounded-full px-4 py-2.5 flex items-center gap-2">
-        <span className="text-sm">🔍</span>
-        <span className="text-[13px] font-bold text-[#1a1a1a]">{typed}</span>
-        <span className="inline-block w-[2px] h-3.5 bg-[#1e8a3c] animate-cursor-blink" />
-      </div>
-      {showResult && (
-        <div className="bg-white rounded-[14px] px-3 py-2.5 flex items-center gap-2.5 slide-in-result">
-          <div className="w-9 h-9 rounded-full flex items-center justify-center font-fredoka text-sm text-white flex-shrink-0"
-            style={{ background: "linear-gradient(135deg,#c8960c,#f5d020)" }}>
-            {initials}
+    <motion.div
+      ref={ref}
+      className="border-t border-bone/10 py-9 md:py-12"
+      initial={{ opacity: 0, y: 26 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+      transition={{ duration: 0.65, ease: EASE }}
+    >
+      <div className="flex items-start gap-5 md:gap-7">
+        <span
+          className={`u-eyebrow shrink-0 pt-1.5 transition-colors duration-500 ${
+            active ? "text-brand-bright" : "text-bone-faint"
+          }`}
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+        <div className="min-w-0 flex-1">
+          <div className="mb-3 flex items-center gap-3">
+            <Icon
+              className={`h-[18px] w-[18px] shrink-0 transition-colors duration-500 ${
+                active ? "text-brand-bright" : "text-bone-faint"
+              }`}
+              strokeWidth={1.75}
+              aria-hidden="true"
+            />
+            <span className="u-eyebrow text-[10px] text-bone-faint">{tag}</span>
           </div>
-          <div>
-            <div className="text-[13px] font-black">{typed}</div>
-            <div className="text-[10px] text-[#6b7b6b] font-semibold">Attaquant · Makepe</div>
-          </div>
-          <div className="ml-auto bg-[#1e8a3c] text-white text-[10px] font-black px-2.5 py-1 rounded-full">RTG 92</div>
+
+          <h3
+            className={`font-display text-[clamp(23px,3.4vw,38px)] leading-[1.1] transition-colors duration-500 ${
+              active ? "text-bone" : "text-bone/45"
+            }`}
+          >
+            {title}
+          </h3>
+
+          <p className="mt-3 max-w-[460px] text-[14px] leading-relaxed text-bone-dim md:text-[15px]">
+            {desc}
+          </p>
         </div>
-      )}
-    </div>
+      </div>
+    </motion.div>
   );
 };
 
-type MarketplaceListing = { product: string; price: string; location: string; condition: string; seller: string };
-
-const MarketplaceDemo = ({ demo }: { demo: MarketplaceListing }) => (
-  <div className="rounded-[18px] p-4"
-    style={{ background: "rgba(255,255,255,0.05)", border: "1.5px solid rgba(255,255,255,0.1)" }}>
-    <div className="bg-white rounded-[14px] p-3.5 flex flex-col gap-3">
-      <div className="flex items-center gap-2.5">
-        <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{ background: "linear-gradient(135deg,#c8960c,#f5d020)" }}>
-          <Footprints className="w-5 h-5 text-white" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="text-[13px] font-black text-[#1a1a1a] truncate">{demo.product}</div>
-          <div className="text-[10px] text-[#6b7b6b] font-semibold flex items-center gap-1">
-            <MapPin className="w-3 h-3" /> {demo.location}
-          </div>
-        </div>
-        <span className="bg-[#e8f5ed] text-[#1e8a3c] text-[9px] font-black px-2 py-1 rounded-full flex-shrink-0">{demo.condition}</span>
-      </div>
-      <div className="flex items-center justify-between pt-2.5 border-t border-[#f0f2f0]">
-        <span className="font-fredoka text-[17px] text-[#1a1a1a]">{demo.price}</span>
-        <div className="flex items-center gap-1 text-[10px] font-black text-[#c8960c]">
-          <BadgeCheck className="w-3.5 h-3.5" /> {demo.seller}
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const GLOW_COLORS = ['#1e8a3c', '#f5a623', '#f59e0b', '#6366f1'];
-const HOVER_BORDERS = ['#1e8a3c', '#f5a623', '#f59e0b', '#6366f1'];
-
-const reveal = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (d: number) => ({ opacity: 1, y: 0, transition: { duration: 0.55, delay: d * 0.1 } }),
-};
-
 const Features = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const { t } = useLang();
-  const f = t.features;
+  const { t, lang } = useLang();
+  const [active, setActive] = useState(0);
+  const screens = CARD_SCREENS.map((key) => SCREENSHOTS[key][lang]);
+  const handleActive = useCallback((i: number) => setActive(i), []);
 
   return (
-    <section id="features" className="bg-white py-24 relative overflow-hidden">
-      <div className="absolute inset-0 dot-grid pointer-events-none" />
-      <div className="max-w-[1120px] mx-auto px-6 relative z-10">
+    // No bottom padding: this section ends on a full-bleed band, and padding
+    // after it would read as a dead gap.
+    <section id="features" className="relative bg-ink pt-20 md:pt-28">
+      <div className="mx-auto max-w-[1340px] px-5 md:px-10">
+        {/* Section header */}
+        <Reveal>
+          <span className="u-eyebrow text-brand-bright">
+            {t.features.badge}
+          </span>
+        </Reveal>
 
-        {/* Header */}
-        <motion.div
-          ref={ref}
-          className="text-center mb-15"
-          initial="hidden" animate={inView ? "visible" : "hidden"} custom={0} variants={reveal}
-        >
-          <div className="inline-flex items-center gap-1.5 bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-5">
-            {f.badge}
+        <MaskLines
+          as="h2"
+          lines={[
+            t.features.headline,
+            <span className="text-brand-bright">{t.features.accent}</span>,
+          ]}
+          className="font-display mt-5 max-w-[15ch] text-[clamp(32px,6vw,74px)] leading-[1.03] text-bone"
+        />
+
+        <Reveal delay={0.1}>
+          <p className="mt-6 max-w-[520px] text-[15px] leading-relaxed text-bone-dim md:text-[17px]">
+            {t.features.sub}
+          </p>
+        </Reveal>
+
+        {/* Mobile screenshot — the sticky column is desktop-only */}
+        <Reveal delay={0.1} className="mt-12 md:hidden">
+          <AppScreen src={screens[0]} className="mx-auto max-w-[280px]" />
+        </Reveal>
+
+        {/* Rows + sticky panel */}
+        <div className="mt-8 grid gap-10 md:mt-16 md:grid-cols-[1fr_0.8fr] md:gap-20">
+          <div>
+            {t.features.cards.map((card, i) => (
+              <FeatureRow
+                key={card.title}
+                index={i}
+                active={active === i}
+                onActive={handleActive}
+                tag={card.tag}
+                title={card.title}
+                desc={card.desc}
+              />
+            ))}
           </div>
-          <h2 className="font-fredoka text-[clamp(36px,5vw,60px)] leading-[1.1] text-[#1a1a1a] mb-3">
-            {f.headline}<br /><span className="text-[#1e8a3c]">{f.accent}</span>
-          </h2>
-          <p className="text-[16px] font-semibold text-[#6b7b6b] max-w-[480px] mx-auto">{f.sub}</p>
-        </motion.div>
 
-        {/* Bento */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
-          {/* Discovery — wide */}
-          <motion.div
-            className="group sm:col-span-2 relative bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-[32px] p-8 overflow-hidden cursor-default hover:-translate-y-1 hover:bg-white hover:shadow-xl transition-all duration-300"
-            style={{ ['--hover-border' as any]: HOVER_BORDERS[0] }}
-            initial="hidden" animate={inView ? "visible" : "hidden"} custom={1} variants={reveal}
-          >
-            <div className="bento-glow" style={{ background: GLOW_COLORS[0] }} />
-            <span className="text-[42px] mb-5 block">{f.cards[0].icon}</span>
-            <div className="text-[10px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-1.5">{f.cards[0].tag}</div>
-            <h3 className="font-fredoka text-[26px] text-[#1a1a1a] mb-2.5">{f.cards[0].title}</h3>
-            <p className="text-[14px] font-semibold text-[#6b7b6b] leading-[1.6] max-w-xs">{f.cards[0].desc}</p>
-          </motion.div>
-
-          {/* Challenges */}
-          <motion.div
-            className="group relative bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-[32px] p-8 overflow-hidden cursor-default hover:-translate-y-1 hover:bg-white hover:shadow-xl transition-all duration-300"
-            initial="hidden" animate={inView ? "visible" : "hidden"} custom={2} variants={reveal}
-          >
-            <div className="bento-glow" style={{ background: GLOW_COLORS[1] }} />
-            <span className="text-[42px] mb-5 block">{f.cards[1].icon}</span>
-            <div className="text-[10px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-1.5">{f.cards[1].tag}</div>
-            <h3 className="font-fredoka text-[26px] text-[#1a1a1a] mb-2.5">{f.cards[1].title}</h3>
-            <p className="text-[14px] font-semibold text-[#6b7b6b] leading-[1.6]">{f.cards[1].desc}</p>
-          </motion.div>
-
-          {/* Rankings */}
-          <motion.div
-            className="group relative bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-[32px] p-8 overflow-hidden cursor-default hover:-translate-y-1 hover:bg-white hover:shadow-xl transition-all duration-300"
-            initial="hidden" animate={inView ? "visible" : "hidden"} custom={3} variants={reveal}
-          >
-            <div className="bento-glow" style={{ background: GLOW_COLORS[2] }} />
-            <span className="text-[42px] mb-5 block">{f.cards[2].icon}</span>
-            <div className="text-[10px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-1.5">{f.cards[2].tag}</div>
-            <h3 className="font-fredoka text-[26px] text-[#1a1a1a] mb-2.5">{f.cards[2].title}</h3>
-            <p className="text-[14px] font-semibold text-[#6b7b6b] leading-[1.6]">{f.cards[2].desc}</p>
-          </motion.div>
-
-          {/* Profile — wide */}
-          <motion.div
-            className="group sm:col-span-2 relative bg-[#f0f2f0] border-2 border-[#dde8dd] rounded-[32px] p-8 overflow-hidden cursor-default hover:-translate-y-1 hover:bg-white hover:shadow-xl transition-all duration-300"
-            initial="hidden" animate={inView ? "visible" : "hidden"} custom={4} variants={reveal}
-          >
-            <div className="bento-glow" style={{ background: GLOW_COLORS[3] }} />
-            <span className="text-[42px] mb-5 block">{f.cards[3].icon}</span>
-            <div className="text-[10px] font-black uppercase tracking-[1.5px] text-[#6b7b6b] mb-1.5">{f.cards[3].tag}</div>
-            <h3 className="font-fredoka text-[26px] text-[#1a1a1a] mb-2.5">{f.cards[3].title}</h3>
-            <p className="text-[14px] font-semibold text-[#6b7b6b] leading-[1.6] max-w-xs">{f.cards[3].desc}</p>
-          </motion.div>
-
-          {/* Live Formation Preview — full width */}
-          <motion.div
-            className="lg:col-span-3 sm:col-span-2 relative rounded-[32px] overflow-hidden border-2 border-[#2db355]/20 hover:border-[#2db355]/40 hover:shadow-xl transition-all duration-300"
-            style={{ background: "#0a1a0f" }}
-            initial="hidden" animate={inView ? "visible" : "hidden"} custom={5} variants={reveal}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-8 md:p-10">
-              <div>
-                <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#2db355] mb-5"
-                  style={{ background: "rgba(45,179,85,0.1)", border: "1.5px solid rgba(45,179,85,0.25)" }}>
-                  {f.liveFormation.badge}
-                </div>
-                <h3 className="font-fredoka text-[32px] text-white mb-3">{f.liveFormation.title}</h3>
-                <p className="text-[15px] font-semibold text-white/55 leading-[1.65] max-w-[340px]">{f.liveFormation.desc}</p>
+          <div className="hidden md:block">
+            <div className="sticky top-[132px]">
+              <div className="relative mx-auto max-w-[300px]">
+                {screens.map((src, i) => (
+                  <motion.div
+                    key={i}
+                    className={i === 0 ? "relative" : "absolute inset-0"}
+                    animate={{ opacity: active === i ? 1 : 0 }}
+                    transition={{ duration: 0.5, ease: EASE }}
+                    aria-hidden={active !== i}
+                  >
+                    <AppScreen src={src} />
+                  </motion.div>
+                ))}
               </div>
-              <div className="flex justify-center">
-                <div className="rounded-[28px] p-3 w-[220px]"
-                  style={{ background: "#0d0d0d", boxShadow: "0 0 0 2px rgba(255,255,255,0.08), 0 30px 60px rgba(0,0,0,0.5)" }}>
-                  <img src={formationImg} alt={f.liveFormation.title} className="w-full rounded-[16px] object-cover" />
-                </div>
+
+              <div className="mx-auto mt-6 flex max-w-[300px] gap-1.5">
+                {screens.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`h-px flex-1 transition-colors duration-500 ${
+                      active === i ? "bg-brand-bright" : "bg-bone/15"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
-          </motion.div>
+          </div>
+        </div>
 
-          {/* Marketplace — full width */}
-          <motion.div
-            className="lg:col-span-3 sm:col-span-2 relative rounded-[32px] overflow-hidden border-2 border-[#f5a623]/20 hover:border-[#f5a623]/40 hover:shadow-xl transition-all duration-300"
-            style={{ background: "#0a1a0f" }}
-            initial="hidden" animate={inView ? "visible" : "hidden"} custom={6} variants={reveal}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-8 md:p-10">
-              <div>
-                <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#f5a623] mb-5"
-                  style={{ background: "rgba(245,166,35,0.1)", border: "1.5px solid rgba(245,166,35,0.25)" }}>
-                  {f.marketplace.badge}
-                </div>
-                <h3 className="font-fredoka text-[32px] text-white mb-3">{f.marketplace.title}</h3>
-                <p className="text-[15px] font-semibold text-white/55 leading-[1.65] max-w-[340px]">{f.marketplace.desc}</p>
+        {/* Live formation + marketplace */}
+        <div className="mt-20 grid gap-8 md:mt-28 md:grid-cols-2 md:gap-12">
+          <Reveal>
+            <div className="flex h-full flex-col border border-bone/10 bg-ink-raised">
+              <div className="flex items-center gap-3 border-b border-bone/10 px-6 py-4">
+                <LayoutGrid
+                  className="h-4 w-4 text-brand-bright"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+                <span className="u-eyebrow text-[10px] text-brand-bright">
+                  {t.features.liveFormation.badge}
+                </span>
               </div>
-              <MarketplaceDemo demo={f.marketplace.demo} />
-            </div>
-          </motion.div>
 
-          {/* Talent Showcase — full width */}
-          <motion.div
-            className="lg:col-span-3 sm:col-span-2 relative rounded-[32px] overflow-hidden border-2 border-[#2db355]/20 hover:border-[#2db355]/40 hover:shadow-xl transition-all duration-300"
-            style={{ background: "#0a1a0f" }}
-            initial="hidden" animate={inView ? "visible" : "hidden"} custom={7} variants={reveal}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-8 md:p-10">
-              <div>
-                <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[1.5px] text-[#2db355] mb-5"
-                  style={{ background: "rgba(45,179,85,0.1)", border: "1.5px solid rgba(45,179,85,0.25)" }}>
-                  {f.showcaseBadge}
+              {/* Fixed media height keeps this card level with the
+                  marketplace card beside it. */}
+              <div className="px-6 pt-6">
+                <div className="mx-auto h-[260px] w-full max-w-[260px] overflow-hidden border border-bone/10 md:h-[300px]">
+                  <img
+                    src={SCREENSHOTS.formation[lang]}
+                    alt=""
+                    loading="lazy"
+                    className="block h-full w-full object-cover object-top"
+                  />
                 </div>
-                <h3 className="font-fredoka text-[32px] text-white mb-3">{f.showcaseTitle}</h3>
-                <p className="text-[15px] font-semibold text-white/55 leading-[1.65] max-w-[340px]">{f.showcaseDesc}</p>
               </div>
-              <SearchDemo />
+
+              <div className="mt-auto px-6 pb-7 pt-6">
+                <h3 className="font-display text-[26px] leading-tight text-bone">
+                  {t.features.liveFormation.title}
+                </h3>
+                <p className="mt-3 text-[14px] leading-relaxed text-bone-dim">
+                  {t.features.liveFormation.desc}
+                </p>
+              </div>
             </div>
-          </motion.div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="flex h-full flex-col border border-bone/10 bg-ink-raised">
+              <div className="flex items-center gap-3 border-b border-bone/10 px-6 py-4">
+                <Store
+                  className="h-4 w-4 text-brand-bright"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+                <span className="u-eyebrow text-[10px] text-brand-bright">
+                  {t.features.marketplace.badge}
+                </span>
+              </div>
+
+              {/* Illustrative listing, built from the copy deck */}
+              <div className="px-6 pt-6">
+                <div className="flex flex-col border border-bone/10 bg-ink-deep p-5 md:h-[300px]">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="font-display text-[20px] leading-none text-bone">
+                        {t.features.marketplace.demo.product}
+                      </p>
+                      <p className="u-eyebrow mt-2 text-[10px] text-bone-faint">
+                        {t.features.marketplace.demo.location} ·{" "}
+                        {t.features.marketplace.demo.condition}
+                      </p>
+                    </div>
+                    <span className="font-display shrink-0 text-[20px] leading-none text-brand-bright">
+                      {t.features.marketplace.demo.price}
+                    </span>
+                  </div>
+
+                  <div className="mt-auto flex items-center gap-2 border-t border-bone/10 pt-4">
+                    <span className="h-6 w-6 shrink-0 border border-bone/15 bg-bone/[0.06]" />
+                    <span className="text-[12px] text-bone-dim">
+                      {t.features.marketplace.demo.seller}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-auto px-6 pb-7 pt-6">
+                <h3 className="font-display text-[26px] leading-tight text-bone">
+                  {t.features.marketplace.title}
+                </h3>
+                <p className="mt-3 text-[14px] leading-relaxed text-bone-dim">
+                  {t.features.marketplace.desc}
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+
+      {/* Talent showcase — full-bleed band */}
+      <div className="relative mt-20 overflow-hidden md:mt-28">
+        <div className="relative min-h-[420px] md:min-h-[520px]">
+          <img
+            src={showcasePhoto}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          />
+          <div className="u-photo-wash absolute inset-0" />
+          <div className="u-grid-lines absolute inset-0 opacity-50" />
+
+          <div className="relative mx-auto flex min-h-[420px] max-w-[1340px] flex-col justify-center px-5 py-16 md:min-h-[520px] md:px-10">
+            <Reveal>
+              <span className="u-eyebrow text-brand-bright">
+                {t.features.showcaseBadge}
+              </span>
+            </Reveal>
+
+            <MaskLines
+              as="h3"
+              lines={[t.features.showcaseTitle]}
+              className="font-display mt-4 text-[clamp(38px,8vw,92px)] leading-[1.02] text-bone"
+            />
+
+            <Reveal delay={0.1}>
+              <p className="mt-5 max-w-[520px] text-[15px] leading-relaxed text-bone-dim md:text-[17px]">
+                {t.features.showcaseDesc}
+              </p>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

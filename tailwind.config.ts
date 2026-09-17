@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Nunito', 'system-ui', '-apple-system', 'sans-serif'],
-        fredoka: ['Fredoka One', 'cursive'],
+        // Two families only.
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Anton', 'Impact', 'Haettenschweiler', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -60,6 +61,22 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        // Editorial dark system
+        ink: {
+          DEFAULT: '#080b09',
+          raised:  '#0e1411',
+          deep:    '#050806',
+        },
+        bone: {
+          DEFAULT: '#f2f4f1',
+          dim:     'rgba(242,244,241,0.55)',
+          faint:   'rgba(242,244,241,0.32)',
+        },
+        brand: {
+          DEFAULT: '#1e8a3c',
+          bright:  '#2db355',
+          deep:    '#145c28',
         },
         g: {
           green:       '#1e8a3c',
@@ -129,6 +146,11 @@ export default {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0" },
         },
+        scrollHint: {
+          "0%":        { transform: "translateY(0)",    opacity: "0" },
+          "35%":       { opacity: "1" },
+          "100%":      { transform: "translateY(14px)", opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -142,6 +164,7 @@ export default {
         "pulse-dot": "pulseDot 2s ease-in-out infinite",
         "live-blink": "liveBlink 1s ease-in-out infinite",
         "cursor-blink": "cursorBlink 1s step-end infinite",
+        "scroll-hint": "scrollHint 1.8s ease-in-out infinite",
       },
     },
   },
