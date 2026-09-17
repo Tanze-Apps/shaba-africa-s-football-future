@@ -12,7 +12,10 @@ const Gamification = () => {
   const { t, lang } = useLang();
   const barRef = useRef<HTMLDivElement>(null);
   // The XP bar only fills once, when the panel is actually looked at.
-  const barInView = useInView(barRef, { once: true, margin: "0px 0px -20% 0px" });
+  const barInView = useInView(barRef, {
+    once: true,
+    margin: "0px 0px -20% 0px",
+  });
 
   return (
     <section className="relative border-t border-bone/10 bg-ink py-20 md:py-28">
@@ -54,7 +57,7 @@ const Gamification = () => {
                   <motion.div
                     className="h-[3px] bg-brand-bright"
                     initial={{ width: "0%" }}
-                    animate={barInView ? { width: "78%" } : { width: "0%" }}
+                    animate={barInView ? { width: "60%" } : { width: "0%" }}
                     transition={{ duration: 1.5, delay: 0.2, ease: EASE }}
                   />
                 </div>
@@ -72,7 +75,10 @@ const Gamification = () => {
               </div>
 
               <div className="border-t border-bone/10 p-6">
-                <AppScreen src={SCREENSHOTS.progression[lang]} className="mx-auto max-w-[240px]" />
+                <AppScreen
+                  src={SCREENSHOTS.progression[lang]}
+                  className="mx-auto max-w-[240px]"
+                />
               </div>
             </div>
           </Reveal>
