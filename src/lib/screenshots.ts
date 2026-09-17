@@ -13,7 +13,6 @@ import homeDesktop from "@/assets/app/home-desktop.webp";
 import rankingsDesktop from "@/assets/app/rankings-desktop.webp";
 import profileDesktop from "@/assets/app/profile-desktop.webp";
 import tournamentsDesktop from "@/assets/app/tournaments-desktop.webp";
-import legacyFormation from "@/assets/app-formation.webp";
 
 /**
  * Every app screenshot the site shows, per language.
@@ -37,9 +36,6 @@ export const SCREENSHOTS = {
   progression: same(progression),
   laRue: same(laRue),
   tournaments: same(tournaments),
-
-  // Pre-revamp capture — there is no demo-data formation screen yet.
-  formation: same(legacyFormation),
 
   // Desktop web app.
   exploreDesktop: same(exploreDesktop),

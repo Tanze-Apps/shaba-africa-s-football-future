@@ -4,6 +4,7 @@ import { Search, Zap, Trophy, User, LayoutGrid, Store } from "lucide-react";
 import { useLang } from "@/contexts/lang";
 import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
 import AppScreen from "@/components/AppScreen";
+import FormationPitch from "@/components/FormationPitch";
 import { SCREENSHOTS } from "@/lib/screenshots";
 import showcasePhoto from "@/assets/photos/player-golden.webp";
 
@@ -191,17 +192,14 @@ const Features = () => {
                 </span>
               </div>
 
-              {/* Fixed media height keeps this card level with the
-                  marketplace card beside it. */}
+              {/* An illustration, not a screenshot: the feature is still in
+                  development. Capped at 463px wide on desktop, which makes it
+                  300px tall — level with the marketplace card beside it. */}
               <div className="px-6 pt-6">
-                <div className="mx-auto h-[260px] w-full max-w-[260px] overflow-hidden border border-bone/10 md:h-[300px]">
-                  <img
-                    src={SCREENSHOTS.formation[lang]}
-                    alt=""
-                    loading="lazy"
-                    className="block h-full w-full object-cover object-top"
-                  />
-                </div>
+                <FormationPitch
+                  label={t.features.liveFormation.illustration}
+                  className="mx-auto md:max-w-[463px]"
+                />
               </div>
 
               <div className="mt-auto px-6 pb-7 pt-6">
