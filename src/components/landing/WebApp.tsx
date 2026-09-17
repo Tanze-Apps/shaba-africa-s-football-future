@@ -17,6 +17,7 @@ const SCREENS = [
   "exploreDesktop",
   "homeDesktop",
   "rankingsDesktop",
+  "tournamentsDesktop",
   "profileDesktop",
 ] as const;
 
@@ -34,6 +35,7 @@ const WebApp = () => {
   const reduced = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
+  const tablistRef = useRef<HTMLDivElement>(null);
 
   const [active, setActive] = useState(0);
   // The tour stops for good once someone picks a tab — moving it out from
@@ -50,6 +52,19 @@ const WebApp = () => {
     );
     return () => window.clearTimeout(id);
   }, [active, playing]);
+
+  // On narrow screens the tabs overflow; keep the active one centred in the
+  // row so the tour never advances to a tab the visitor can't see. Scrolls the
+  // row only — scrollIntoView would also move the page.
+  useEffect(() => {
+    const row = tablistRef.current;
+    const tab = row?.children[active] as HTMLElement | undefined;
+    if (!row || !tab || row.scrollWidth <= row.clientWidth) return;
+    row.scrollTo({
+      left: tab.offsetLeft - (row.clientWidth - tab.offsetWidth) / 2,
+      behavior: reduced ? "auto" : "smooth",
+    });
+  }, [active, reduced]);
 
   // The frame settles to full size as it scrolls up into view.
   const { scrollYProgress } = useScroll({
@@ -123,9 +138,10 @@ const WebApp = () => {
         >
           {/* Screen tabs */}
           <div
+            ref={tablistRef}
             role="tablist"
             aria-label={t.webapp.alt}
-            className="flex overflow-x-auto border-x border-t border-bone/15"
+            className="relative flex overflow-x-auto border-x border-t border-bone/15 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {t.webapp.tabs.map((label, i) => (
               <button
