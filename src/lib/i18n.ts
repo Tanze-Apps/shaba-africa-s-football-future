@@ -83,6 +83,8 @@ const fr = {
     liveFormation: {
       badge: "Bientôt disponible",
       title: "Formation en direct",
+      illustration:
+        "Illustration : la formation 4-3-3 de Makepe United sur un terrain, avec Junior Mbarga capitaine",
       desc: "Le capitaine compose sa formation avec les joueurs de l'équipe. Chacun voit sa position avant même d'arriver sur le terrain.",
     },
     marketplace: {
@@ -314,6 +316,8 @@ const en: typeof fr = {
     liveFormation: {
       badge: "Coming soon",
       title: "Live Formation Preview",
+      illustration:
+        "Illustration: Makepe United's 4-3-3 formation on a pitch, with Junior Mbarga as captain",
       desc: "Captains draft their lineup from the team roster. Everyone sees their position before they even reach the pitch.",
     },
     marketplace: {
