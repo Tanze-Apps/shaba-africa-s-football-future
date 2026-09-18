@@ -4,6 +4,8 @@ import { Search, Zap, Trophy, User, LayoutGrid, Store } from "lucide-react";
 import { useLang } from "@/contexts/lang";
 import { EASE, MaskLines, Reveal } from "@/components/motion/Reveal";
 import AppScreen from "@/components/AppScreen";
+import FormationPitch from "@/components/FormationPitch";
+import MarketplaceBoard from "@/components/MarketplaceBoard";
 import { SCREENSHOTS } from "@/lib/screenshots";
 import showcasePhoto from "@/assets/photos/player-golden.webp";
 
@@ -175,31 +177,33 @@ const Features = () => {
         </div>
 
         {/* Live formation + marketplace */}
+        {/* min-w-0 on both items: grid items default to min-width:auto, so a
+            card would otherwise refuse to shrink below its content's minimum
+            and push the page wider than the phone viewport. */}
         <div className="mt-20 grid gap-8 md:mt-28 md:grid-cols-2 md:gap-12">
-          <Reveal>
+          <Reveal className="min-w-0">
             <div className="flex h-full flex-col border border-bone/10 bg-ink-raised">
               <div className="flex items-center gap-3 border-b border-bone/10 px-6 py-4">
+                {/* Still in development — muted so it doesn't read like the
+                    green "New" on the live Marketplace card beside it. */}
                 <LayoutGrid
-                  className="h-4 w-4 text-brand-bright"
+                  className="h-4 w-4 text-bone-faint"
                   strokeWidth={1.75}
                   aria-hidden="true"
                 />
-                <span className="u-eyebrow text-[10px] text-brand-bright">
+                <span className="u-eyebrow text-[10px] text-bone-faint">
                   {t.features.liveFormation.badge}
                 </span>
               </div>
 
-              {/* Fixed media height keeps this card level with the
-                  marketplace card beside it. */}
+              {/* An illustration, not a screenshot: the feature is still in
+                  development. Capped at 463px wide on desktop, which makes it
+                  300px tall — level with the marketplace card beside it. */}
               <div className="px-6 pt-6">
-                <div className="mx-auto h-[260px] w-full max-w-[260px] overflow-hidden border border-bone/10 md:h-[300px]">
-                  <img
-                    src={SCREENSHOTS.formation[lang]}
-                    alt=""
-                    loading="lazy"
-                    className="block h-full w-full object-cover object-top"
-                  />
-                </div>
+                <FormationPitch
+                  label={t.features.liveFormation.illustration}
+                  className="mx-auto md:max-w-[463px]"
+                />
               </div>
 
               <div className="mt-auto px-6 pb-7 pt-6">
@@ -213,7 +217,7 @@ const Features = () => {
             </div>
           </Reveal>
 
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} className="min-w-0">
             <div className="flex h-full flex-col border border-bone/10 bg-ink-raised">
               <div className="flex items-center gap-3 border-b border-bone/10 px-6 py-4">
                 <Store
@@ -226,31 +230,14 @@ const Features = () => {
                 </span>
               </div>
 
-              {/* Illustrative listing, built from the copy deck */}
+              {/* An illustration rather than a screenshot: the live board
+                  shows whatever is for sale that day, which may be one item. */}
               <div className="px-6 pt-6">
-                <div className="flex flex-col border border-bone/10 bg-ink-deep p-5 md:h-[300px]">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="min-w-0">
-                      <p className="font-display text-[20px] leading-none text-bone">
-                        {t.features.marketplace.demo.product}
-                      </p>
-                      <p className="u-eyebrow mt-2 text-[10px] text-bone-faint">
-                        {t.features.marketplace.demo.location} ·{" "}
-                        {t.features.marketplace.demo.condition}
-                      </p>
-                    </div>
-                    <span className="font-display shrink-0 text-[20px] leading-none text-brand-bright">
-                      {t.features.marketplace.demo.price}
-                    </span>
-                  </div>
-
-                  <div className="mt-auto flex items-center gap-2 border-t border-bone/10 pt-4">
-                    <span className="h-6 w-6 shrink-0 border border-bone/15 bg-bone/[0.06]" />
-                    <span className="text-[12px] text-bone-dim">
-                      {t.features.marketplace.demo.seller}
-                    </span>
-                  </div>
-                </div>
+                <MarketplaceBoard
+                  categories={t.features.marketplace.categories}
+                  listings={t.features.marketplace.listings}
+                  location={t.features.marketplace.location}
+                />
               </div>
 
               <div className="mt-auto px-6 pb-7 pt-6">
