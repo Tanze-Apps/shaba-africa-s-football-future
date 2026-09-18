@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLang } from "@/contexts/lang";
 import { EASE } from "@/components/motion/Reveal";
 import SocialRow from "@/components/SocialRow";
-import { ROUTES, useSiteNav } from "@/lib/nav";
+import { ROUTES, useMenuNav } from "@/lib/nav";
 import menuPhoto from "@/assets/photos/player-golden.webp";
 
 const LangToggle = () => {
@@ -36,7 +36,7 @@ const Header = () => {
   const { t } = useLang();
   const reduced = useReducedMotion();
   const { pathname } = useLocation();
-  const navLinks = useSiteNav();
+  const navLinks = useMenuNav();
 
   // Header goes solid once the hero starts scrolling away.
   useEffect(() => {
