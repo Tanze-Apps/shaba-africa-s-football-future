@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import { useLang } from "@/contexts/lang";
 import { Reveal } from "@/components/motion/Reveal";
 import SocialRow from "@/components/SocialRow";
+<<<<<<< HEAD
 import { ROUTES } from "@/lib/nav";
+=======
+>>>>>>> main
 
 const EMAIL = "shabasfootball@gmail.com";
 const PHONE = "+237673015993";
@@ -12,12 +15,16 @@ const PHONE_DISPLAY = "+237 673 015 993";
  * Destinations line up with `t.footer.productLinks` / `companyLinks` by index.
  * The remaining "#" entries are pages that do not exist yet.
  */
+<<<<<<< HEAD
 const PRODUCT_HREFS = [
   ROUTES.features,
   ROUTES.how,
   ROUTES.laRue,
   ROUTES.features,
 ];
+=======
+const PRODUCT_HREFS = ["#features", "#how", "#la-rue", "#features"];
+>>>>>>> main
 const COMPANY_HREFS = ["#", "/privacy-policy", "#", `mailto:${EMAIL}`];
 
 const Footer = () => {
@@ -68,12 +75,21 @@ const Footer = () => {
             <ul className="flex flex-col gap-3">
               {f.productLinks.map((label, i) => (
                 <li key={label}>
+<<<<<<< HEAD
                   <Link
                     to={PRODUCT_HREFS[i]}
                     className="text-[14px] text-bone-dim transition-colors duration-200 hover:text-bone"
                   >
                     {label}
                   </Link>
+=======
+                  <a
+                    href={PRODUCT_HREFS[i]}
+                    className="text-[14px] text-bone-dim transition-colors duration-200 hover:text-bone"
+                  >
+                    {label}
+                  </a>
+>>>>>>> main
                 </li>
               ))}
             </ul>
