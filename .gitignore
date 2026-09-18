@@ -27,3 +27,6 @@ dist-ssr
 .env
 .env.local
 *.env
+# Raw app captures from the Flutter repo — working material, some of it
+# showing real production accounts. Processed assets live in src/assets/app.
+src/marketing_screenshots/

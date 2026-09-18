@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLang } from "@/contexts/lang";
 import { EASE } from "@/components/motion/Reveal";
 import SocialRow from "@/components/SocialRow";
+import { ROUTES, useMenuNav } from "@/lib/nav";
 import menuPhoto from "@/assets/photos/player-golden.webp";
 
 const LangToggle = () => {
@@ -33,15 +35,8 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const { t } = useLang();
   const reduced = useReducedMotion();
-
-  const navLinks = [
-    { href: "#features", label: t.nav.features },
-    { href: "#how", label: t.nav.howItWorks },
-    { href: "#tournaments", label: t.nav.tournaments },
-    { href: "#la-rue", label: t.nav.laRue },
-    { href: "#partners", label: t.nav.partners },
-    { href: "#download", label: t.nav.download },
-  ];
+  const { pathname } = useLocation();
+  const navLinks = useMenuNav();
 
   // Header goes solid once the hero starts scrolling away.
   useEffect(() => {
@@ -104,8 +99,8 @@ const Header = () => {
           </button>
 
           {/* Centre — crest */}
-          <a
-            href="#hero"
+          <Link
+            to={ROUTES.home}
             className="absolute left-1/2 z-10 flex -translate-x-1/2 items-center gap-2.5"
             aria-label="Shabas"
           >
@@ -119,7 +114,7 @@ const Header = () => {
             <span className="font-display text-[19px] leading-none text-bone md:text-[22px]">
               Shabas
             </span>
-          </a>
+          </Link>
 
           {/* Right — language + socials */}
           <div className="z-10 flex items-center gap-5">
@@ -152,7 +147,7 @@ const Header = () => {
                   <ul>
                     {navLinks.map((l, i) => (
                       <motion.li
-                        key={l.href}
+                        key={l.to}
                         initial={{ opacity: 0, y: reduced ? 0 : 26 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{
@@ -162,18 +157,31 @@ const Header = () => {
                         }}
                         className="border-b border-bone/10"
                       >
-                        <a
-                          href={l.href}
+                        <Link
+                          to={l.to}
                           onClick={() => setOpen(false)}
+                          aria-current={pathname === l.to ? "page" : undefined}
                           className="group flex items-baseline gap-4 py-3 md:py-4"
                         >
-                          <span className="u-eyebrow w-7 shrink-0 text-bone-faint transition-colors group-hover:text-brand-bright">
+                          <span
+                            className={`u-eyebrow w-7 shrink-0 transition-colors group-hover:text-brand-bright ${
+                              pathname === l.to
+                                ? "text-brand-bright"
+                                : "text-bone-faint"
+                            }`}
+                          >
                             {String(i + 1).padStart(2, "0")}
                           </span>
-                          <span className="font-display text-[clamp(30px,6.5vw,60px)] leading-[1.05] text-bone transition-colors duration-200 group-hover:text-brand-bright">
+                          <span
+                            className={`font-display text-[clamp(30px,6.5vw,60px)] leading-[1.05] transition-colors duration-200 group-hover:text-brand-bright ${
+                              pathname === l.to
+                                ? "text-brand-bright"
+                                : "text-bone"
+                            }`}
+                          >
                             {l.label}
                           </span>
-                        </a>
+                        </Link>
                       </motion.li>
                     ))}
                   </ul>
