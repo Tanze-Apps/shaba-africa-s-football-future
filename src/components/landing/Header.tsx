@@ -39,6 +39,7 @@ const Header = () => {
     { href: "#how", label: t.nav.howItWorks },
     { href: "#tournaments", label: t.nav.tournaments },
     { href: "#la-rue", label: t.nav.laRue },
+    { href: "#partners", label: t.nav.partners },
     { href: "#download", label: t.nav.download },
   ];
 

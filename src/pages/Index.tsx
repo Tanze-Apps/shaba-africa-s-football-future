@@ -7,6 +7,7 @@ import HowItWorks from "@/components/landing/HowItWorks";
 import Gamification from "@/components/landing/Gamification";
 import Tournaments from "@/components/landing/Tournaments";
 import LaRue from "@/components/landing/LaRue";
+import Partners from "@/components/landing/Partners";
 import Download from "@/components/landing/Download";
 import Footer from "@/components/landing/Footer";
 
@@ -22,6 +23,7 @@ const Index = () => (
       <Gamification />
       <Tournaments />
       <LaRue />
+      <Partners />
       <Download />
     </main>
     <Footer />

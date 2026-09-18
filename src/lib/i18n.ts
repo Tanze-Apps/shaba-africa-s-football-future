@@ -6,6 +6,7 @@ const fr = {
     howItWorks: "Comment ça marche",
     tournaments: "Tournois",
     laRue: "La Rue",
+    partners: "Partenaires",
     download: "Télécharger",
     menu: "Menu",
     close: "Fermer",
@@ -90,7 +91,7 @@ const fr = {
     marketplace: {
       badge: "Nouveau",
       title: "Marketplace",
-      desc: "Les membres premium mettent en vente crampons, maillots et équipement. Tout le monde peut parcourir et envoyer une demande directement.",
+      desc: "Les vendeurs partenaires mettent en vente crampons, maillots et équipement. Tout le monde peut parcourir et envoyer une demande directement.",
       categories: ["Tout", "Crampons", "Maillots", "Gants"],
       location: "Makepe, Douala",
       listings: [
@@ -202,6 +203,40 @@ const fr = {
       },
     ],
   },
+  partners: {
+    badge: "Partenariats",
+    headline: "Ouvert aux",
+    accent: "partenaires.",
+    sub: "Shabas grandit quartier par quartier. Si vous vendez de l'équipement ou si vous arbitrez, écrivez-nous : nous ouvrons votre accès à la main, après un échange.",
+    cards: [
+      {
+        tag: "Vendeurs locaux",
+        title: "Vendez sur la Marketplace",
+        desc: "Crampons, maillots, gants, équipement. Vos articles sont visibles par les joueurs de votre ville, qui vous contactent directement dans l'app.",
+        bullets: [
+          "Vos articles listés dans la Marketplace",
+          "Les demandes arrivent directement dans l'app",
+          "Visible par les équipes de votre quartier",
+        ],
+        cta: "Devenir vendeur partenaire",
+        subject: "Partenariat vendeur",
+      },
+      {
+        tag: "Arbitres",
+        title: "Arbitrez les matchs",
+        desc: "Les capitaines fixent la date, le terrain et l'arbitre au moment du défi. Faites-vous référencer pour être proposé sur les matchs près de chez vous.",
+        bullets: [
+          "Profil arbitre visible par les équipes",
+          "Proposé sur les matchs et les tournois",
+          "Mis en avant sur ce site quand nous lancerons nos campagnes",
+        ],
+        cta: "Se référencer comme arbitre",
+        subject: "Référencement arbitre",
+      },
+    ],
+    note: "Les accès vendeur et arbitre sont activés manuellement par l'équipe Shabas, après un échange.",
+    contact: "Ou écrivez-nous directement :",
+  },
   download: {
     headline: "Prêt à jouer ?",
     accent: "Téléchargez Shabas.",
@@ -247,6 +282,7 @@ const en: typeof fr = {
     howItWorks: "How It Works",
     tournaments: "Tournaments",
     laRue: "The Street",
+    partners: "Partners",
     download: "Download",
     menu: "Menu",
     close: "Close",
@@ -331,7 +367,7 @@ const en: typeof fr = {
     marketplace: {
       badge: "New",
       title: "Marketplace",
-      desc: "Premium members list boots, jerseys and gear for sale. Anyone can browse and send an inquiry directly.",
+      desc: "Partner sellers list boots, jerseys and gear. Anyone can browse and send an inquiry directly.",
       categories: ["All", "Boots", "Jerseys", "Gloves"],
       location: "Makepe, Douala",
       listings: [
@@ -438,6 +474,40 @@ const en: typeof fr = {
         desc: '"Best striker in Makepe?" One tap. Real results.',
       },
     ],
+  },
+  partners: {
+    badge: "Partnerships",
+    headline: "Open for",
+    accent: "partners.",
+    sub: "Shabas grows neighbourhood by neighbourhood. If you sell gear or you referee, write to us — we open your access by hand, after a conversation.",
+    cards: [
+      {
+        tag: "Local vendors",
+        title: "Sell on the Marketplace",
+        desc: "Boots, jerseys, gloves, gear. Your items are visible to players in your city, who contact you directly in the app.",
+        bullets: [
+          "Your items listed in the Marketplace",
+          "Inquiries arrive straight in the app",
+          "Seen by the teams in your neighbourhood",
+        ],
+        cta: "Become a partner seller",
+        subject: "Vendor partnership",
+      },
+      {
+        tag: "Referees",
+        title: "Referee the matches",
+        desc: "Captains set the date, the pitch and the referee when they send a challenge. Get listed so you're offered for matches near you.",
+        bullets: [
+          "A referee profile teams can see",
+          "Offered for matches and tournaments",
+          "Featured on this site once we start our campaigns",
+        ],
+        cta: "Get listed as a referee",
+        subject: "Referee listing",
+      },
+    ],
+    note: "Vendor and referee access is switched on by hand by the Shabas team, after a conversation.",
+    contact: "Or write to us directly:",
   },
   download: {
     headline: "Ready to play?",
