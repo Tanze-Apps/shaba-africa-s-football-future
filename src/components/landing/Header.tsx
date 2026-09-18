@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { Link, useLocation } from "react-router-dom";
-=======
->>>>>>> main
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLang } from "@/contexts/lang";
 import { EASE } from "@/components/motion/Reveal";
 import SocialRow from "@/components/SocialRow";
-<<<<<<< HEAD
 import { ROUTES, useMenuNav } from "@/lib/nav";
-=======
->>>>>>> main
 import menuPhoto from "@/assets/photos/player-golden.webp";
 
 const LangToggle = () => {
@@ -41,46 +35,8 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const { t } = useLang();
   const reduced = useReducedMotion();
-<<<<<<< HEAD
   const { pathname } = useLocation();
   const navLinks = useMenuNav();
-
-  // Header goes solid once the hero starts scrolling away.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Hold the page still behind the overlay, and let Escape dismiss it.
-  useEffect(() => {
-    if (!open) return;
-
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-
-    return () => {
-      document.body.style.overflow = previous;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
-=======
-
-  const navLinks = [
-    { href: "#features", label: t.nav.features },
-    { href: "#how", label: t.nav.howItWorks },
-    { href: "#tournaments", label: t.nav.tournaments },
-    { href: "#la-rue", label: t.nav.laRue },
-    { href: "#partners", label: t.nav.partners },
-    { href: "#download", label: t.nav.download },
-  ];
->>>>>>> main
 
   // Header goes solid once the hero starts scrolling away.
   useEffect(() => {
@@ -143,13 +99,8 @@ const Header = () => {
           </button>
 
           {/* Centre — crest */}
-<<<<<<< HEAD
           <Link
             to={ROUTES.home}
-=======
-          <a
-            href="#hero"
->>>>>>> main
             className="absolute left-1/2 z-10 flex -translate-x-1/2 items-center gap-2.5"
             aria-label="Shabas"
           >
@@ -163,11 +114,7 @@ const Header = () => {
             <span className="font-display text-[19px] leading-none text-bone md:text-[22px]">
               Shabas
             </span>
-<<<<<<< HEAD
           </Link>
-=======
-          </a>
->>>>>>> main
 
           {/* Right — language + socials */}
           <div className="z-10 flex items-center gap-5">
@@ -200,11 +147,7 @@ const Header = () => {
                   <ul>
                     {navLinks.map((l, i) => (
                       <motion.li
-<<<<<<< HEAD
                         key={l.to}
-=======
-                        key={l.href}
->>>>>>> main
                         initial={{ opacity: 0, y: reduced ? 0 : 26 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{
@@ -214,7 +157,6 @@ const Header = () => {
                         }}
                         className="border-b border-bone/10"
                       >
-<<<<<<< HEAD
                         <Link
                           to={l.to}
                           onClick={() => setOpen(false)}
@@ -240,20 +182,6 @@ const Header = () => {
                             {l.label}
                           </span>
                         </Link>
-=======
-                        <a
-                          href={l.href}
-                          onClick={() => setOpen(false)}
-                          className="group flex items-baseline gap-4 py-3 md:py-4"
-                        >
-                          <span className="u-eyebrow w-7 shrink-0 text-bone-faint transition-colors group-hover:text-brand-bright">
-                            {String(i + 1).padStart(2, "0")}
-                          </span>
-                          <span className="font-display text-[clamp(30px,6.5vw,60px)] leading-[1.05] text-bone transition-colors duration-200 group-hover:text-brand-bright">
-                            {l.label}
-                          </span>
-                        </a>
->>>>>>> main
                       </motion.li>
                     ))}
                   </ul>

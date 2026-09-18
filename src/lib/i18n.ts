@@ -2,10 +2,8 @@ export type Lang = "fr" | "en";
 
 const fr = {
   nav: {
-<<<<<<< HEAD
     home: "Accueil",
-=======
->>>>>>> main
+
     features: "Fonctionnalités",
     howItWorks: "Comment ça marche",
     tournaments: "Tournois",
@@ -282,10 +280,8 @@ const fr = {
 // error rather than an `undefined` rendered into the page.
 const en: typeof fr = {
   nav: {
-<<<<<<< HEAD
     home: "Home",
-=======
->>>>>>> main
+
     features: "Features",
     howItWorks: "How It Works",
     tournaments: "Tournaments",
